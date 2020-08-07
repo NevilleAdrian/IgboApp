@@ -6,6 +6,8 @@ import 'package:nkuzi_igbo/screens/registration_screen.dart';
 import 'package:nkuzi_igbo/screens/splash_screen.dart';
 import 'package:nkuzi_igbo/screens/welcome_screen.dart';
 
+import 'utils/theme_data.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -18,6 +20,7 @@ class MyApp extends StatelessWidget {
       title: 'NkuziIgbo',
       debugShowCheckedModeBanner: false,
       initialRoute: HomePage.id,
+      theme: myThemeData(context),
       routes: {
         WelcomeScreen.id : (context) => WelcomeScreen(),
         LoginScreen.id : (context) => LoginScreen(),

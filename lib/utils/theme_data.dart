@@ -3,7 +3,7 @@ import 'package:nkuzi_igbo/utils/constants.dart';
 
 ThemeData myThemeData(BuildContext context) {
   return ThemeData(
-    fontFamily: "Montserrat",
+    fontFamily: "Poppins",
     primaryColor: PRIMARY,
     accentColor: ACCENT,
     buttonColor: PRIMARY,
@@ -39,7 +39,7 @@ ThemeData myThemeData(BuildContext context) {
         headline6: TextStyle(
           color: Colors.black,
           fontSize: 16,
-          fontFamily: "Montserrat",
+          fontFamily: "Poppins",
           fontWeight: FontWeight.w500,
         ),
       ),

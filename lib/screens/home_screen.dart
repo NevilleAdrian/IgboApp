@@ -27,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
            padding: const EdgeInsets.only(left: 20),
            child: Text('Categories', style: TextStyle( color: Colors.black),),
          ) ,
+        
         elevation: 0,
       ),
       body: ListView(
