@@ -7,9 +7,12 @@ ThemeData myThemeData(BuildContext context) {
     primaryColor: PRIMARY,
     accentColor: ACCENT,
     buttonColor: PRIMARY,
+    textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
+    primaryTextTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
+    accentTextTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
     scaffoldBackgroundColor: Colors.white,
     backgroundColor: Colors.white,
-    textTheme: TextTheme(bodyText2: TextStyle(color: Colors.black)),
+//    textTheme: TextTheme(bodyText2: TextStyle(color: Colors.black)),
     inputDecorationTheme: InputDecorationTheme(
       fillColor: Color(0xFFF7F7FB),
       filled: true,

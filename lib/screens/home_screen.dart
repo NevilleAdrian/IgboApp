@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -17,16 +18,16 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        title:  Text( 'Categories', style: TextStyle( color: Colors.black, fontWeight: FontWeight.w600,  fontFamily: 'Poppins'),),
+        centerTitle: false,
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 20),
-            child: Icon(Icons.search, color: Colors.black,)
+            child: SvgPicture.asset("assets/images/search.svg",
+                color: Colors.black
+            ),
           ),
         ],
-         leading: Padding(
-           padding: const EdgeInsets.only(left: 20),
-           child: Text('Categories', style: TextStyle( color: Colors.black),),
-         ) ,
         
         elevation: 0,
       ),
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
               color: Colors.white,
               child: Column(
                 children: <Widget>[
-                  Container(color: Colors.white , height: 1),
+                  Container(color: Colors.grey , height: 0.3),
                   SizedBox(
                     height: 15.0,
                   )
