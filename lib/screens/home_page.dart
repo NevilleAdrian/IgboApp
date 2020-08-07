@@ -49,30 +49,32 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white ,
         type: BottomNavigationBarType.fixed,
         iconSize: 20,
+//        showSelectedLabels: false,
+//        showUnselectedLabels: false,
         items: [
           BottomNavigationBarItem(
             icon: SvgPicture.asset("assets/images/learn.svg",
               color: _selectedIndex == 0 ? Color(0XFF9D1000): Color(0XFF9A9A9A)
             ),
-            title: Text('Learn', style: TextStyle(color: _selectedIndex == 0 ? Colors.black: Color(0XFF9A9A9A))),
+            title: Text('Learn',  style: TextStyle( fontSize: 10.0, color: _selectedIndex == 0 ? Colors.black: Color(0XFF9A9A9A))),
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset("assets/images/progress.svg",
               color: _selectedIndex == 1 ? Color(0XFF9D1000): Color(0XFF9A9A9A)
             ),
-            title: Text('Progress', style: TextStyle(color: _selectedIndex == 1 ? Colors.black: Color(0XFF9A9A9A))),
+            title: Text('Progress', style: TextStyle(fontSize: 10.0, color: _selectedIndex == 1 ? Colors.black: Color(0XFF9A9A9A))),
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset("assets/images/notification.svg",
               color: _selectedIndex == 2 ? Color(0XFF9D1000): Color(0XFF9A9A9A)
             ),
-            title: Text('Notifications', style: TextStyle(color: _selectedIndex == 2 ? Colors.black : Color(0XFF9A9A9A))),
+            title: Text('Notifications', style: TextStyle(fontSize: 10.0, color: _selectedIndex == 2 ? Colors.black : Color(0XFF9A9A9A))),
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset("assets/images/profile.svg",
               color: _selectedIndex == 3 ? Color(0XFF9D1000): Color(0XFF9A9A9A)
             ),
-            title: Text('Profile', style: TextStyle(color: _selectedIndex == 3 ? Colors.black: Color(0XFF9A9A9A))),
+            title: Text('Profile', style: TextStyle(fontSize: 10.0, color: _selectedIndex == 3 ? Colors.black: Color(0XFF9A9A9A))),
           ),
 
         ],

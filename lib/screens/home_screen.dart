@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title:  Text( 'Categories', style: TextStyle( color: Colors.black, fontWeight: FontWeight.w600,  fontFamily: 'Poppins'),),
+        title:  Text( 'Categories', style: TextStyle( fontSize: 18, color: Colors.black, fontWeight: FontWeight.w600,  fontFamily: 'Poppins'),),
         centerTitle: false,
         actions: <Widget>[
           Padding(
@@ -38,11 +38,162 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
             child: Container(
               color: Colors.white,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Container(color: Colors.grey , height: 0.3),
                   SizedBox(
                     height: 15.0,
-                  )
+                  ),
+                  SizedBox(
+                    child: Card(
+                      color: Color(0XFF47C1ED) ,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(5),
+                            bottomRight: Radius.circular(5),
+                            topLeft: Radius.circular(5),
+                            topRight: Radius.circular(5)
+
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 25.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text('Mkpuru Osisi', style: TextStyle(color: Colors.white, fontSize: 12),),
+                            SizedBox(height: 5,),
+                            Text('Fruits', style: TextStyle( fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.w500) ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    child: Card(
+                      color: Color(0XFFAA91C2) ,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(5),
+                            bottomRight: Radius.circular(5),
+                            topLeft: Radius.circular(5),
+                            topRight: Radius.circular(5)
+
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 25.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text('Aha Umuanumanu ', style: TextStyle(color: Colors.white, fontSize: 12),),
+                            SizedBox(height: 5,),
+                            Text('Names of Animal', style: TextStyle( fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.w500) ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    child: Card(
+                      color: Color(0XFF2F78CA) ,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(5),
+                            bottomRight: Radius.circular(5),
+                            topLeft: Radius.circular(5),
+                            topRight: Radius.circular(5)
+
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 25.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text('Mkpuru Osisi', style: TextStyle(color: Colors.white, fontSize: 12),),
+                            SizedBox(height: 5,),
+                            Text('Fruits', style: TextStyle( fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.w500) ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    child: Card(
+                      color: Color(0XFFD13631) ,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(5),
+                            bottomRight: Radius.circular(5),
+                            topLeft: Radius.circular(5),
+                            topRight: Radius.circular(5)
+
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 25.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text('Aha Umuanumanu ', style: TextStyle(color: Colors.white, fontSize: 12),),
+                            SizedBox(height: 5,),
+                            Text('Names of Animal', style: TextStyle( fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.w500) ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    child: Card(
+                      color: Color(0XFF2D0C06) ,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(5),
+                            bottomRight: Radius.circular(5),
+                            topLeft: Radius.circular(5),
+                            topRight: Radius.circular(5)
+
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 25.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text('Mkpuru Osisi', style: TextStyle(color: Colors.white, fontSize: 12),),
+                            SizedBox(height: 5,),
+                            Text('Fruits', style: TextStyle( fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.w500) ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    child: Card(
+                      color: Color(0XFFF7B500) ,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(5),
+                            bottomRight: Radius.circular(5),
+                            topLeft: Radius.circular(5),
+                            topRight: Radius.circular(5)
+
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 25.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text('Aha Umuanumanu ', style: TextStyle(color: Colors.white, fontSize: 12),),
+                            SizedBox(height: 5,),
+                            Text('Names of Animal', style: TextStyle( fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.w500) ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
 
                 ],
               ),
