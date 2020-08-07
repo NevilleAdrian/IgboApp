@@ -16,32 +16,34 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Activities'),
         backgroundColor: Colors.white,
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 20),
-            child: Icon(Icons.search)
+            child: Icon(Icons.search, color: Colors.black,)
           ),
         ],
          leading: Padding(
            padding: const EdgeInsets.only(left: 20),
-           child: Text('Categories', style: TextStyle(),),
+           child: Text('Categories', style: TextStyle( color: Colors.black),),
          ) ,
         elevation: 0,
       ),
       body: ListView(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 30.0, bottom: 20.0),
-            child: Column(
-              children: <Widget>[
-                Container(color: Color(0XFFEDEDED), height: 1),
-                SizedBox(
-                  height: 15.0,
-                )
+            padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+            child: Container(
+              color: Colors.white,
+              child: Column(
+                children: <Widget>[
+                  Container(color: Colors.white , height: 1),
+                  SizedBox(
+                    height: 15.0,
+                  )
 
-              ],
+                ],
+              ),
             ),
           )
 

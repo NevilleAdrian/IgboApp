@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/screens/home_screen.dart';
 import 'package:nkuzi_igbo/screens/notifications_screen.dart';
 import 'package:nkuzi_igbo/screens/profile_screen.dart';
@@ -46,42 +47,32 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onTapped,
         backgroundColor: Colors.white ,
-//        showSelectedLabels: false,
-//        showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
         iconSize: 20,
         items: [
           BottomNavigationBarItem(
-            backgroundColor: Colors.white,
-//            icon: SvgPicture.asset("assets/images/appointments.svg",
-//              color: _selectedIndex == 0 ? Color(0XFFFF7B71): Colors.black,
-//            ),
-            icon: Icon(Icons.book),
+            icon: SvgPicture.asset("assets/images/learn.svg",
+              color: _selectedIndex == 0 ? Color(0XFF9D1000): Color(0XFF9A9A9A)
+            ),
             title: Text('Learn', style: TextStyle(color: Color(0XFF9A9A9A))),
           ),
           BottomNavigationBarItem(
-//            icon: SvgPicture.asset("assets/images/Icons_5.svg",
-//              color: _selectedIndex == 1 ? Color(0XFFFF7B71): Colors.black,
-//            ),
-            icon: Icon(Icons.table_chart),
+            icon: SvgPicture.asset("assets/images/progress.svg",
+              color: _selectedIndex == 1 ? Color(0XFF9D1000): Color(0XFF9A9A9A)
+            ),
             title: Text('Progress', style: TextStyle(color: Color(0XFF9A9A9A))),
           ),
           BottomNavigationBarItem(
-//            icon: BadgeOnWidget(
-//              number: (notifCount == 0) ? null : notifCount.toString(),
-//              child: SvgPicture.asset("assets/images/Icons_4.svg",
-//                color: _selectedIndex == 2 ? Color(0XFFFF7B71): Colors.black,
-//              ),
-//            ),
-          icon: Icon(Icons.notifications),
+            icon: SvgPicture.asset("assets/images/notification.svg",
+              color: _selectedIndex == 2 ? Color(0XFF9D1000): Color(0XFF9A9A9A)
+            ),
             title: Text('Notifications', style: TextStyle(color: Color(0XFF9A9A9A))),
 
           ),
           BottomNavigationBarItem(
-//            icon: SvgPicture.asset("assets/images/money-bag.svg",
-//              color: _selectedIndex == 3 ? Color(0XFFFF7B71): Colors.black,
-//            ),
-              icon: Icon(Icons.settings),
+            icon: SvgPicture.asset("assets/images/profile.svg",
+              color: _selectedIndex == 3 ? Color(0XFF9D1000): Color(0XFF9A9A9A)
+            ),
             title: Text('Profile', style: TextStyle(color: Color(0XFF9A9A9A))),
 
           ),
