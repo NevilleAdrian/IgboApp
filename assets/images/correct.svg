@@ -1,0 +1,10 @@
+<svg id="Elements_05_Markups_Simple_01_Done" data-name="Elements/#05 Markups/Simple/#01 Done" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+  <g id="Color:" fill="#66c109" stroke="rgba(78,154,0,0.7)" stroke-miterlimit="10" stroke-width="1.5">
+    <circle cx="18" cy="18" r="18" stroke="none"/>
+    <circle cx="18" cy="18" r="17.25" fill="none"/>
+  </g>
+  <g id="Elements_06_Icons_02_Action_Done" data-name="Elements/#06 Icons/#02 Action/Done" transform="translate(10 10)">
+    <rect id="Elements_06_Icons_02_Action_Done_background" data-name="Elements/#06 Icons/#02 Action/Done background" width="16" height="16" fill="none"/>
+    <path id="Color:-2" data-name="Color:" d="M2.069,4.638A1.212,1.212,0,0,0,.355,6.352L3.672,9.594a1.212,1.212,0,0,0,1.841-.149L11.175,1.92A1.212,1.212,0,0,0,9.207.5L4.378,6.871Z" transform="translate(2.298 3.025)" fill="#fff"/>
+  </g>
+</svg>

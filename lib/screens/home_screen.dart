@@ -24,7 +24,86 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
         "color": 0XFF47C1ED,
         "form": "Beginner",
         "status": "paid",
-        "time": "9 minutes"
+        "time": "9 minutes",
+        "questions" : [
+          {
+              "id": "1",
+              "mainquestion": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac",
+              "answerQuestion": "Pellentesque habitant morbi tristique senectus et netus",
+              "questionImage": "assets/images/house.svg",
+              "optionA": "Apple",
+              "optionAImage": "assets/images/apple.svg",
+              "optionB": "Egg",
+              "optionBImage": "assets/images/egg.svg",
+              "optionC": "Vegetable",
+              "optionCImage": "assets/images/veg.svg",
+              "optionD": "Meat",
+              "optionDImage": "assets/images/meat.svg",
+              "correctOption": "Egg",
+              "audioUrl": 'Eli',
+              "type": "toIgbo"
+            },
+          {
+            "id": "2",
+            "mainquestion": "Pellentesque habitant morbi tristique senectus",
+            "answerQuestion": "Pellentesque habitant morbi tristique senectus et netus al tefiri",
+            "questionImage": "assets/images/house.svg",
+            "optionA": "Egg",
+            "optionAImage": "assets/images/egg.svg",
+            "optionB": "Apple",
+            "optionBImage": "assets/images/apple.svg",
+            "optionC": "Meat",
+            "optionCImage": "assets/images/meat.svg",
+            "optionD": "Vegetable",
+            "optionDImage": "assets/images/veg.svg",
+            "correctOption": "Egg",
+            "audioUrl": 'Eli',
+            "type": "toIgbo"
+
+          },
+          {
+            "id": "3",
+            "mainquestion": "Match the following english words with its correct Igbo words",
+            "option1": "Ji",
+            "option2": "Anu",
+            "option3": "Agwa",
+            "option4": "Azu",
+            "correctOption": "Anu",
+            "audioUrl": 'Eli',
+            "type": "toEnglish"
+
+          },
+          {
+            "id": "4",
+            "mainquestion": "Match the following english words with its correct Igbo words",
+            "option1": "Agwa",
+            "option2": "Ji",
+            "option3": "Azu",
+            "option4": "Osikapa",
+            "correctOption": "Osikapa",
+            "audioUrl": 'Eli',
+            "type": "toEnglish"
+
+          },
+          {
+            "id": "5",
+            "mainquestion": "Pellentesque habitant morbi tristique senectus",
+            "answerQuestion": "Pellentesque habitant morbi tristique senectus et netus al tefiri",
+            "questionImage": "assets/images/house.svg",
+            "optionA": "Egg",
+            "optionAImage": "assets/images/egg.svg",
+            "optionB": "Apple",
+            "optionBImage": "assets/images/apple.svg",
+            "optionC": "Meat",
+            "optionCImage": "assets/images/meat.svg",
+            "optionD": "Vegetable",
+            "optionDImage": "assets/images/veg.svg",
+            "correctOption": "Egg",
+            "audioUrl": 'Eli',
+            "type": "toIgbo"
+
+          },
+        ]
       },
       {
         "id": "2",
@@ -47,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
       {
         "id": "2",
         "name": "Aha Umuanumanu",
-        "type": "Names of  Utensils",
+        "type": "Names of Utensils",
         "color": 0XFFAD13631,
         "form": "intermediate",
         "status": "not paid",
@@ -78,15 +157,52 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
         backgroundColor: Colors.white,
         title:  Text( 'Categories', style: TextStyle( fontSize: 18, color: Colors.black, fontWeight: FontWeight.w600,  fontFamily: 'Poppins'),),
         centerTitle: false,
+        automaticallyImplyLeading: false,
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 20),
-            child: SvgPicture.asset("assets/images/search.svg",
-                color: Colors.black
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Dialog(
+                        backgroundColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                            BorderRadius.circular(20.0)), //this right here
+                        child: Container(
+                          height: 100,
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextField(
+                                  decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.only(top: 5, bottom: 5, left: 15),
+                                      border: InputBorder.none,
+                                      hintText: 'Search with topic',
+                                      hintStyle: TextStyle( color: Colors.black),
+                                       suffixIcon: Icon(Icons.search, color: Colors.black,)
+                                  ),
+                                  style: TextStyle(fontSize: 13.0, color: Colors.black),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    });
+              },
+              child: SvgPicture.asset("assets/images/search.svg",
+                  color: Colors.black
+              ),
             ),
           ),
         ],
-        
+
         elevation: 0,
       ),
       body: ListView(
@@ -100,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                 children: <Widget>[
                   Container(color: Colors.grey , height: 0.3),
                   SizedBox(
-                    height: 15.0,
+                    height: 25.0,
                   ),
                  CategoryList(lessons: lessons)
                 ],

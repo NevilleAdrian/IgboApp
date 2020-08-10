@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="26" viewBox="0 0 27 26">
+  <defs>
+    <clipPath id="clip-path">
+      <rect width="27" height="26" fill="none"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <rect width="26" height="26" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="ic_logout" clip-path="url(#clip-path)">
+    <g id="ic_logout-2" data-name="ic_logout">
+      <g id="ic" transform="translate(2.208 2.208)">
+        <path id="Path" d="M0,0,5.394,4.858,0,9.715" transform="translate(11.166 6.182)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+        <path id="Path-2" data-name="Path" d="M0,1H16.56" transform="translate(0 10.04)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+        <path id="Shape" d="M1,0V22.08" transform="translate(21.08)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+      </g>
+      <g id="bound_24" clip-path="url(#clip-path-2)">
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="27" height="27" viewBox="0 0 27 27">
+  <defs>
+    <clipPath id="clip-path">
+      <rect width="27" height="27" fill="none"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <rect width="26" height="26" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="ic_update" clip-path="url(#clip-path)">
+    <g id="ic_update-2" data-name="ic_update">
+      <g id="ic" transform="translate(1.104 2.208)">
+        <path id="Shape" d="M17.782,14.352H19a5.234,5.234,0,0,0,5.286-5.181A5.234,5.234,0,0,0,19,3.991h-.2A6.941,6.941,0,0,0,11.563.062a6.848,6.848,0,0,0-5.9,5.682A4.53,4.53,0,0,0,1.085,7.108a4.315,4.315,0,0,0-.7,4.639,4.475,4.475,0,0,0,3.978,2.606H6.4" transform="translate(0 0)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+        <path id="Path" d="M0,0V8.889" transform="translate(12.144 13.248)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+        <path id="Path-2" data-name="Path" d="M0,0,3.312,3.232,6.624,0" transform="translate(8.832 18.904)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+      </g>
+      <g id="bound_24" clip-path="url(#clip-path-2)">
+      </g>
+    </g>
+  </g>
+</svg>
