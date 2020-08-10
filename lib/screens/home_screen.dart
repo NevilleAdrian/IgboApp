@@ -12,146 +12,168 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin {
+  final _nameController = TextEditingController();
+  String searchText;
+  List<Map<String, dynamic>> lessons = [
+    {
+    "id": "1",
+    "name": "Mkpuru Osisi",
+    "type": "Fruits",
+    "color": 0XFF47C1ED,
+    "form": "Beginner",
+    "status": "paid",
+    "time": "9 minutes",
+    "questions" : [
+      {
+        "id": "1",
+        "mainquestion": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac",
+        "answerQuestion": "Pellentesque habitant morbi tristique senectus et netus",
+        "questionImage": "assets/images/house.svg",
+        "optionA": "Apple",
+        "optionAImage": "assets/images/apple.svg",
+        "optionB": "Egg",
+        "optionBImage": "assets/images/egg.svg",
+        "optionC": "Vegetable",
+        "optionCImage": "assets/images/veg.svg",
+        "optionD": "Meat",
+        "optionDImage": "assets/images/meat.svg",
+        "correctOption": "Egg",
+        "audioUrl": 'Eli',
+        "type": "toIgbo"
+      },
+      {
+        "id": "2",
+        "mainquestion": "Pellentesque habitant morbi tristique senectus",
+        "answerQuestion": "Pellentesque habitant morbi tristique senectus et netus al tefiri",
+        "questionImage": "assets/images/house.svg",
+        "optionA": "Egg",
+        "optionAImage": "assets/images/egg.svg",
+        "optionB": "Apple",
+        "optionBImage": "assets/images/apple.svg",
+        "optionC": "Meat",
+        "optionCImage": "assets/images/meat.svg",
+        "optionD": "Vegetable",
+        "optionDImage": "assets/images/veg.svg",
+        "correctOption": "Egg",
+        "audioUrl": 'Eli',
+        "type": "toIgbo"
+
+      },
+      {
+        "id": "3",
+        "mainquestion": "Match the following english words with its correct Igbo words",
+        "option1": "Ji",
+        "option2": "Anu",
+        "option3": "Agwa",
+        "option4": "Azu",
+        "correctOption": "Anu",
+        "audioUrl": 'Eli',
+        "type": "toEnglish"
+
+      },
+      {
+        "id": "4",
+        "mainquestion": "Match the following english words with its correct Igbo words",
+        "option1": "Agwa",
+        "option2": "Ji",
+        "option3": "Azu",
+        "option4": "Osikapa",
+        "correctOption": "Osikapa",
+        "audioUrl": 'Eli',
+        "type": "toEnglish"
+
+      },
+      {
+        "id": "5",
+        "mainquestion": "Pellentesque habitant morbi tristique senectus",
+        "answerQuestion": "Pellentesque habitant morbi tristique senectus et netus al tefiri",
+        "questionImage": "assets/images/house.svg",
+        "optionA": "Egg",
+        "optionAImage": "assets/images/egg.svg",
+        "optionB": "Apple",
+        "optionBImage": "assets/images/apple.svg",
+        "optionC": "Meat",
+        "optionCImage": "assets/images/meat.svg",
+        "optionD": "Vegetable",
+        "optionDImage": "assets/images/veg.svg",
+        "correctOption": "Egg",
+        "audioUrl": 'Eli',
+        "type": "toIgbo"
+
+      },
+    ]
+  }, {
+    "id": "2",
+    "name": "Aha Umuanumanu",
+    "type": "Names of Animal",
+    "color": 0XFFAA91C2,
+    "form": "Beginner",
+    "status": "not paid",
+    "time": "4 minutes"
+  }, {
+    "id": "1",
+    "name": "Anu Osisi",
+    "type": "Food",
+    "color": 0XFF2F78CA,
+    "form": "intermediate",
+    "status": "paid",
+    "time": "9 minutes"
+  }, {
+    "id": "2",
+    "name": "Aha Umuanumanu",
+    "type": "Names of Utensils",
+    "color": 0XFFAD13631,
+    "form": "intermediate",
+    "status": "not paid",
+    "time": "7 minutes"
+  }, {
+    "id": "1",
+    "name": "Mkpuru Osisi",
+    "type": "Fruits",
+    "color": 0XFF2D0C06,
+    "form": "advanced",
+    "status": "paid",
+    "time": "6 minutes"
+  }, {
+    "id": "2",
+    "name": "Aha Umuanumanu",
+    "type": "Names of Institutions",
+    "color": 0XFFF7B500,
+    "form": "advanced",
+    "status": "not paid",
+    "time": "7 minutes"
+  }
+  ];
+  List filteredCategory = [];
+
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+   filteredCategory = lessons;
+    super.initState();
+  }
+
+  onSearch(String term) {
+    setState(() {
+      searchText = term;
+      filteredCategory = onFilter(term);
+    });
+  }
+ List onFilter(String term){
+    return lessons.where((element) => element['name'].toLowerCase().contains(term.toLowerCase()) || element['type'].toLowerCase().contains(term.toLowerCase())).toList();
+  }
 
 
   Widget build(BuildContext context) {
     super.build(context);
-    var lessons = [
-      {
-        "id": "1",
-        "name": "Mkpuru Osisi",
-        "type": "Fruits",
-        "color": 0XFF47C1ED,
-        "form": "Beginner",
-        "status": "paid",
-        "time": "9 minutes",
-        "questions" : [
-          {
-              "id": "1",
-              "mainquestion": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac",
-              "answerQuestion": "Pellentesque habitant morbi tristique senectus et netus",
-              "questionImage": "assets/images/house.svg",
-              "optionA": "Apple",
-              "optionAImage": "assets/images/apple.svg",
-              "optionB": "Egg",
-              "optionBImage": "assets/images/egg.svg",
-              "optionC": "Vegetable",
-              "optionCImage": "assets/images/veg.svg",
-              "optionD": "Meat",
-              "optionDImage": "assets/images/meat.svg",
-              "correctOption": "Egg",
-              "audioUrl": 'Eli',
-              "type": "toIgbo"
-            },
-          {
-            "id": "2",
-            "mainquestion": "Pellentesque habitant morbi tristique senectus",
-            "answerQuestion": "Pellentesque habitant morbi tristique senectus et netus al tefiri",
-            "questionImage": "assets/images/house.svg",
-            "optionA": "Egg",
-            "optionAImage": "assets/images/egg.svg",
-            "optionB": "Apple",
-            "optionBImage": "assets/images/apple.svg",
-            "optionC": "Meat",
-            "optionCImage": "assets/images/meat.svg",
-            "optionD": "Vegetable",
-            "optionDImage": "assets/images/veg.svg",
-            "correctOption": "Egg",
-            "audioUrl": 'Eli',
-            "type": "toIgbo"
 
-          },
-          {
-            "id": "3",
-            "mainquestion": "Match the following english words with its correct Igbo words",
-            "option1": "Ji",
-            "option2": "Anu",
-            "option3": "Agwa",
-            "option4": "Azu",
-            "correctOption": "Anu",
-            "audioUrl": 'Eli',
-            "type": "toEnglish"
 
-          },
-          {
-            "id": "4",
-            "mainquestion": "Match the following english words with its correct Igbo words",
-            "option1": "Agwa",
-            "option2": "Ji",
-            "option3": "Azu",
-            "option4": "Osikapa",
-            "correctOption": "Osikapa",
-            "audioUrl": 'Eli',
-            "type": "toEnglish"
-
-          },
-          {
-            "id": "5",
-            "mainquestion": "Pellentesque habitant morbi tristique senectus",
-            "answerQuestion": "Pellentesque habitant morbi tristique senectus et netus al tefiri",
-            "questionImage": "assets/images/house.svg",
-            "optionA": "Egg",
-            "optionAImage": "assets/images/egg.svg",
-            "optionB": "Apple",
-            "optionBImage": "assets/images/apple.svg",
-            "optionC": "Meat",
-            "optionCImage": "assets/images/meat.svg",
-            "optionD": "Vegetable",
-            "optionDImage": "assets/images/veg.svg",
-            "correctOption": "Egg",
-            "audioUrl": 'Eli',
-            "type": "toIgbo"
-
-          },
-        ]
-      },
-      {
-        "id": "2",
-        "name": "Aha Umuanumanu",
-        "type": "Names of Animal",
-        "color": 0XFFAA91C2,
-        "form": "Beginner",
-        "status": "not paid",
-        "time": "4 minutes"
-      },
-      {
-        "id": "1",
-        "name": "Anu Osisi",
-        "type": "Food",
-        "color": 0XFF2F78CA,
-        "form": "intermediate",
-        "status": "paid",
-        "time": "9 minutes"
-      },
-      {
-        "id": "2",
-        "name": "Aha Umuanumanu",
-        "type": "Names of Utensils",
-        "color": 0XFFAD13631,
-        "form": "intermediate",
-        "status": "not paid",
-        "time": "7 minutes"
-      },
-      {
-        "id": "1",
-        "name": "Mkpuru Osisi",
-        "type": "Fruits",
-        "color": 0XFF2D0C06,
-        "form": "advanced",
-        "status": "paid",
-        "time": "6 minutes"
-      },
-      {
-        "id": "2",
-        "name": "Aha Umuanumanu",
-        "type": "Names of Institutions",
-        "color": 0XFFF7B500,
-        "form": "advanced",
-        "status": "not paid",
-        "time": "7 minutes"
-      },
-
-    ];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -179,16 +201,21 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TextField(
+                                TextFormField(
                                   decoration: InputDecoration(
                                       contentPadding: EdgeInsets.only(top: 5, bottom: 5, left: 15),
                                       border: InputBorder.none,
                                       hintText: 'Search with topic',
                                       hintStyle: TextStyle( color: Colors.black),
-                                       suffixIcon: Icon(Icons.search, color: Colors.black,)
+                                       suffixIcon: GestureDetector( onTap: () => Navigator.pop(context) , child: Icon(Icons.search, color: Colors.black,))
                                   ),
                                   style: TextStyle(fontSize: 13.0, color: Colors.black),
-                                ),
+                                  controller: _nameController,
+                                  onChanged: (value) {
+                                    onSearch(value) ;
+                                    print('search:$value');
+                                  }
+                                )
                               ],
                             ),
                           ),
@@ -218,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                   SizedBox(
                     height: 25.0,
                   ),
-                 CategoryList(lessons: lessons)
+                 CategoryList(lessons: filteredCategory)
                 ],
               ),
             ),
@@ -233,6 +260,8 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }
+
+
 
 class CategoryList extends StatelessWidget {
   const CategoryList({

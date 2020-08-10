@@ -12,11 +12,14 @@ class CategoriesScreen extends StatefulWidget {
   final String paid;
 
 
+
   @override
   _CategoriesScreenState createState() => _CategoriesScreenState();
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
+
+
 
   void _modalBottomSheetMenu(){
     showModalBottomSheet<dynamic>(
