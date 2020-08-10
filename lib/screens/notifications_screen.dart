@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:nkuzi_igbo/screens/Settings.dart';
+import 'package:nkuzi_igbo/screens/settings.dart';
 
 class NotificationScreen extends StatefulWidget {
   @override
@@ -13,9 +13,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Scaffold(
-        appBar:  AppBar(
+        appBar: AppBar(
           backgroundColor: Colors.white,
-          title:  Text( 'Notification', style: TextStyle( fontSize: 18, color: Colors.black, fontWeight: FontWeight.w600,  fontFamily: 'Poppins'),),
+          title: Text(
+            'Notification',
+            style: TextStyle(
+                fontSize: 18,
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+                fontFamily: 'Poppins'),
+          ),
           centerTitle: false,
           automaticallyImplyLeading: false,
           actions: <Widget>[
@@ -25,15 +32,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => Settings(
-                        )
-                    ),
+                    MaterialPageRoute(builder: (context) => Settings()),
                   );
                 },
                 child: SvgPicture.asset("assets/images/settings.svg",
-                    color: Colors.black
-                ),
+                    color: Colors.black),
               ),
             ),
           ],
@@ -45,13 +48,22 @@ class _NotificationScreenState extends State<NotificationScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SvgPicture.asset("assets/images/banner.svg"),
-              SizedBox(height: 20.0,),
-              NotificationList(mainText: "Phasellus dignissim, tellus", lowerText: 'Duis pretium gravida enim, vel maximus ligula fermentum' ,),
-              SizedBox(height: 20.0,),
-              NotificationList(mainText: "Phasellus dignissim, tellus", lowerText: 'Duis pretium gravida enim, vel maximus ligula fermentum' ,)
-
-
-
+              SizedBox(
+                height: 20.0,
+              ),
+              NotificationList(
+                mainText: "Phasellus dignissim, tellus",
+                lowerText:
+                    'Duis pretium gravida enim, vel maximus ligula fermentum',
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              NotificationList(
+                mainText: "Phasellus dignissim, tellus",
+                lowerText:
+                    'Duis pretium gravida enim, vel maximus ligula fermentum',
+              )
             ],
           ),
         ),
@@ -61,7 +73,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 }
 
 class NotificationList extends StatelessWidget {
-  const NotificationList({ this.mainText, this.lowerText });
+  const NotificationList({this.mainText, this.lowerText});
   final String mainText;
   final String lowerText;
 
@@ -70,11 +82,22 @@ class NotificationList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(mainText, style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600)),
-        SizedBox(height: 5.0,),
-        Text(lowerText, style: TextStyle(fontSize: 11),),
-        SizedBox(height: 20.0,),
-        Container( color: Colors.grey, height: 0.2,)
+        Text(mainText,
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+        SizedBox(
+          height: 5.0,
+        ),
+        Text(
+          lowerText,
+          style: TextStyle(fontSize: 11),
+        ),
+        SizedBox(
+          height: 20.0,
+        ),
+        Container(
+          color: Colors.grey,
+          height: 0.2,
+        )
       ],
     );
   }
