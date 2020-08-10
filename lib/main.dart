@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'NkuziIgbo',
       debugShowCheckedModeBanner: false,
-      initialRoute: HomePage.id,
+      initialRoute: SplashScreen.id,
       theme: myThemeData(context),
       routes: {
         WelcomeScreen.id : (context) => WelcomeScreen(),
