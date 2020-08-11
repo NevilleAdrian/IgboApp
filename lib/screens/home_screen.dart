@@ -2,150 +2,155 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/screens/categories_screen.dart';
 
-
 class HomeScreen extends StatefulWidget {
-
   static String id = 'home_screen';
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin {
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin {
   final _nameController = TextEditingController();
   String searchText;
   List<Map<String, dynamic>> lessons = [
     {
-    "id": "1",
-    "name": "Mkpuru Osisi",
-    "type": "Fruits",
-    "color": 0XFF47C1ED,
-    "form": "Beginner",
-    "status": "paid",
-    "time": "9 minutes",
-    "questions" : [
-      {
-        "id": "1",
-        "mainquestion": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac",
-        "answerQuestion": "Pellentesque habitant morbi tristique senectus et netus",
-        "questionImage": "assets/images/house.svg",
-        "optionA": "Apple",
-        "optionAImage": "assets/images/apple.svg",
-        "optionB": "Egg",
-        "optionBImage": "assets/images/egg.svg",
-        "optionC": "Vegetable",
-        "optionCImage": "assets/images/veg.svg",
-        "optionD": "Meat",
-        "optionDImage": "assets/images/meat.svg",
-        "correctOption": "Egg",
-        "audioUrl": 'Eli',
-        "type": "toIgbo"
-      },
-      {
-        "id": "2",
-        "mainquestion": "Pellentesque habitant morbi tristique senectus",
-        "answerQuestion": "Pellentesque habitant morbi tristique senectus et netus al tefiri",
-        "questionImage": "assets/images/house.svg",
-        "optionA": "Egg",
-        "optionAImage": "assets/images/egg.svg",
-        "optionB": "Apple",
-        "optionBImage": "assets/images/apple.svg",
-        "optionC": "Meat",
-        "optionCImage": "assets/images/meat.svg",
-        "optionD": "Vegetable",
-        "optionDImage": "assets/images/veg.svg",
-        "correctOption": "Egg",
-        "audioUrl": 'Eli',
-        "type": "toIgbo"
-
-      },
-      {
-        "id": "3",
-        "mainquestion": "Match the following english words with its correct Igbo words",
-        "option1": "Ji",
-        "option2": "Anu",
-        "option3": "Agwa",
-        "option4": "Azu",
-        "correctOption": "Anu",
-        "audioUrl": 'Eli',
-        "type": "toEnglish"
-
-      },
-      {
-        "id": "4",
-        "mainquestion": "Match the following english words with its correct Igbo words",
-        "option1": "Agwa",
-        "option2": "Ji",
-        "option3": "Azu",
-        "option4": "Osikapa",
-        "correctOption": "Osikapa",
-        "audioUrl": 'Eli',
-        "type": "toEnglish"
-
-      },
-      {
-        "id": "5",
-        "mainquestion": "Pellentesque habitant morbi tristique senectus",
-        "answerQuestion": "Pellentesque habitant morbi tristique senectus et netus al tefiri",
-        "questionImage": "assets/images/house.svg",
-        "optionA": "Egg",
-        "optionAImage": "assets/images/egg.svg",
-        "optionB": "Apple",
-        "optionBImage": "assets/images/apple.svg",
-        "optionC": "Meat",
-        "optionCImage": "assets/images/meat.svg",
-        "optionD": "Vegetable",
-        "optionDImage": "assets/images/veg.svg",
-        "correctOption": "Egg",
-        "audioUrl": 'Eli',
-        "type": "toIgbo"
-
-      },
-    ]
-  }, {
-    "id": "2",
-    "name": "Aha Umuanumanu",
-    "type": "Names of Animal",
-    "color": 0XFFAA91C2,
-    "form": "Beginner",
-    "status": "not paid",
-    "time": "4 minutes"
-  }, {
-    "id": "1",
-    "name": "Anu Osisi",
-    "type": "Food",
-    "color": 0XFF2F78CA,
-    "form": "intermediate",
-    "status": "paid",
-    "time": "9 minutes"
-  }, {
-    "id": "2",
-    "name": "Aha Umuanumanu",
-    "type": "Names of Utensils",
-    "color": 0XFFAD13631,
-    "form": "intermediate",
-    "status": "not paid",
-    "time": "7 minutes"
-  }, {
-    "id": "1",
-    "name": "Mkpuru Osisi",
-    "type": "Fruits",
-    "color": 0XFF2D0C06,
-    "form": "advanced",
-    "status": "paid",
-    "time": "6 minutes"
-  }, {
-    "id": "2",
-    "name": "Aha Umuanumanu",
-    "type": "Names of Institutions",
-    "color": 0XFFF7B500,
-    "form": "advanced",
-    "status": "not paid",
-    "time": "7 minutes"
-  }
+      "id": "1",
+      "name": "Mkpuru Osisi",
+      "type": "Fruits",
+      "color": 0XFF47C1ED,
+      "form": "Beginner",
+      "status": "paid",
+      "time": "9 minutes",
+      "questions": [
+        {
+          "id": "1",
+          "mainquestion":
+              "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac",
+          "answerQuestion":
+              "Pellentesque habitant morbi tristique senectus et netus",
+          "questionImage": "assets/images/house.svg",
+          "optionA": "Apple",
+          "optionAImage": "assets/images/apple.svg",
+          "optionB": "Egg",
+          "optionBImage": "assets/images/egg.svg",
+          "optionC": "Vegetable",
+          "optionCImage": "assets/images/veg.svg",
+          "optionD": "Meat",
+          "optionDImage": "assets/images/meat.svg",
+          "correctOption": "Egg",
+          "audioUrl": 'Eli',
+          "type": "toIgbo"
+        },
+        {
+          "id": "2",
+          "mainquestion": "Pellentesque habitant morbi tristique senectus",
+          "answerQuestion":
+              "Pellentesque habitant morbi tristique senectus et netus al tefiri",
+          "questionImage": "assets/images/house.svg",
+          "optionA": "Egg",
+          "optionAImage": "assets/images/egg.svg",
+          "optionB": "Apple",
+          "optionBImage": "assets/images/apple.svg",
+          "optionC": "Meat",
+          "optionCImage": "assets/images/meat.svg",
+          "optionD": "Vegetable",
+          "optionDImage": "assets/images/veg.svg",
+          "correctOption": "Egg",
+          "audioUrl": 'Eli',
+          "type": "toIgbo"
+        },
+        {
+          "id": "3",
+          "mainquestion":
+              "Match the following english words with its correct Igbo words",
+          "option1": "Ji",
+          "option2": "Anu",
+          "option3": "Agwa",
+          "option4": "Azu",
+          "correctOption": "Anu",
+          "audioUrl": 'Eli',
+          "type": "toEnglish"
+        },
+        {
+          "id": "4",
+          "mainquestion":
+              "Match the following english words with its correct Igbo words",
+          "option1": "Agwa",
+          "option2": "Ji",
+          "option3": "Azu",
+          "option4": "Osikapa",
+          "correctOption": "Osikapa",
+          "audioUrl": 'Eli',
+          "type": "toEnglish"
+        },
+        {
+          "id": "5",
+          "mainquestion": "Pellentesque habitant morbi tristique senectus",
+          "answerQuestion":
+              "Pellentesque habitant morbi tristique senectus et netus al tefiri",
+          "questionImage": "assets/images/house.svg",
+          "optionA": "Egg",
+          "optionAImage": "assets/images/egg.svg",
+          "optionB": "Apple",
+          "optionBImage": "assets/images/apple.svg",
+          "optionC": "Meat",
+          "optionCImage": "assets/images/meat.svg",
+          "optionD": "Vegetable",
+          "optionDImage": "assets/images/veg.svg",
+          "correctOption": "Egg",
+          "audioUrl": 'Eli',
+          "type": "toIgbo"
+        },
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Aha Umuanumanu",
+      "type": "Names of Animal",
+      "color": 0XFFAA91C2,
+      "form": "Beginner",
+      "status": "not paid",
+      "time": "4 minutes"
+    },
+    {
+      "id": "1",
+      "name": "Anu Osisi",
+      "type": "Food",
+      "color": 0XFF2F78CA,
+      "form": "intermediate",
+      "status": "paid",
+      "time": "9 minutes"
+    },
+    {
+      "id": "2",
+      "name": "Aha Umuanumanu",
+      "type": "Names of Utensils",
+      "color": 0XFFAD13631,
+      "form": "intermediate",
+      "status": "not paid",
+      "time": "7 minutes"
+    },
+    {
+      "id": "1",
+      "name": "Mkpuru Osisi",
+      "type": "Fruits",
+      "color": 0XFF2D0C06,
+      "form": "advanced",
+      "status": "paid",
+      "time": "6 minutes"
+    },
+    {
+      "id": "2",
+      "name": "Aha Umuanumanu",
+      "type": "Names of Institutions",
+      "color": 0XFFF7B500,
+      "form": "advanced",
+      "status": "not paid",
+      "time": "7 minutes"
+    }
   ];
   List filteredCategory = [];
-
 
   @override
   void dispose() {
@@ -155,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
 
   @override
   void initState() {
-   filteredCategory = lessons;
+    filteredCategory = lessons;
     super.initState();
   }
 
@@ -165,19 +170,29 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
       filteredCategory = onFilter(term);
     });
   }
- List onFilter(String term){
-    return lessons.where((element) => element['name'].toLowerCase().contains(term.toLowerCase()) || element['type'].toLowerCase().contains(term.toLowerCase())).toList();
-  }
 
+  List onFilter(String term) {
+    return lessons
+        .where((element) =>
+            element['name'].toLowerCase().contains(term.toLowerCase()) ||
+            element['type'].toLowerCase().contains(term.toLowerCase()))
+        .toList();
+  }
 
   Widget build(BuildContext context) {
     super.build(context);
 
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title:  Text( 'Categories', style: TextStyle( fontSize: 18, color: Colors.black, fontWeight: FontWeight.w600,  fontFamily: 'Poppins'),),
+        title: Text(
+          'Categories',
+          style: TextStyle(
+              fontSize: 18,
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Poppins'),
+        ),
         centerTitle: false,
         automaticallyImplyLeading: false,
         actions: <Widget>[
@@ -192,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                         backgroundColor: Colors.transparent,
                         shape: RoundedRectangleBorder(
                             borderRadius:
-                            BorderRadius.circular(20.0)), //this right here
+                                BorderRadius.circular(20.0)), //this right here
                         child: Container(
                           height: 100,
                           child: Padding(
@@ -202,20 +217,38 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 TextFormField(
-                                  decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.only(top: 5, bottom: 5, left: 15),
-                                      border: InputBorder.none,
-                                      hintText: 'Search with topic',
-                                      hintStyle: TextStyle( color: Colors.black),
-                                       suffixIcon: GestureDetector( onTap: () => Navigator.pop(context) , child: Icon(Icons.search, color: Colors.black,))
-                                  ),
-                                  style: TextStyle(fontSize: 13.0, color: Colors.black),
-                                  controller: _nameController,
-                                  onChanged: (value) {
-                                    onSearch(value) ;
-                                    print('search:$value');
-                                  }
-                                )
+                                    decoration: InputDecoration(
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        contentPadding: EdgeInsets.only(
+                                            top: 5, bottom: 5, left: 15),
+                                        //border: InputBorder.none,
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color(0xFFF7F7FB),
+                                              width: 0.5),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color(0xFFF7F7FB),
+                                              width: 0.5),
+                                        ),
+                                        hintText: 'Search with topic',
+                                        hintStyle:
+                                            TextStyle(color: Colors.black),
+                                        suffixIcon: GestureDetector(
+                                            onTap: () => Navigator.pop(context),
+                                            child: Icon(
+                                              Icons.search,
+                                              color: Colors.black,
+                                            ))),
+                                    style: TextStyle(
+                                        fontSize: 13.0, color: Colors.black),
+                                    controller: _nameController,
+                                    onChanged: (value) {
+                                      onSearch(value);
+                                      print('search:$value');
+                                    })
                               ],
                             ),
                           ),
@@ -224,12 +257,10 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                     });
               },
               child: SvgPicture.asset("assets/images/search.svg",
-                  color: Colors.black
-              ),
+                  color: Colors.black),
             ),
           ),
         ],
-
         elevation: 0,
       ),
       body: ListView(
@@ -241,16 +272,15 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Container(color: Colors.grey , height: 0.3),
+                  Container(color: Colors.grey, height: 0.3),
                   SizedBox(
                     height: 25.0,
                   ),
-                 CategoryList(lessons: filteredCategory)
+                  CategoryList(lessons: filteredCategory)
                 ],
               ),
             ),
           )
-
         ],
       ),
     );
@@ -260,8 +290,6 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }
-
-
 
 class CategoryList extends StatelessWidget {
   const CategoryList({
@@ -274,50 +302,54 @@ class CategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-     physics: ScrollPhysics(),
-     shrinkWrap: true,
-     itemCount: lessons.length,
-     itemBuilder: (BuildContext context, int index) {
-       return GestureDetector(
-         onTap: () {
-           Navigator.push(
-             context,
-             MaterialPageRoute(
-                 builder: (context) => CategoriesScreen(
-                   lessons: lessons,
-                   type: lessons[index]['type'],
-                   form: lessons[index]['form'],
-                   paid: lessons[index]['status']
-                 )
-             ),
-           );
-         },
-         child: Card(
-           color: Color(lessons[index]['color']) ,
-           shape: RoundedRectangleBorder(
-             borderRadius: BorderRadius.only(
-                 bottomLeft: Radius.circular(5),
-                 bottomRight: Radius.circular(5),
-                 topLeft: Radius.circular(5),
-                 topRight: Radius.circular(5)
-
-             ),
-           ),
-           child: Padding(
-             padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 25.0),
-             child: Column(
-               crossAxisAlignment: CrossAxisAlignment.start,
-               children: <Widget>[
-                 Text('${lessons[index]['name']}', style: TextStyle(color: Colors.white, fontSize: 12),),
-                 SizedBox(height: 5,),
-                 Text('${lessons[index]['type']}', style: TextStyle( fontSize: 20.0, color: Colors.white, fontWeight: FontWeight.w500) ),
-               ],
-             ),
-           ),
-         ),
-       );
-     });
+        physics: ScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: lessons.length,
+        itemBuilder: (BuildContext context, int index) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CategoriesScreen(
+                        lessons: lessons,
+                        type: lessons[index]['type'],
+                        form: lessons[index]['form'],
+                        paid: lessons[index]['status'])),
+              );
+            },
+            child: Card(
+              color: Color(lessons[index]['color']),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(5),
+                    bottomRight: Radius.circular(5),
+                    topLeft: Radius.circular(5),
+                    topRight: Radius.circular(5)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 25.0, horizontal: 25.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      '${lessons[index]['name']}',
+                      style: TextStyle(color: Colors.white, fontSize: 12),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text('${lessons[index]['type']}',
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500)),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 }
-
-

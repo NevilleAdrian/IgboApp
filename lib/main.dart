@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:nkuzi_igbo/screens/auth/login_screen.dart';
+import 'package:nkuzi_igbo/screens/auth/password_reset_screen.dart';
+import 'package:nkuzi_igbo/screens/auth/reset_screen.dart';
+import 'package:nkuzi_igbo/screens/auth/reset_success.dart';
+import 'package:nkuzi_igbo/screens/auth/signup_screen.dart';
+import 'package:nkuzi_igbo/screens/auth/welcome_screen.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
-import 'package:nkuzi_igbo/screens/home_screen.dart';
-import 'package:nkuzi_igbo/screens/login_screen.dart';
 import 'package:nkuzi_igbo/screens/registration_screen.dart';
 import 'package:nkuzi_igbo/screens/splash_screen.dart';
-import 'package:nkuzi_igbo/screens/welcome_screen.dart';
 
 import 'utils/theme_data.dart';
 
@@ -22,13 +25,16 @@ class MyApp extends StatelessWidget {
       initialRoute: SplashScreen.id,
       theme: myThemeData(context),
       routes: {
-        WelcomeScreen.id : (context) => WelcomeScreen(),
-        LoginScreen.id : (context) => LoginScreen(),
-        RegistrationScreen.id : (context) => RegistrationScreen(),
-        HomePage.id : (context) => HomePage(),
-        SplashScreen.id : (context) => SplashScreen()
+        WelcomeScreen.id: (context) => WelcomeScreen(),
+        SignUpScreen.id: (context) => SignUpScreen(),
+        LoginScreen.id: (context) => LoginScreen(),
+        ResetScreen.id: (context) => ResetScreen(),
+        PasswordResetScreen.id: (context) => PasswordResetScreen(),
+        ResetSuccess.id: (context) => ResetSuccess(),
+        RegistrationScreen.id: (context) => RegistrationScreen(),
+        HomePage.id: (context) => HomePage(),
+        SplashScreen.id: (context) => SplashScreen(),
       },
     );
   }
 }
-

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
 
@@ -6,7 +7,7 @@ ThemeData myThemeData(BuildContext context) {
     fontFamily: "Poppins",
     primaryColor: PRIMARY,
     accentColor: ACCENT,
-    buttonColor: PRIMARY,
+    buttonColor: kButtonColor,
     textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
     primaryTextTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
     accentTextTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
@@ -14,17 +15,18 @@ ThemeData myThemeData(BuildContext context) {
     backgroundColor: Colors.white,
 //    textTheme: TextTheme(bodyText2: TextStyle(color: Colors.black)),
     inputDecorationTheme: InputDecorationTheme(
-      fillColor: Color(0xFFF7F7FB),
-      filled: true,
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Color(0xFF4380FF), width: 0.5),
+      contentPadding: EdgeInsets.all(2.0),
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: kGoogleBorderColor, width: 1),
       ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Color(0xFFF7F7FB), width: 0.5),
+      enabledBorder: UnderlineInputBorder(
+        borderSide:
+            BorderSide(color: kGoogleBorderColor.withOpacity(0.3), width: 1),
       ),
     ),
+
     buttonTheme: ButtonThemeData(
-      buttonColor: Color(0xFFFF6D67),
+      buttonColor: kButtonColor,
       height: 50,
       // minWidth: double.infinity,
       textTheme: ButtonTextTheme.primary,
