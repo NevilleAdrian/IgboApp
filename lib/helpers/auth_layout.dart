@@ -34,6 +34,7 @@ class AuthLayout extends StatelessWidget {
                     color: Colors.black,
                     text: 'Continue with Google',
                     svgImage: 'google.svg',
+                    size: 20.0,
                   ),
                 ),
                 SizedBox(
@@ -45,6 +46,8 @@ class AuthLayout extends StatelessWidget {
                   child: ExternalLogin(
                     text: 'Continue with Facebook',
                     svgImage: 'facebook.svg',
+                    iconColor: Colors.white,
+                    size: 30.0,
                   ),
                 ),
                 SizedBox(
@@ -86,13 +89,21 @@ class ExternalLogin extends StatelessWidget {
   final String svgImage;
   final String text;
   final Color color;
-  const ExternalLogin({this.text, this.svgImage, this.color});
+  final Color iconColor;
+  final double size;
+  const ExternalLogin(
+      {this.text, this.svgImage, this.color, this.iconColor, this.size});
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        SvgPicture.asset('$kImageUrl/$svgImage'),
+        SvgPicture.asset(
+          '$kImageUrl/$svgImage',
+          height: size,
+          width: size,
+          color: iconColor,
+        ),
         SizedBox(
           width: 10.0,
         ),
