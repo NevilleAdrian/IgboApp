@@ -1,17 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nkuzi_igbo/screens/auth/welcome_screen.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
 
 class SplashScreen extends StatefulWidget {
-
   static String id = 'splash_screen';
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>  with SingleTickerProviderStateMixin  {
-
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
 
@@ -37,10 +38,9 @@ class _SplashScreenState extends State<SplashScreen>  with SingleTickerProviderS
     controller.addListener(() {
       setState(() {});
       print(controller.value);
-      if( controller.value == 1){
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (BuildContext context) => HomePage()),
-            ModalRoute.withName('/'));
+      if (controller.value == 1) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            WelcomeScreen.id, (Route<dynamic> route) => false);
       }
     });
   }
@@ -58,17 +58,28 @@ class _SplashScreenState extends State<SplashScreen>  with SingleTickerProviderS
         color: Colors.white,
 //      color: animation.value,
 //      animate: true,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Expanded(flex: 4, child: SvgPicture.asset("assets/images/logo.svg", height: controller.value * 100 , )),
-              Expanded(flex: 1,child: Text('Igbo Tutor Powered by Gtonia', style: TextStyle(color: Color(0XFFE20303), fontSize: 11),))
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(
+                flex: 4,
+                child: SvgPicture.asset(
+                  "assets/images/logo.svg",
+                  height: controller.value * 100,
+                )),
+            SizedBox(
+              width: double.infinity,
+            ),
+            Expanded(
+                flex: 1,
+                child: Text(
+                  'Igbo Tutor Powered by Gtonia',
+                  style: TextStyle(color: Color(0XFFE20303), fontSize: 11),
+                ))
+          ],
         ),
       ),
     );
-
   }
 }
