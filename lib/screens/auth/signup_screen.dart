@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:nkuzi_igbo/helpers/auth_layout.dart';
 import 'package:nkuzi_igbo/screens/auth/login_screen.dart';
-import 'package:nkuzi_igbo/screens/home_screen.dart';
 import 'package:nkuzi_igbo/ui_widgets/alt_auth_action.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
 
@@ -61,7 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   color: Colors.black,
                   fontWeight: FontWeight.w200,
                 ),
-                leadingText: 'Have an account?',
+                leadingText: 'Have an account? ',
                 actionText: 'Log in',
                 actionStyle: TextStyle(
                   decoration: TextDecoration.underline,

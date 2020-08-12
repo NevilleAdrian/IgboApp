@@ -40,7 +40,7 @@ class ResetSuccess extends StatelessWidget {
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         LoginScreen.id, (Route<dynamic> route) => false);
                   },
-                  child: Text('Request Reset Link'),
+                  child: Text('Login'),
                 ),
               ),
             ],

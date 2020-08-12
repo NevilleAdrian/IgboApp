@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.black,
                   fontWeight: FontWeight.w200,
                 ),
-                leadingText: 'New?',
+                leadingText: 'New? ',
                 actionText: 'Sign up',
                 actionStyle: TextStyle(decoration: TextDecoration.underline),
                 onTap: () {

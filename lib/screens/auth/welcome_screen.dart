@@ -70,7 +70,7 @@ class StartAuthBottom extends StatelessWidget {
           ),
           AltAuthAction(
             defaultStyle: kAuthTextSmall,
-            leadingText: 'Have an account?',
+            leadingText: 'Have an account? ',
             actionText: 'Log in',
             actionStyle:
                 kAuthTextSmall.copyWith(decoration: TextDecoration.underline),
