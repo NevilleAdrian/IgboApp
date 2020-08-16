@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nkuzi_igbo/helpers/auth_layout.dart';
+import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/auth/reset_screen.dart';
 import 'package:nkuzi_igbo/screens/auth/signup_screen.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
 import 'package:nkuzi_igbo/ui_widgets/alt_auth_action.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
+import 'package:provider/provider.dart';
 
 import '../home_screen.dart';
 
@@ -64,6 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.of(context).pushNamed(SignUpScreen.id);
                 },
               ),
+              Text(Provider.of<Auth>(context).token),
             ],
           ),
         )

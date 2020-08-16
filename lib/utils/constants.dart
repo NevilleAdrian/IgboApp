@@ -10,3 +10,16 @@ const TextStyle kTextHeavyWeight = TextStyle(fontWeight: FontWeight.w600);
 const String kImageUrl = 'assets/images';
 const TextStyle kAuthTextBig = TextStyle(color: kTextColor, fontSize: 25.0);
 const TextStyle kAuthTextSmall = TextStyle(color: kTextColor, fontSize: 15.0);
+
+//app url
+const String kAppAPIUrl = 'https://nkuziigbo.herokuapp.com';
+
+Map<String, String> _headers(String token) {
+  return {
+    'Content-type': 'application/json',
+    'Accept': 'application/json',
+    "Authorization": "Bearer $token"
+  };
+}
+
+const Function kHeaders = _headers;

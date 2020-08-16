@@ -29,6 +29,7 @@ dependencies:
   http: ^0.12.2
   audioplayers: ^0.15.1
   percent_indicator: ^2.1.5
+  provider: ^4.3.2
 
 
   # The following adds the Cupertino Icons font to your application.
