@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/settings.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -92,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         height: 20.0,
                       ),
                       Text(
-                        'Chisom Okoro',
+                        Auth.authProvider(context).user.name,
                         style: TextStyle(
                             fontWeight: FontWeight.w500, fontSize: 20.0),
                       )
