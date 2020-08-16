@@ -45,12 +45,14 @@ class StartAuthBottom extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 18.0),
       child: Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 62.0),
-            child: Text(
-              'Your Igbo Learning made easy',
-              style: kAuthTextBig,
-              textAlign: TextAlign.center,
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 62.0),
+              child: Text(
+                'Your Igbo Learning made easy',
+                style: kAuthTextBig,
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
           SizedBox(

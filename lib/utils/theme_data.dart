@@ -5,8 +5,8 @@ import 'package:nkuzi_igbo/utils/constants.dart';
 ThemeData myThemeData(BuildContext context) {
   return ThemeData(
     fontFamily: "Poppins",
-    primaryColor: PRIMARY,
-    accentColor: ACCENT,
+    primaryColor: kPrimary,
+    accentColor: kAccent,
     buttonColor: kButtonColor,
     textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
     primaryTextTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),

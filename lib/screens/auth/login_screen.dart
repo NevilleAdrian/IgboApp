@@ -6,10 +6,7 @@ import 'package:nkuzi_igbo/screens/auth/reset_screen.dart';
 import 'package:nkuzi_igbo/screens/auth/signup_screen.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
 import 'package:nkuzi_igbo/ui_widgets/alt_auth_action.dart';
-import 'package:nkuzi_igbo/utils/constants.dart';
-import 'package:provider/provider.dart';
-
-import '../home_screen.dart';
+import 'package:nkuzi_igbo/ui_widgets/loading_button.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -18,24 +15,58 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  String _email;
+  String _password;
+  bool _loading = false;
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return AuthLayout(
       title: 'Login',
       children: <Widget>[
-        LoginForm(),
+        Form(
+          key: _formKey,
+          child: LoginForm(
+            onEmailChange: (value) {
+              setState(() {
+                _email = value;
+              });
+            },
+            onPasswordChange: (value) {
+              setState(() {
+                _password = value;
+              });
+            },
+          ),
+        ),
         SizedBox(
           height: 30.0,
         ),
         Container(
           width: double.infinity,
-          child: FlatButton(
-            color: kButtonColor,
-            onPressed: () {
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  HomePage.id, (Route<dynamic> route) => false);
+          child: LoadingButton(
+            text: 'Sign up',
+            isLoading: _loading,
+            action: () async {
+              if (_formKey.currentState.validate()) {
+                setState(() {
+                  _loading = true;
+                });
+                await Auth.authProvider(context)
+                    .loginUser(_email, _password)
+                    .then((_) => setState(() {
+                          _loading = false;
+                        }))
+                    .catchError((error) {
+                  setState(() {
+                    _loading = false;
+                  });
+                  throw Exception(error);
+                });
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    HomePage.id, (Route<dynamic> route) => false);
+              }
             },
-            child: Text('Login'),
           ),
         ),
         Padding(
@@ -66,7 +97,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.of(context).pushNamed(SignUpScreen.id);
                 },
               ),
-              Text(Provider.of<Auth>(context).token),
             ],
           ),
         )
@@ -76,6 +106,9 @@ class _LoginScreenState extends State<LoginScreen> {
 }
 
 class LoginForm extends StatelessWidget {
+  final Function onEmailChange;
+  final Function onPasswordChange;
+  LoginForm({this.onEmailChange, this.onPasswordChange});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -88,13 +121,13 @@ class LoginForm extends StatelessWidget {
             labelText: 'Email',
           ),
           onChanged: (value) {
-            print(value);
+            onEmailChange(value);
           },
           validator: (value) {
             if (value.isEmpty) {
               return 'Please enter some text';
             }
-            return value;
+            return null;
           },
         ),
         SizedBox(
@@ -109,13 +142,13 @@ class LoginForm extends StatelessWidget {
             labelText: 'Password',
           ),
           onChanged: (value) {
-            print(value);
+            onPasswordChange(value);
           },
           validator: (value) {
             if (value.isEmpty) {
               return 'Please enter some text';
             }
-            return value;
+            return null;
           },
         ),
       ],

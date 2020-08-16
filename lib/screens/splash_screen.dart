@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/auth/welcome_screen.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
 
@@ -39,8 +40,13 @@ class _SplashScreenState extends State<SplashScreen>
       setState(() {});
       print(controller.value);
       if (controller.value == 1) {
-        Navigator.of(context).pushNamedAndRemoveUntil(
-            WelcomeScreen.id, (Route<dynamic> route) => false);
+        if (Auth.authProvider(context).user == null) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              WelcomeScreen.id, (Route<dynamic> route) => false);
+        } else {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              HomePage.id, (Route<dynamic> route) => false);
+        }
       }
     });
   }

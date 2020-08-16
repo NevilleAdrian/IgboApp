@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-const Color PRIMARY = Color(0xFFFF6D67);
-const Color ACCENT = Color(0xFF4380FF);
+const Color kPrimary = Color(0xFFFF6D67);
+const Color kAccent = Color(0xFF4380FF);
 const Color kButtonColor = Color(0xFFF21600);
 const Color kGoogleBorderColor = Color(0xFF70707024);
 const Color kFacebookColor = Color(0xFF1976D2);
@@ -12,7 +12,7 @@ const TextStyle kAuthTextBig = TextStyle(color: kTextColor, fontSize: 25.0);
 const TextStyle kAuthTextSmall = TextStyle(color: kTextColor, fontSize: 15.0);
 
 //app url
-const String kAppAPIUrl = 'https://nkuziigbo.herokuapp.com';
+const String kAppAPIUrl = 'https://nkuziigbo.herokuapp.com/igboapp/api';
 
 Map<String, String> _headers(String token) {
   return {
@@ -22,4 +22,4 @@ Map<String, String> _headers(String token) {
   };
 }
 
-const Function kHeaders = _headers;
+const kHeaders = _headers;

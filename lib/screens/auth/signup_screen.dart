@@ -1,9 +1,13 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nkuzi_igbo/helpers/auth_layout.dart';
+import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/auth/login_screen.dart';
 import 'package:nkuzi_igbo/ui_widgets/alt_auth_action.dart';
+import 'package:nkuzi_igbo/ui_widgets/loading_button.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
+import 'package:provider/provider.dart';
 
 import '../home_page.dart';
 
@@ -14,24 +18,64 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  String _name;
+  String _email;
+  String _password;
+  bool _loading = false;
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return AuthLayout(
       title: 'Create account',
       children: <Widget>[
-        SignUpForm(),
+        Form(
+          key: _formKey,
+          child: SignUpForm(
+            onEmailChange: (value) {
+              setState(() {
+                _email = value;
+              });
+            },
+            onNameChange: (value) {
+              setState(() {
+                _name = value;
+              });
+            },
+            onPasswordChange: (value) {
+              setState(() {
+                _password = value;
+              });
+            },
+          ),
+        ),
         SizedBox(
           height: 30.0,
         ),
         Container(
           width: double.infinity,
-          child: FlatButton(
-            color: kButtonColor,
-            onPressed: () {
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  HomePage.id, (Route<dynamic> route) => false);
+          child: LoadingButton(
+            text: 'Sign up',
+            isLoading: _loading,
+            action: () async {
+              if (_formKey.currentState.validate()) {
+                setState(() {
+                  _loading = true;
+                });
+                await Auth.authProvider(context)
+                    .registerUser(_name, _email, _password)
+                    .then((_) => setState(() {
+                          _loading = false;
+                        }))
+                    .catchError((error) {
+                  setState(() {
+                    _loading = false;
+                  });
+                  throw Exception(error);
+                });
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    HomePage.id, (Route<dynamic> route) => false);
+              }
             },
-            child: Text('Sign up'),
           ),
         ),
         Padding(
@@ -77,6 +121,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
 }
 
 class SignUpForm extends StatelessWidget {
+  final Function onNameChange;
+  final Function onEmailChange;
+  final Function onPasswordChange;
+  SignUpForm({this.onEmailChange, this.onNameChange, this.onPasswordChange});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -89,13 +137,13 @@ class SignUpForm extends StatelessWidget {
             labelText: 'Email',
           ),
           onChanged: (value) {
-            print(value);
+            onEmailChange(value);
           },
           validator: (value) {
             if (value.isEmpty) {
               return 'Please enter some text';
             }
-            return value;
+            return null;
           },
         ),
         SizedBox(
@@ -109,13 +157,13 @@ class SignUpForm extends StatelessWidget {
             labelText: 'Name',
           ),
           onChanged: (value) {
-            print(value);
+            onNameChange(value);
           },
           validator: (value) {
             if (value.isEmpty) {
               return 'Please enter some text';
             }
-            return value;
+            return null;
           },
         ),
         SizedBox(
@@ -130,13 +178,15 @@ class SignUpForm extends StatelessWidget {
             labelText: 'Password',
           ),
           onChanged: (value) {
-            print(value);
+            onPasswordChange(value);
           },
           validator: (value) {
             if (value.isEmpty) {
               return 'Please enter some text';
+            } else if (value.length < 6) {
+              return 'Password should be at least six characters';
             }
-            return value;
+            return null;
           },
         ),
       ],
