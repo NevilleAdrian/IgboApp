@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/models/app_model.dart';
 import 'package:nkuzi_igbo/models/user_model.dart';
-import 'package:nkuzi_igbo/providers/app_data_provider.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/repository/hive_repository.dart';
 import 'package:nkuzi_igbo/screens/auth/welcome_screen.dart';
@@ -54,8 +53,6 @@ class _SplashScreenState extends State<SplashScreen>
       user = _hiveRepository.get<User>(key: 'user', name: kUserName);
       appModel =
           _hiveRepository.get<AppModel>(key: 'appModel', name: kAppDataName);
-      print('user box is $user');
-      print('app box is $appModel');
     } catch (ex) {
       print(ex);
     }
