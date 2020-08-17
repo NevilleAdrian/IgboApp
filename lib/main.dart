@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nkuzi_igbo/providers/auth_provider.dart';
+import 'package:nkuzi_igbo/models/app_model.dart';
+import 'package:nkuzi_igbo/models/user_model.dart';
 import 'package:nkuzi_igbo/providers/provider_list.dart';
 import 'package:nkuzi_igbo/screens/auth/login_screen.dart';
 import 'package:nkuzi_igbo/screens/auth/password_reset_screen.dart';
@@ -11,15 +13,36 @@ import 'package:nkuzi_igbo/screens/home_page.dart';
 import 'package:nkuzi_igbo/screens/registration_screen.dart';
 import 'package:nkuzi_igbo/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
-
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart' as pp;
 import 'utils/theme_data.dart';
 
-void main() {
+void main() async {
+  await _openHive();
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+_openHive() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  var appDocDir = await pp.getApplicationDocumentsDirectory();
+  Hive.init(appDocDir.path);
+  Hive.registerAdapter(UserAdapter());
+  Hive.registerAdapter(AppModelAdapter());
+}
+
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void dispose() {
+    Hive.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

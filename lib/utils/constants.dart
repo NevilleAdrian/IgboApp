@@ -8,7 +8,7 @@ const Color kFacebookColor = Color(0xFF1976D2);
 const Color kTextColor = Colors.white;
 const TextStyle kTextHeavyWeight = TextStyle(fontWeight: FontWeight.w600);
 const String kImageUrl = 'assets/images';
-const TextStyle kAuthTextBig = TextStyle(color: kTextColor, fontSize: 25.0);
+const TextStyle kAuthTextBig = TextStyle(color: kTextColor, fontSize: 23.0);
 const TextStyle kAuthTextSmall = TextStyle(color: kTextColor, fontSize: 15.0);
 
 //app url
@@ -23,3 +23,6 @@ Map<String, String> _headers(String token) {
 }
 
 const kHeaders = _headers;
+
+const String kUserName = 'user';
+const String kAppDataName = 'appData';
