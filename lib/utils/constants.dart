@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-const Color kPrimary = Color(0xFFFF6D67);
+const Color kPrimary = Color(0xFFF21600);
 const Color kAccent = Color(0xFF4380FF);
-const Color kButtonColor = Color(0xFFF21600);
+const Color kButtonColor = kPrimary;
 const Color kGoogleBorderColor = Color(0xFF70707024);
 const Color kFacebookColor = Color(0xFF1976D2);
 const Color kTextColor = Colors.white;
