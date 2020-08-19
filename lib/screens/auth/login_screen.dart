@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Container(
           width: double.infinity,
           child: LoadingButton(
-            text: 'Sign up',
+            text: 'Log in',
             isLoading: _loading,
             action: () async {
               if (_formKey.currentState.validate()) {

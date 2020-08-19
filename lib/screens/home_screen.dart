@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/categories_screen.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
@@ -13,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen>
     with AutomaticKeepAliveClientMixin {
   final _nameController = TextEditingController();
   String searchText;
+  List<dynamic> lesson;
   List<Map<String, dynamic>> lessons = [
     {
       "id": "1",
@@ -160,7 +163,10 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
-    filteredCategory = lessons;
+    lesson = Provider.of<Auth>(context, listen: false).category;
+    filteredCategory = lesson;
+    print('filter:$filteredCategory');
+     print('mylesson: ${lesson[0]['color']}');
     super.initState();
   }
 
@@ -172,16 +178,12 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   List onFilter(String term) {
-    return lessons
-        .where((element) =>
-            element['name'].toLowerCase().contains(term.toLowerCase()) ||
-            element['type'].toLowerCase().contains(term.toLowerCase()))
-        .toList();
+    return lesson.where((element) => element['name'].toLowerCase().contains(term.toLowerCase())
+        || element['description'].toLowerCase().contains(term.toLowerCase()).toList());
   }
 
   Widget build(BuildContext context) {
     super.build(context);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -297,7 +299,7 @@ class CategoryList extends StatelessWidget {
     @required this.lessons,
   }) : super(key: key);
 
-  final List<Map<String, Object>> lessons;
+  final List<dynamic> lessons;
 
   @override
   Widget build(BuildContext context) {
@@ -312,14 +314,13 @@ class CategoryList extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => CategoriesScreen(
-                        lessons: lessons,
-                        type: lessons[index]['type'],
-                        form: lessons[index]['form'],
-                        paid: lessons[index]['status'])),
+                        lessons: lessons[index]['sub_categories'],
+                        description:  lessons[index]['description']
+                      )),
               );
             },
             child: Card(
-              color: Color(lessons[index]['color']),
+              color: Color(int.parse(lessons[index]['color'])),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(5),
@@ -340,7 +341,7 @@ class CategoryList extends StatelessWidget {
                     SizedBox(
                       height: 5,
                     ),
-                    Text('${lessons[index]['type']}',
+                    Text('${lessons[index]['description']}',
                         style: TextStyle(
                             fontSize: 20.0,
                             color: Colors.white,

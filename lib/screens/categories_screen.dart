@@ -4,11 +4,9 @@ import 'package:nkuzi_igbo/screens/settings.dart';
 import 'package:nkuzi_igbo/screens/continue_screen.dart';
 
 class CategoriesScreen extends StatefulWidget {
-  CategoriesScreen({this.lessons, this.type, this.form, this.paid});
-  final List<Map<String, Object>> lessons;
-  final String type;
-  final String form;
-  final String paid;
+  CategoriesScreen({this.lessons, this.description});
+  final List<dynamic> lessons;
+  final String description;
 
   @override
   _CategoriesScreenState createState() => _CategoriesScreenState();
@@ -39,7 +37,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       )),
                 ),
                 Container(
-                  height: 680,
+                  height: MediaQuery.of(context).size.height * 0.85,
                   width: MediaQuery.of(context).size.width,
                   decoration: new BoxDecoration(
                       color: Colors.white,
@@ -356,6 +354,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   }
 
   @override
+  void initState() {
+    print('cat${widget.lessons}');
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -385,19 +389,19 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   padding:
                       EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
                   child: Text(
-                    '${widget.type}',
+                    '${widget.description}',
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 25.0,
                         fontWeight: FontWeight.w600),
                   )),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
+                padding: EdgeInsets.symmetric(horizontal: 25.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     SizedBox(
-                      height: 20.0,
+                      height: 15.0,
                     ),
                     Text(
                       'Beginner',
@@ -419,26 +423,19 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                   children: <Widget>[
                                     GestureDetector(
                                       onTap: () {
-                                        widget.lessons[index]['status'] ==
-                                                "not paid"
+                                        widget.lessons[index]
+                                                    ['premium_content'] ==
+                                                false
                                             ? _modalBottomSheetMenu()
                                             : Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         ContinueList(
-                                                          lessons:
-                                                              widget.lessons[
-                                                                      index]
-                                                                  ['questions'],
-                                                          id: widget.lessons[
-                                                              index]['id'],
-                                                          form: widget.lessons[
-                                                              index]['form'],
-                                                          type: widget.lessons[
-                                                              index]['type'],
-                                                          time: widget.lessons[
-                                                              index]['time'],
+                                                          lessons: widget.lessons[index]['study'],
+                                                          form: widget.lessons[index]['form'],
+                                                          type: widget.lessons[index]['type'],
+                                                          time: widget.lessons[index]['time'],
                                                         )),
                                               );
                                       },
@@ -466,8 +463,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                           Alignment.topRight,
                                                       children: <Widget>[
                                                         widget.lessons[index][
-                                                                    'status'] ==
-                                                                'paid'
+                                                                    'premium_content'] ==
+                                                                true
                                                             ? Positioned(
                                                                 right: -2,
                                                                 top: 9,
@@ -512,8 +509,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                   ),
                                                 ],
                                               ),
-                                              widget.lessons[index]['status'] ==
-                                                      "not paid"
+                                              widget.lessons[index]
+                                                          ['premium_content'] ==
+                                                      false
                                                   ? Container(
                                                       child: SvgPicture.asset(
                                                           "assets/images/padlock.svg"),
@@ -568,28 +566,22 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                   children: <Widget>[
                                     GestureDetector(
                                       onTap: () {
-                                        widget.lessons[index]['status'] ==
-                                                "paid"
-                                            ? Navigator.push(
+                                        widget.lessons[index]
+                                                    ['premium_content'] ==
+                                                true
+                                            ? _modalBottomSheetMenu()
+                                            : Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         ContinueList(
-                                                          lessons:
-                                                              widget.lessons[
-                                                                      index]
-                                                                  ['questions'],
-                                                          id: widget.lessons[
-                                                              index]['id'],
-                                                          form: widget.lessons[
-                                                              index]['form'],
-                                                          type: widget.lessons[
-                                                              index]['type'],
-                                                          time: widget.lessons[
-                                                              index]['time'],
+                                                          lessons: widget.lessons[index]['study'],
+                                                          form: widget.lessons[index]['form'],
+                                                          type: widget.lessons[index]['type'],
+                                                          time: widget.lessons[index]['time'],
                                                         )),
-                                              )
-                                            : '';
+                                              );
+                                        '';
                                       },
                                       child: Column(
                                         children: <Widget>[
@@ -617,8 +609,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                             Alignment.topRight,
                                                         children: <Widget>[
                                                           widget.lessons[index][
-                                                                      'status'] ==
-                                                                  'paid'
+                                                                      'premium_content'] ==
+                                                                  true
                                                               ? Positioned(
                                                                   right: -2,
                                                                   top: 9,
@@ -664,9 +656,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                     ),
                                                   ],
                                                 ),
-                                                widget.lessons[index]
-                                                            ['status'] ==
-                                                        'not paid'
+                                                widget.lessons[index][
+                                                            'premium_content'] ==
+                                                        false
                                                     ? Container(
                                                         child: SvgPicture.asset(
                                                             "assets/images/padlock.svg"),
@@ -722,9 +714,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                   children: <Widget>[
                                     GestureDetector(
                                       onTap: () {
-                                        widget.lessons[index]['status'] ==
-                                                "paid"
-                                            ? Navigator.push(
+                                        widget.lessons[index]
+                                                    ['premium_content'] ==
+                                                false
+                                            ? _modalBottomSheetMenu()
+                                            : Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
@@ -733,8 +727,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                               widget.lessons[
                                                                       index]
                                                                   ['questions'],
-                                                          id: widget.lessons[
-                                                              index]['id'],
                                                           form: widget.lessons[
                                                               index]['form'],
                                                           type: widget.lessons[
@@ -742,8 +734,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                           time: widget.lessons[
                                                               index]['time'],
                                                         )),
-                                              )
-                                            : '';
+                                              );
                                       },
                                       child: Column(
                                         children: <Widget>[
@@ -765,9 +756,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                       backgroundImage: NetworkImage(
                                                           'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'),
                                                       child: widget.lessons[
-                                                                      index]
-                                                                  ['status'] ==
-                                                              'paid'
+                                                                      index][
+                                                                  'premium_content'] ==
+                                                              true
                                                           ? Stack(
                                                               overflow: Overflow
                                                                   .visible,
@@ -822,8 +813,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                 ),
                                                 Container(
                                                     child: widget.lessons[index]
-                                                                ['status'] ==
-                                                            'not paid'
+                                                                [
+                                                                'premium_content'] ==
+                                                            false
                                                         ? SvgPicture.asset(
                                                             "assets/images/padlock.svg")
                                                         : SizedBox(

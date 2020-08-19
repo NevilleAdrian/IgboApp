@@ -18,10 +18,26 @@ class NetworkHelper {
     return await authRequest(body, '$kAppAPIUrl/auth/register');
   }
 
+  Future<dynamic> getCategory() async {
+    return await getRequest('$kAppAPIUrl/category/appflow');
+  }
+
+  Future<dynamic> getRequest( String url) async {
+    var response = await http.get(url);
+    print(response.body);
+    var decoded = jsonDecode(response.body);
+    if (response.statusCode.toString().startsWith('2')) {
+      print(decoded);
+      return decoded;
+    } else {
+      throw Exception(response.reasonPhrase);
+    }
+  }
+
+
   Future<dynamic> authRequest(Map body, String url) async {
     print(body);
-    var response =
-        await http.post(url, headers: kHeaders(null), body: json.encode(body));
+    var response = await http.post(url, headers: kHeaders(null), body: json.encode(body));
     print(response.body);
     var decoded = jsonDecode(response.body);
     if (response.statusCode.toString().startsWith('2')) {

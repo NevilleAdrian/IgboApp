@@ -3,10 +3,11 @@ import 'package:nkuzi_igbo/screens/home_page.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class ResultScreen extends StatefulWidget {
-  ResultScreen({this.lessons, this.percentage});
+  ResultScreen({this.lessons, this.percentage, this.score});
 
-  final List<Map<String, Object>> lessons;
+  final List<dynamic> lessons;
   final List percentage;
+  final int score;
 
   @override
   _ResultScreenState createState() => _ResultScreenState();
@@ -15,8 +16,11 @@ class ResultScreen extends StatefulWidget {
 class _ResultScreenState extends State<ResultScreen> {
 
   double percent() {
-    double p = (widget.percentage[0]/widget.lessons.length) * 100;
+    double p = (widget.score/widget.percentage.length) * 100;
     return p;
+  }
+  double score() {
+  return  widget.score/widget.percentage.length;
   }
 
   String pass() {
@@ -30,8 +34,8 @@ class _ResultScreenState extends State<ResultScreen> {
 
   @override
   void initState() {
-    print('newlesson: ${widget.lessons}');
-    print('percent:${widget.percentage}');
+    print('newlesson: ${widget.score}');
+    print('percent:${widget.percentage.length}');
     super.initState();
   }
   @override
@@ -63,12 +67,11 @@ class _ResultScreenState extends State<ResultScreen> {
                           SizedBox(height: 20,),
                           CircularPercentIndicator(
                             radius: 170.0,
-                            lineWidth: 16.0,
+                            lineWidth: 14.0,
                             animation: true,
-                            percent: percent()/100,
-                            center: new Text( percent().toString(),
-                              style:
-                              new TextStyle(fontWeight: FontWeight.w600, fontSize: 30.0, color: Colors.white),
+                            percent: score(),
+                            center: new Text( '${percent().toStringAsFixed(0)}%',
+                              style: new TextStyle(fontWeight: FontWeight.w600, fontSize: 30.0, color: Colors.white),
                             ),
                             circularStrokeCap: CircularStrokeCap.round,
                             linearGradient: LinearGradient(
@@ -85,7 +88,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               children: <Widget>[
                                 Column(
                                   children: <Widget>[
-                                    Text('${widget.percentage[0]}', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 40, )),
+                                    Text('${widget.score}', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 40, )),
                                     Text('Words learned', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300, fontSize: 18, ))
                                   ],
                                 ),
@@ -95,7 +98,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
                                 Column(
                                   children: <Widget>[
-                                    Text('${widget.percentage[0]}', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 40, )),
+                                    Text('${widget.score}', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 40, )),
                                     Text('Total Points', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300, fontSize: 18, ))
                                   ],
                                 ),

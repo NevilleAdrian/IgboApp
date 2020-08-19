@@ -1,4 +1,5 @@
 import 'package:audioplayers/audio_cache.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -10,7 +11,7 @@ import 'package:nkuzi_igbo/screens/result_page.dart';
 
 class QuizScreen extends StatefulWidget {
   QuizScreen({this.lessons});
-  final List<Map<String, Object>> lessons;
+  final List<dynamic> lessons;
 
   @override
   _QuizScreenState createState() => _QuizScreenState();
@@ -20,8 +21,11 @@ class _QuizScreenState extends State<QuizScreen> {
   double getWidth(BuildContext context, double width) {
     return MediaQuery.of(context).size.width * 0.5 * width;
   }
-
+  bool correctAnswer;
+  bool correct;
   int number = 0;
+  int testNumber =  0;
+  int results = 0;
   double figure;
   bool next = false;
   bool _isVisible = true;
@@ -77,24 +81,59 @@ class _QuizScreenState extends State<QuizScreen> {
 
   bool dismiss = false;
 
-  bool correctAnswer() {
-    String checkAnswerA = clickedA == true ? optionA : null;
-    String checkAnswerB = clickedB == true ? optionB : null;
-    String checkAnswerC = clickedC == true ? optionC : null;
-    String checkAnswerD = clickedD == true ? optionD : null;
+  String checkAnswerA;
+  String checkAnswerB;
+  String checkAnswerC;
+  String checkAnswerD;
 
-    if (widget.lessons[number]['correctOption'] == checkAnswerA) {
-      return true;
-    } else if (widget.lessons[number]['correctOption'] == checkAnswerB) {
-      return true;
-    } else if (widget.lessons[number]['correctOption'] == checkAnswerC) {
-      return true;
-    } else if (widget.lessons[number]['correctOption'] == checkAnswerD) {
-      return true;
-    } else {
-      return false;
+//  bool correctAnswer() {
+//   checkAnswerA = clickedA == true ? optionA : null;
+//   checkAnswerB = clickedB == true ? optionB : null;
+//   checkAnswerC = clickedC == true ? optionC : null;
+//   checkAnswerD = clickedD == true ? optionD : null;
+//
+//    if (checkAnswerA == widget.lessons[number]['test'][testNumber]['correctOption']) {
+//      return true;
+//    }
+//   else if ( checkAnswerB == widget.lessons[number]['test'][testNumber]['correctOption']) {
+//      return true;
+//    }
+//   else if ( checkAnswerC == widget.lessons[number]['test'][testNumber]['correctOption']) {
+//      return true;
+//    }
+//   else if (checkAnswerD == widget.lessons[number]['test'][testNumber]['correctOption']) {
+//      return true;
+//    }
+//    else {
+//      return false;
+//    }
+//  }
+
+
+  void checkAnswer(String userPickedAnswer) {
+    print('userPickedAnswer $userPickedAnswer');
+   print("correctOptionss:${widget.lessons[number]['test'][testNumber]['correctOption']}");
+
+    if(userPickedAnswer == widget.lessons[number]['test'][testNumber]['correctOption']){
+      correctAnswer = true;
+    }
+    else {
+      correctAnswer = false;
     }
   }
+
+  void checkAnswer2(String userPickedAnswer) {
+    print('userPickedAnswer $userPickedAnswer');
+    print("correctOptionss:${widget.lessons[number]['test'][testNumber]['correctOption']}");
+
+    if(userPickedAnswer == widget.lessons[number]['test'][testNumber]['correctOption']){
+      correct = true;
+    }
+    else {
+      correct = false;
+    }
+  }
+
 
   String text1;
   String text2;
@@ -106,22 +145,28 @@ class _QuizScreenState extends State<QuizScreen> {
   bool opt3 = false;
   bool opt4 = false;
 
-  bool correct() {
-    if (widget.lessons[number]['correctOption'] == text1) {
-      return true;
-    } else if (widget.lessons[number]['correctOption'] == text2) {
-      return true;
-    } else if (widget.lessons[number]['correctOption'] == text3) {
-      return true;
-    } else if (widget.lessons[number]['correctOption'] == text4) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  bool show = true;
+
+//  bool correct() {
+//    if ( widget.lessons[number]['test'][testNumber]['correctOption'] == text1) {
+//      return true;
+//    }
+//    if ( widget.lessons[number]['test'][testNumber]['correctOption'] == text2) {
+//      return true;
+//    }
+//    if ( widget.lessons[number]['test'][testNumber]['correctOption']== text3) {
+//      return true;
+//    }
+//    if ( widget.lessons[number]['test'][testNumber]['correctOption'] == text4) {
+//      return true;
+//    }
+//    else {
+//      return false;
+//    }
+//  }
 
   bool isFinished() {
-    if (number >= widget.lessons.length - 1) {
+    if (number >= widget.lessons.length - 1 && testNumber >= widget.lessons[number]['test'].length - 1) {
       return true;
     } else {
       return false;
@@ -144,7 +189,8 @@ class _QuizScreenState extends State<QuizScreen> {
       MaterialPageRoute(
           builder: (context) => ResultScreen(
                 lessons: widget.lessons,
-                percentage: _list,
+                percentage: result,
+                score: results
               )),
     );
   }
@@ -154,11 +200,12 @@ class _QuizScreenState extends State<QuizScreen> {
         context: context,
         isDismissible: false,
         builder: (builder) {
-          return correctAnswer() == true
+          return
+            widget.lessons[number]['test'].length != 0 ?
+            correctAnswer == true
               ? Container(
                   height: 200.0,
-                  color: Color(0XFF66C109).withOpacity(
-                      0.2), //could change this to Color(0xFF737373),
+                  color: Color(0XFF66C109).withOpacity(0.2),
                   //so you don't have to change MaterialApp canvasColor
                   child: new Container(
                       decoration: new BoxDecoration(
@@ -194,14 +241,28 @@ class _QuizScreenState extends State<QuizScreen> {
                                     onPressed: () {
                                       resultPage();
                                     },
-                                    color: Color(0XFF9D1000),
-                                    child: Text('Continue'),
+                                    color: Color(0XFF66C109),
+                                    child: Text('Continue', style: TextStyle(color: Colors.white),),
                                   )
-                                : FlatButton(
+                                :
+                            FlatButton(
                                     onPressed: () {
                                       setState(() {
-                                        number++;
-                                        next = false;
+                                        if(widget.lessons[number]['test'] != [] || widget.lessons[number]['test'].length != 0) {
+                                          if (testNumber < widget.lessons[number]['test'].length - 1) {
+                                            testNumber++;
+                                          }
+                                          else if((testNumber) >= widget.lessons[number]['test'].length - 1){
+                                            number ++;
+                                            next = false;
+                                            testNumber = 0;
+                                          }
+                                        }
+                                        else {
+                                          next = true;
+                                        }
+
+                                        print('testNum: $testNumber');
                                         clickedA = false;
                                         clickedB = false;
                                         clickedC = false;
@@ -213,9 +274,10 @@ class _QuizScreenState extends State<QuizScreen> {
                                         print(
                                             'length:${widget.lessons.length}');
                                         print('finished: ${isFinished()}');
+
                                       });
                                     },
-                                    color: correctAnswer() == true
+                                    color: correctAnswer == true
                                         ? Color(0XFF4C9800)
                                         : Color(0XFF9D1000),
                                     child: Text('Continue'),
@@ -264,25 +326,37 @@ class _QuizScreenState extends State<QuizScreen> {
                                     color: Color(0XFF9D1000),
                                     child: Text('Continue'),
                                   )
-                                : FlatButton(
+                                :
+                            FlatButton(
                                     onPressed: () {
                                       setState(() {
-                                        number++;
-                                        next = false;
+                                        if(widget.lessons[number]['test'] != [] || widget.lessons[number]['test'].length != 0) {
+                                          if (testNumber < widget.lessons[number]['test'].length - 1) {
+                                            testNumber++;
+                                          }
+                                          else if((testNumber) >= widget.lessons[number]['test'].length - 1){
+                                            number ++;
+                                            next = false;
+                                            testNumber = 0;
+                                          }
+                                        }
+                                        else {
+                                          next = true;
+                                        }
+                                        print('testNum: $testNumber');
                                         clickedA = false;
                                         clickedB = false;
                                         clickedC = false;
                                         clickedD = false;
                                         Navigator.pop(context);
                                         print('number: $number');
-                                        print(
-                                            'length:${widget.lessons.length}');
+                                        print('length:${widget.lessons.length}');
                                         print('progree: ${progressBar()}');
                                         print('figure: $figure');
                                         print('finished: ${isFinished()}');
                                       });
                                     },
-                                    color: correctAnswer() == true
+                                    color: correctAnswer == true
                                         ? Color(0XFF4C9800)
                                         : Color(0XFF9D1000),
                                     child: Text('Continue'),
@@ -290,7 +364,8 @@ class _QuizScreenState extends State<QuizScreen> {
                           ],
                         ),
                       )),
-                );
+                )
+          : Container();
         });
   }
 
@@ -299,106 +374,121 @@ class _QuizScreenState extends State<QuizScreen> {
         context: context,
         isDismissible: false,
         builder: (builder) {
-          return correct() == true
-              ? Container(
-                  height: 200.0,
-                  color: Color(0XFF66C109).withOpacity(
-                      0.2), //could change this to Color(0xFF737373),
-                  //so you don't have to change MaterialApp canvasColor
-                  child: new Container(
-                      decoration: new BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: new BorderRadius.only(
-                              topLeft: const Radius.circular(10.0),
-                              topRight: const Radius.circular(10.0))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+          return
+            widget.lessons[number]['test'].length != 0 ?
+            correct == true
+                ? Container(
+              height: 200.0,
+              color: Color(0XFF66C109).withOpacity(
+                  0.2), //could change this to Color(0xFF737373),
+              //so you don't have to change MaterialApp canvasColor
+              child: new Container(
+                  decoration: new BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: new BorderRadius.only(
+                          topLeft: const Radius.circular(10.0),
+                          topRight: const Radius.circular(10.0))),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Row(
                           children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                SvgPicture.asset(
-                                  "assets/images/correct.svg",
-                                ),
-                                SizedBox(
-                                  width: 20.0,
-                                ),
-                                Text(
-                                  'Correct Answer',
-                                  style: TextStyle(
-                                      color: Color(0XFF66C109),
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 20.0),
-                                )
-                              ],
+                            SvgPicture.asset(
+                              "assets/images/correct.svg",
                             ),
-                            isFinished()
-                                ? FlatButton(
-                                    onPressed: () {
-                                      resultPage();
-                                    },
-                                    color: Color(0XFF9D1000),
-                                    child: Text('Continue'),
-                                  )
-                                : FlatButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        number++;
-                                        next = false;
-                                        opt1 = false;
-                                        opt2 = false;
-                                        opt3 = false;
-                                        opt4 = false;
-                                        print('numberss: $number');
-                                        print(
-                                            'length:${widget.lessons.length}');
-                                        Navigator.pop(context);
-                                        print('finished: ${isFinished()}');
-                                      });
-                                    },
-                                    color: correct() == true
-                                        ? Color(0XFF4C9800)
-                                        : Color(0XFF9D1000),
-                                    child: Text('Continue'),
-                                  ),
+                            SizedBox(
+                              width: 20.0,
+                            ),
+                            Text(
+                              'Correct Answer',
+                              style: TextStyle(
+                                  color: Color(0XFF66C109),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 20.0),
+                            )
                           ],
                         ),
-                      )),
-                )
-              : Container(
-                  height: 200.0,
-                  color: Color(
-                      0XFFFFF5EB), //could change this to Color(0xFF737373),
-                  //so you don't have to change MaterialApp canvasColor
-                  child: new Container(
-                      decoration: new BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: new BorderRadius.only(
-                              topLeft: const Radius.circular(10.0),
-                              topRight: const Radius.circular(10.0))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                            isFinished()
+                                ? FlatButton(
+                                    onPressed: () {
+                                      resultPage();
+                                    },
+                                    color: Color(0XFF66C109),
+                                    child: Text('Continue', style: TextStyle(color: Colors.white),),
+                                  )
+                                :
+                        FlatButton(
+                          onPressed: () {
+                            setState(() {
+                              if(widget.lessons[number]['test'] != [] || widget.lessons[number]['test'].length != 0) {
+                                if (testNumber < widget.lessons[number]['test'].length - 1) {
+                                  testNumber++;
+                                }
+                                else if((testNumber) >= widget.lessons[number]['test'].length - 1){
+                                  number ++;
+                                  next = false;
+                                  testNumber = 0;
+                                }
+                              }
+                              else {
+                                next = true;
+                              }
+                              print('testNum: $testNumber');
+                              opt1 = false;
+                              opt2 = false;
+                              opt3 = false;
+                              opt4 = false;
+                              print('numberss: $number');
+                              print(
+                                  'length:${widget.lessons.length}');
+                              Navigator.pop(context);
+                              print('finished: ${isFinished()}');
+                            });
+                          },
+                          color: correct == true
+                              ? Color(0XFF4C9800)
+                              : Color(0XFF9D1000),
+                          child: Text('Continue'),
+                        ),
+                      ],
+                    ),
+                  )),
+            )
+                : Container(
+              height: 200.0,
+              color: Color(
+                  0XFFFFF5EB), //could change this to Color(0xFF737373),
+              //so you don't have to change MaterialApp canvasColor
+              child: new Container(
+                  decoration: new BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: new BorderRadius.only(
+                          topLeft: const Radius.circular(10.0),
+                          topRight: const Radius.circular(10.0))),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Row(
                           children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                SvgPicture.asset(
-                                  "assets/images/fail.svg",
-                                ),
-                                SizedBox(
-                                  width: 20.0,
-                                ),
-                                Text('Wrong Answer',
-                                    style: TextStyle(
-                                        color: Color(0XFFF21600),
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 20.0))
-                              ],
+                            SvgPicture.asset(
+                              "assets/images/fail.svg",
                             ),
+                            SizedBox(
+                              width: 20.0,
+                            ),
+                            Text('Wrong Answer',
+                                style: TextStyle(
+                                    color: Color(0XFFF21600),
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20.0))
+                          ],
+                        ),
                             isFinished()
                                 ? FlatButton(
                                     onPressed: () {
@@ -407,38 +497,57 @@ class _QuizScreenState extends State<QuizScreen> {
                                     color: Color(0XFF9D1000),
                                     child: Text('Continue'),
                                   )
-                                : FlatButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        number++;
-                                        next = false;
-                                        opt1 = false;
-                                        opt2 = false;
-                                        opt3 = false;
-                                        opt4 = false;
-                                        print('numberss: $number');
-                                        print(
-                                            'length:${widget.lessons.length}');
+                                :
+                        FlatButton(
+                          onPressed: () {
+                            setState(() {
+                              if(widget.lessons[number]['test'] != []) {
+                                if (testNumber < widget.lessons[number]['test'].length -1) {
+                                  testNumber++;
+                                }
+                                else if((testNumber) >= widget.lessons[number]['test'].length - 1){
+                                  number ++;
+                                  next = false;
+                                  testNumber = 0;
+                                }
+                              }
+                              else {
+                                next = true;
+                              }
+                              print('testNum: $testNumber');
+                              opt1 = false;
+                              opt2 = false;
+                              opt3 = false;
+                              opt4 = false;
+                              print('numberss: $number');
+                              print(
+                                  'length:${widget.lessons.length}');
 
-                                        Navigator.pop(context);
-                                        print('finished: ${isFinished()}');
-                                      });
-                                    },
-                                    color: correct() == true
-                                        ? Color(0XFF4C9800)
-                                        : Color(0XFF9D1000),
-                                    child: Text('Continue'),
-                                  ),
-                          ],
+                              Navigator.pop(context);
+                              print('finished: ${isFinished()}');
+                            });
+                          },
+                          color: correct == true
+                              ? Color(0XFF4C9800)
+                              : Color(0XFF9D1000),
+                          child: Text('Continue'),
                         ),
-                      )),
-                );
+
+                      ],
+                    ),
+                  )),
+            )
+          : Container()
+          ;
+
+
         });
   }
 
   @override
   void initState() {
-    print('lessonsss: ${widget.lessons[number]}');
+    print('mylength: ${widget.lessons[number]['test'].length}');
+
     print('${progressBar()}');
     super.initState();
   }
@@ -524,12 +633,101 @@ class _QuizScreenState extends State<QuizScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: 30.0,
+                  height: 50.0,
                 ),
-                next
-                    ? Column(
+
+
+//                Column(
+//                  children: <Widget>[
+//                    widget.lessons[number]['type'] == 'toIgbo'
+//                        ? Column(
+//                      children: <Widget>[
+//                        Column(
+//                          children: <Widget>[
+//                            Text(
+//                              '${widget.lessons[number]['description']}',
+//                              textAlign: TextAlign.center,
+//                              style: TextStyle(
+//                                  fontSize: 20.0,
+//                                  fontWeight: FontWeight.w600),
+//                            ),
+//                            SizedBox(
+//                              height: 55.0,
+//                            ),
+//                            Container(
+//                                padding: EdgeInsets.symmetric(
+//                                    vertical: 25.0,
+//                                    horizontal: 25.0),
+//                                decoration: BoxDecoration(
+//                                    color: Colors.white,
+//                                    borderRadius: BorderRadius.only(
+//                                        topLeft: Radius.circular(5),
+//                                        topRight:
+//                                        Radius.circular(5),
+//                                        bottomLeft:
+//                                        Radius.circular(5),
+//                                        bottomRight:
+//                                        Radius.circular(5)),
+//                                    boxShadow: [
+//                                      BoxShadow(
+//                                        color: Colors.grey
+//                                            .withOpacity(0.3),
+//                                        spreadRadius: 1,
+//                                        blurRadius: 10,
+//                                        offset: Offset(-1,
+//                                            1), // changes position of shadow
+//                                      ),
+//                                    ]),
+//                                child: Image.asset(
+//                                  "${widget.lessons[number]['picture']}",
+//                                )),
+//                          ],
+//                        ),
+//                        SizedBox(
+//                          height: 100.0,
+//                        ),
+//                        Row(
+//                          mainAxisAlignment:
+//                          MainAxisAlignment.spaceBetween,
+//                          children: <Widget>[
+//                            number == 0
+//                                ? GestureDetector(
+//                              onTap: () {},
+//                              child: SvgPicture.asset(
+//                                "assets/images/left-grey.svg",
+//                              ),
+//                            )
+//                                : GestureDetector(
+//                              onTap: () {
+//                                setState(() {
+//                                  number--;
+//                                });
+//                              },
+//                              child: SvgPicture.asset(
+//                                "assets/images/left.svg",
+//                              ),
+//                            ),
+//                            GestureDetector(
+//                              onTap: () {
+//                                setState(() {
+//                                  next = true;
+//                                });
+//                              },
+//                              child: SvgPicture.asset(
+//                                "assets/images/right.svg",
+//                              ),
+//                            )
+//                          ],
+//                        )
+//                      ],
+//                    )
+//
+//                  ],
+//                ),
+                next ?
+                Column(
                         children: <Widget>[
-                          widget.lessons[number]['type'] == 'toIgbo'
+                          widget.lessons[number]['test'][testNumber]['type'] == 'toIgbo'
                               ? Column(
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
@@ -537,7 +735,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                     Column(
                                       children: <Widget>[
                                         Text(
-                                          '${widget.lessons[number]['answerQuestion']}',
+                                          '${widget.lessons[number]['test'][testNumber]['question']}',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               fontSize: 20.0,
@@ -558,7 +756,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                                     onTap: () {
                                                       playSound(
                                                           widget.lessons[number]
-                                                              ['audioUrl']);
+                                                              ['voicing']);
                                                       pausePlayToggle();
                                                     },
                                                   )
@@ -610,10 +808,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                               child: GestureDetector(
                                                 onTap: () {
                                                   setState(() {
-                                                    optionA =
-                                                        widget.lessons[number]
-                                                            ['optionA'];
-                                                    print('optionA: $optionA');
+                                                    checkAnswer(widget.lessons[number]['test'][testNumber]['optionA']);
+//                                                    optionA = widget.lessons[number]['test'][testNumber]['optionA'];
+//                                                    print('optionA: $optionA');
                                                     clickedA = !clickedA;
                                                     clickedB = false;
                                                     clickedC = false;
@@ -665,16 +862,13 @@ class _QuizScreenState extends State<QuizScreen> {
                                                         children: <Widget>[
                                                           Container(
                                                             height: 50.0,
-                                                            child: SvgPicture
-                                                                .asset(
-                                                              "${widget.lessons[number]['optionAImage']}",
-                                                            ),
+                                                            child: Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionAImage']}",))
                                                           ),
                                                           SizedBox(
                                                             height: 15.0,
                                                           ),
                                                           Text(
-                                                              "${widget.lessons[number]['optionA']}")
+                                                              "${widget.lessons[number]['test'][testNumber]['optionA']}")
                                                         ],
                                                       ),
                                                     )),
@@ -687,10 +881,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                               child: GestureDetector(
                                                 onTap: () {
                                                   setState(() {
-                                                    optionB =
-                                                        widget.lessons[number]
-                                                            ['optionB'];
-                                                    print('optionB: $optionB');
+                                                    checkAnswer(widget.lessons[number]['test'][testNumber]['optionB']);
+//                                                    optionB = widget.lessons[number]['test'][testNumber]['optionB'];
+//                                                    print('optionB: $optionB');
                                                     clickedA = false;
                                                     clickedB = !clickedB;
                                                     clickedC = false;
@@ -742,16 +935,13 @@ class _QuizScreenState extends State<QuizScreen> {
                                                         children: <Widget>[
                                                           Container(
                                                             height: 50.0,
-                                                            child: SvgPicture
-                                                                .asset(
-                                                              "${widget.lessons[number]['optionBImage']}",
-                                                            ),
+                                                            child: Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionBImage']}",)),
                                                           ),
                                                           SizedBox(
                                                             height: 15.0,
                                                           ),
                                                           Text(
-                                                              "${widget.lessons[number]['optionB']}")
+                                                              "${widget.lessons[number]['test'][testNumber]['optionB']}")
                                                         ],
                                                       ),
                                                     )),
@@ -770,10 +960,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                               child: GestureDetector(
                                                 onTap: () {
                                                   setState(() {
-                                                    optionC =
-                                                        widget.lessons[number]
-                                                            ['optionC'];
-                                                    print('optionC: $optionC');
+                                                    checkAnswer(widget.lessons[number]['test'][testNumber]['optionC']);
+//                                                    optionC = widget.lessons[number]['test'][testNumber]['optionC'];
+//                                                    print('optionC: $optionC');
                                                     clickedA = false;
                                                     clickedB = false;
                                                     clickedC = !clickedC;
@@ -822,15 +1011,13 @@ class _QuizScreenState extends State<QuizScreen> {
                                                         Container(
                                                           height: 50.0,
                                                           child:
-                                                              SvgPicture.asset(
-                                                            "${widget.lessons[number]['optionCImage']}",
-                                                          ),
+                                                          Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionCImage']}",))
                                                         ),
                                                         SizedBox(
                                                           height: 15.0,
                                                         ),
                                                         Text(
-                                                            "${widget.lessons[number]['optionC']}")
+                                                            "${widget.lessons[number]['test'][testNumber]['optionC']}")
                                                       ],
                                                     )),
                                               ),
@@ -842,10 +1029,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                               child: GestureDetector(
                                                 onTap: () {
                                                   setState(() {
-                                                    optionD =
-                                                        widget.lessons[number]
-                                                            ['optionD'];
-                                                    print('optionD: $optionD');
+                                                    checkAnswer(widget.lessons[number]['test'][testNumber]['optionD']);
+//                                                    optionD = widget.lessons[number]['test'][testNumber]['optionD'];
+//                                                    print('optionD: $optionD');
                                                     clickedA = false;
                                                     clickedB = false;
                                                     clickedC = false;
@@ -894,15 +1080,13 @@ class _QuizScreenState extends State<QuizScreen> {
                                                         Container(
                                                           height: 50.0,
                                                           child:
-                                                              SvgPicture.asset(
-                                                            "${widget.lessons[number]['optionDImage']}",
-                                                          ),
+                                                          Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionDImage']}",))
                                                         ),
                                                         SizedBox(
                                                           height: 15.0,
                                                         ),
                                                         Text(
-                                                            "${widget.lessons[number]['optionD']}")
+                                                            "${widget.lessons[number]['test'][testNumber]['optionD']}")
                                                       ],
                                                     )),
                                               ),
@@ -918,11 +1102,22 @@ class _QuizScreenState extends State<QuizScreen> {
                                         color: Color(0XFFF21600),
                                         onPressed: () {
                                           setState(() {
+                                          if(widget.lessons[number]['test'] != [] || widget.lessons[number]['test'].length != 0) {
                                             _modalBottomSheetMenu();
-                                            result.add(correctAnswer());
+                                          }
+                                                result.add(correctAnswer);
+                                              correctAnswer ? results++ : 0;
+                                            print('result:$results');
                                             print('result:$result');
+
                                           });
-                                          print('answer:${correctAnswer()}');
+                                          print('CORRECT: ${ widget.lessons[number]['test'][testNumber]['correctOption']}');
+                                          print('A $checkAnswerA');
+                                          print('B $checkAnswerB');
+                                          print('C $checkAnswerC');
+                                          print('D $checkAnswerD');
+
+                                          print('answer:$correctAnswer');
                                         },
                                         child: Text(
                                           'Continue',
@@ -930,336 +1125,324 @@ class _QuizScreenState extends State<QuizScreen> {
                                         ))
                                   ],
                                 )
-                              : SizedBox(
-                                  height: 0,
-                                )
-                        ],
-                      )
-                    : Column(
-                        children: <Widget>[
-                          widget.lessons[number]['type'] == 'toIgbo'
-                              ? Column(
+                              :  Column(
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 30.0, horizontal: 10.0),
+                                child: Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.stretch,
                                   children: <Widget>[
-                                    Column(
-                                      children: <Widget>[
-                                        Text(
-                                          '${widget.lessons[number]['mainquestion']}',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: 20.0,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                        SizedBox(
-                                          height: 55.0,
-                                        ),
-                                        Container(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 25.0,
-                                                horizontal: 25.0),
-                                            decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft: Radius.circular(5),
-                                                    topRight:
-                                                        Radius.circular(5),
-                                                    bottomLeft:
-                                                        Radius.circular(5),
-                                                    bottomRight:
-                                                        Radius.circular(5)),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.grey
-                                                        .withOpacity(0.3),
-                                                    spreadRadius: 1,
-                                                    blurRadius: 10,
-                                                    offset: Offset(-1,
-                                                        1), // changes position of shadow
-                                                  ),
-                                                ]),
-                                            child: SvgPicture.asset(
-                                              "${widget.lessons[number]['questionImage']}",
-                                            )),
-                                      ],
+                                    Text(
+                                      '${ widget.lessons[number]['test'][testNumber]['question']}',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.w600),
                                     ),
                                     SizedBox(
-                                      height: 100.0,
+                                      height: 20.0,
                                     ),
                                     Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.end,
                                       children: <Widget>[
-                                        number == 0
+                                        _isVisible
                                             ? GestureDetector(
-                                                onTap: () {},
-                                                child: SvgPicture.asset(
-                                                  "assets/images/left-grey.svg",
-                                                ),
-                                              )
-                                            : GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    number--;
-                                                  });
-                                                },
-                                                child: SvgPicture.asset(
-                                                  "assets/images/left.svg",
-                                                ),
-                                              ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              next = true;
-                                            });
-                                          },
                                           child: SvgPicture.asset(
-                                            "assets/images/right.svg",
+                                            "assets/images/audio.svg",
                                           ),
+                                          onTap: () {
+                                            playSound(widget
+                                                .lessons[number]
+                                            ['audioUrl']);
+                                            pausePlayToggle();
+                                          },
                                         )
+                                            : GestureDetector(
+                                          child: SvgPicture.asset(
+                                            "assets/images/pause.svg",
+                                          ),
+                                          onTap: () {
+                                            pauseSound();
+                                            pausePlayToggle();
+                                          },
+                                        ),
                                       ],
-                                    )
-                                  ],
-                                )
-                              : Column(
-                                  children: <Widget>[
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 30.0, horizontal: 10.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: <Widget>[
-                                          Text(
-                                            '${widget.lessons[number]['mainquestion']}',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                          SizedBox(
-                                            height: 20.0,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: <Widget>[
-                                              _isVisible
-                                                  ? GestureDetector(
-                                                      child: SvgPicture.asset(
-                                                        "assets/images/audio.svg",
-                                                      ),
-                                                      onTap: () {
-                                                        playSound(widget
-                                                                .lessons[number]
-                                                            ['audioUrl']);
-                                                        pausePlayToggle();
-                                                      },
-                                                    )
-                                                  : GestureDetector(
-                                                      child: SvgPicture.asset(
-                                                        "assets/images/pause.svg",
-                                                      ),
-                                                      onTap: () {
-                                                        pauseSound();
-                                                        pausePlayToggle();
-                                                      },
-                                                    ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 20.0,
-                                          ),
-                                          Row(
-                                            children: <Widget>[
-                                              Expanded(
-                                                  flex: 1,
-                                                  child: Container(
-                                                      color: Colors.grey,
-                                                      height: 0.3)),
-                                              Expanded(
-                                                  flex: 1,
-                                                  child: Center(
-                                                      child: Text(
-                                                    'in Igbo',
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
-                                                        fontSize: 15.0),
-                                                  ))),
-                                              Expanded(
-                                                  flex: 1,
-                                                  child: Container(
-                                                      color: Colors.grey,
-                                                      height: 0.3)),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 40.0,
-                                          ),
-                                          Column(
-                                            children: <Widget>[
-                                              Row(
-                                                children: <Widget>[
-                                                  Expanded(
-                                                      child: GestureDetector(
-                                                          onTap: () {
-                                                            setState(() {
-                                                              text1 = widget
-                                                                          .lessons[
-                                                                      number]
-                                                                  ['option1'];
-                                                              opt1 = !opt1;
-                                                              opt2 = false;
-                                                              opt3 = false;
-                                                              opt4 = false;
-                                                              print(
-                                                                  'text1:$text1');
-                                                            });
-                                                          },
-                                                          child: OptionBox(
-                                                            option:
-                                                                widget.lessons[
-                                                                        number]
-                                                                    ['option1'],
-                                                            gradient1: opt1
-                                                                ? Color(
-                                                                    0XFFF7B500)
-                                                                : Colors.white,
-                                                            gradient2: opt1
-                                                                ? Color(
-                                                                    0XFFF48C02)
-                                                                : Colors.white,
-                                                          ))),
-                                                  SizedBox(
-                                                    width: 15.0,
-                                                  ),
-                                                  Expanded(
-                                                      child: GestureDetector(
-                                                          onTap: () {
-                                                            setState(() {
-                                                              text2 = widget
-                                                                          .lessons[
-                                                                      number]
-                                                                  ['option2'];
-                                                              opt2 = !opt2;
-                                                              opt1 = false;
-                                                              opt3 = false;
-                                                              opt4 = false;
-                                                              print(
-                                                                  'text2:$text2');
-                                                            });
-                                                          },
-                                                          child: OptionBox(
-                                                            option:
-                                                                widget.lessons[
-                                                                        number]
-                                                                    ['option2'],
-                                                            gradient1: opt2
-                                                                ? Color(
-                                                                    0XFFF7B500)
-                                                                : Colors.white,
-                                                            gradient2: opt2
-                                                                ? Color(
-                                                                    0XFFF48C02)
-                                                                : Colors.white,
-                                                          ))),
-                                                  SizedBox(
-                                                    width: 15.0,
-                                                  ),
-                                                  Expanded(
-                                                      child: GestureDetector(
-                                                          onTap: () {
-                                                            setState(() {
-                                                              text3 = widget
-                                                                          .lessons[
-                                                                      number]
-                                                                  ['option3'];
-                                                              opt3 = !opt3;
-                                                              opt2 = false;
-                                                              opt1 = false;
-                                                              opt4 = false;
-                                                              print(
-                                                                  'text1:$text3');
-                                                            });
-                                                          },
-                                                          child: OptionBox(
-                                                            option:
-                                                                widget.lessons[
-                                                                        number]
-                                                                    ['option3'],
-                                                            gradient1: opt3
-                                                                ? Color(
-                                                                    0XFFF7B500)
-                                                                : Colors.white,
-                                                            gradient2: opt3
-                                                                ? Color(
-                                                                    0XFFF48C02)
-                                                                : Colors.white,
-                                                          ))),
-                                                  SizedBox(
-                                                    width: 15.0,
-                                                  ),
-                                                  Expanded(
-                                                      child: GestureDetector(
-                                                          onTap: () {
-                                                            setState(() {
-                                                              text4 = widget
-                                                                          .lessons[
-                                                                      number]
-                                                                  ['option4'];
-                                                              opt4 = !opt4;
-                                                              opt2 = false;
-                                                              opt3 = false;
-                                                              opt1 = false;
-                                                              print(
-                                                                  'text4:$text4');
-                                                            });
-                                                          },
-                                                          child: OptionBox(
-                                                            option:
-                                                                widget.lessons[
-                                                                        number]
-                                                                    ['option4'],
-                                                            gradient1: opt4
-                                                                ? Color(
-                                                                    0XFFF7B500)
-                                                                : Colors.white,
-                                                            gradient2: opt4
-                                                                ? Color(
-                                                                    0XFFF48C02)
-                                                                : Colors.white,
-                                                          ))),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 30.0,
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 80.0,
-                                          ),
-                                          FlatButton(
-                                              color: Color(0XFFF21600),
-                                              onPressed: () {
-                                                setState(() {
-                                                  _bottomSheetMenu();
-                                                  result.add(correct());
-                                                  print('result:$result');
-                                                });
-                                                print('answer:${correct()}');
-                                              },
-                                              child: Text(
-                                                'Continue',
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ))
-                                        ],
-                                      ),
                                     ),
+                                    SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                            flex: 1,
+                                            child: Container(
+                                                color: Colors.grey,
+                                                height: 0.3)),
+                                        Expanded(
+                                            flex: 1,
+                                            child: Center(
+                                                child: Text(
+                                                  'in Igbo',
+                                                  style: TextStyle(
+                                                      color: Colors.grey,
+                                                      fontSize: 15.0),
+                                                ))),
+                                        Expanded(
+                                            flex: 1,
+                                            child: Container(
+                                                color: Colors.grey,
+                                                height: 0.3)),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 40.0,
+                                    ),
+                                    Column(
+                                      children: <Widget>[
+                                        Row(
+                                          children: <Widget>[
+                                            Expanded(
+                                                child: GestureDetector(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        checkAnswer2(widget.lessons[number]['test'][testNumber]['option1']);
+                                                        opt1 = !opt1;
+                                                        opt2 = false;
+                                                        opt3 = false;
+                                                        opt4 = false;
+                                                        print('text1:$text1');
+                                                      });
+                                                    },
+                                                    child: OptionBox(
+                                                      option:
+                                                      widget.lessons[number]['test'][testNumber]['option1'],
+                                                      gradient1: opt1
+                                                          ? Color(
+                                                          0XFFF7B500)
+                                                          : Colors.white,
+                                                      gradient2: opt1
+                                                          ? Color(
+                                                          0XFFF48C02)
+                                                          : Colors.white,
+                                                    ))),
+                                            SizedBox(
+                                              width: 15.0,
+                                            ),
+                                            Expanded(
+                                                child: GestureDetector(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        checkAnswer2(widget.lessons[number]['test'][testNumber]['option2']);
+                                                        opt2 = !opt2;
+                                                        opt1 = false;
+                                                        opt3 = false;
+                                                        opt4 = false;
+                                                        print(
+                                                            'text2:$text2');
+                                                      });
+                                                    },
+                                                    child: OptionBox(
+                                                      option: widget.lessons[number]['test'][testNumber]['option2'],
+                                                      gradient1: opt2
+                                                          ? Color(
+                                                          0XFFF7B500)
+                                                          : Colors.white,
+                                                      gradient2: opt2
+                                                          ? Color(
+                                                          0XFFF48C02)
+                                                          : Colors.white,
+                                                    ))),
+                                            SizedBox(
+                                              width: 15.0,
+                                            ),
+                                            Expanded(
+                                                child: GestureDetector(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        checkAnswer2(widget.lessons[number]['test'][testNumber]['option3']);
+                                                        opt3 = !opt3;
+                                                        opt2 = false;
+                                                        opt1 = false;
+                                                        opt4 = false;
+                                                        print(
+                                                            'text1:$text3');
+                                                      });
+                                                    },
+                                                    child: OptionBox(
+                                                      option:
+                                                      widget.lessons[number]['test'][testNumber]['option3'],
+                                                      gradient1: opt3
+                                                          ? Color(
+                                                          0XFFF7B500)
+                                                          : Colors.white,
+                                                      gradient2: opt3
+                                                          ? Color(
+                                                          0XFFF48C02)
+                                                          : Colors.white,
+                                                    ))),
+                                            SizedBox(
+                                              width: 15.0,
+                                            ),
+                                            Expanded(
+                                                child: GestureDetector(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        checkAnswer2(widget.lessons[number]['test'][testNumber]['option4']);
+                                                        opt4 = !opt4;
+                                                        opt2 = false;
+                                                        opt3 = false;
+                                                        opt1 = false;
+                                                        print(
+                                                            'text4:$text4');
+                                                      });
+                                                    },
+                                                    child: OptionBox(
+                                                      option:
+                                                      widget.lessons[number]['test'][testNumber]['option4'],
+                                                      gradient1: opt4
+                                                          ? Color(
+                                                          0XFFF7B500)
+                                                          : Colors.white,
+                                                      gradient2: opt4
+                                                          ? Color(
+                                                          0XFFF48C02)
+                                                          : Colors.white,
+                                                    ))),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 30.0,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 80.0,
+                                    ),
+                                    FlatButton(
+                                        color: Color(0XFFF21600),
+                                        onPressed: () {
+                                          setState(() {
+                                            if(widget.lessons[number]['test'] != [] || widget.lessons[number]['test'].length != 0){
+                                              _bottomSheetMenu();
+                                            }
+                                            result.add(correct);
+                                            correct == true ? results++ : 0;
+                                            print('results:$results');
+                                            print('result:$result');
+
+                                            print('CORRECT:${ widget.lessons[number]['test'][testNumber]['correctOption']}');
+                                            print('A $checkAnswerA');
+                                            print('B $checkAnswerB');
+                                            print('C $checkAnswerC');
+                                            print('D $checkAnswerD');
+                                          });
+                                          print('answer:$correct');
+                                        },
+                                        child: Text(
+                                          'Continue',
+                                          style: TextStyle(
+                                              color: Colors.white),
+                                        ))
                                   ],
-                                )
+                                ),
+                              ),
+                            ],
+                          )
                         ],
                       )
-              ],
+                :   Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          '${widget.lessons[number]['description']}',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(
+                          height: 55.0,
+                        ),
+                        Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 25.0,
+                                horizontal: 25.0),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(5),
+                                    topRight:
+                                    Radius.circular(5),
+                                    bottomLeft:
+                                    Radius.circular(5),
+                                    bottomRight:
+                                    Radius.circular(5)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey
+                                        .withOpacity(0.3),
+                                    spreadRadius: 1,
+                                    blurRadius: 10,
+                                    offset: Offset(-1,
+                                        1), // changes position of shadow
+                                  ),
+                                ]),
+                            child: Image(
+                              image: NetworkImage("${widget.lessons[number]['picture']}"),
+                            )
+
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 100.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        number == 0
+                            ? GestureDetector(
+                          onTap: () {},
+                          child: SvgPicture.asset(
+                            "assets/images/left-grey.svg",
+                          ),
+                        )
+                            : GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              number--;
+                            });
+                          },
+                          child: SvgPicture.asset(
+                            "assets/images/left.svg",
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              if(widget.lessons[number]['test'] == [] || widget.lessons[number]['test'].length == 0 ){
+                                next = false;
+                                number ++;
+                              }
+                              else {
+                                next = true;
+                              }
+                            });
+                          },
+                          child: SvgPicture.asset(
+                            "assets/images/right.svg",
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ]
             ),
           ),
         ],
