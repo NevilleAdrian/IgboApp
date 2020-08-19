@@ -51,8 +51,7 @@ class _SplashScreenState extends State<SplashScreen>
     AppModel appModel;
     try {
       user = _hiveRepository.get<User>(key: 'user', name: kUserName);
-      appModel =
-          _hiveRepository.get<AppModel>(key: 'appModel', name: kAppDataName);
+      appModel = _hiveRepository.get<AppModel>(key: 'appModel', name: kAppDataName);
     } catch (ex) {
       print(ex);
     }
