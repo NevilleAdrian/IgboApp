@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/helpers/background_image_container.dart';
@@ -28,7 +27,6 @@ class WelcomeScreen extends StatelessWidget {
               width: double.infinity,
             ),
             Expanded(
-              flex: 1,
               child: StartAuthBottom(),
             )
           ],
@@ -45,15 +43,19 @@ class StartAuthBottom extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 18.0),
       child: Column(
         children: <Widget>[
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 62.0),
-              child: Text(
-                'Your Igbo Learning made easy',
+          Column(
+            children: <Widget>[
+              Text(
+                'Your Igbo Learning',
                 style: kAuthTextBig,
                 textAlign: TextAlign.center,
               ),
-            ),
+              Text(
+                'made easy',
+                style: kAuthTextBig,
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
           SizedBox(
             height: 30,
@@ -79,6 +81,9 @@ class StartAuthBottom extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pushNamed(LoginScreen.id);
             },
+          ),
+          SizedBox(
+            height: 20,
           ),
         ],
       ),

@@ -5,6 +5,8 @@ import 'package:nkuzi_igbo/models/login_model.dart';
 import 'package:nkuzi_igbo/models/register_model.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
 
+/// Helper class to make http request
+
 class NetworkHelper {
   Future<dynamic> loginUser(String email, String password) async {
     var body = Login(email: email, password: password).toJson();

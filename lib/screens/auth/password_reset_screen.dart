@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nkuzi_igbo/helpers/reset_layout.dart';
 import 'package:nkuzi_igbo/screens/auth/reset_success.dart';

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nkuzi_igbo/helpers/auth_layout.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
@@ -45,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Container(
           width: double.infinity,
           child: LoadingButton(
-            text: 'Log in',
+            text: 'Login',
             isLoading: _loading,
             action: () async {
               if (_formKey.currentState.validate()) {

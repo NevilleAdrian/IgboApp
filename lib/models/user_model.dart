@@ -1,20 +1,42 @@
+import 'package:hive/hive.dart';
+
+part 'user_model.g.dart';
+
+@HiveType(typeId: 1)
 class User {
+  @HiveField(0)
   bool activeSubscription;
+  @HiveField(1)
   bool verified;
+  @HiveField(2)
   String sId;
+  @HiveField(3)
   String name;
+  @HiveField(4)
   String email;
+  @HiveField(5)
   String location;
+  @HiveField(6)
   String role;
+  @HiveField(7)
   String password;
+  @HiveField(8)
   String did;
+  @HiveField(9)
   bool visible;
+  @HiveField(10)
   String verifiedon;
+  @HiveField(11)
   String createdon;
+  @HiveField(12)
   String verificationId;
+  @HiveField(13)
   String subscribedon;
+  @HiveField(14)
   String deactivatesubon;
+  @HiveField(15)
   String pwdrequeston;
+  @HiveField(16)
   String pwdchangedon;
 
   User(

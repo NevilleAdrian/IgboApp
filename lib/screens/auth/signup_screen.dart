@@ -1,5 +1,3 @@
-import 'package:flushbar/flushbar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nkuzi_igbo/helpers/auth_layout.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
@@ -7,8 +5,6 @@ import 'package:nkuzi_igbo/screens/auth/login_screen.dart';
 import 'package:nkuzi_igbo/ui_widgets/alt_auth_action.dart';
 import 'package:nkuzi_igbo/ui_widgets/loading_button.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
-import 'package:provider/provider.dart';
-
 import '../home_page.dart';
 
 class SignUpScreen extends StatefulWidget {
