@@ -12,7 +12,7 @@ class Auth extends ChangeNotifier {
   HiveRepository _hiveRepository = HiveRepository();
   User _user;
   String _token;
-  List<dynamic>  _categories;
+  List<dynamic> _categories;
 
   User get user => _user;
   String get token => _token;
@@ -20,6 +20,7 @@ class Auth extends ChangeNotifier {
 
   setUser(User user) => _user = user;
   setToken(String token) => _token = token;
+  setCategory(List<dynamic> category) => _categories = category;
 
   static Auth authProvider(BuildContext context, {bool listen = false}) => Provider.of<Auth>(context, listen: listen);
 
@@ -48,7 +49,6 @@ class Auth extends ChangeNotifier {
     _user = User.fromJson(data['user']);
     _token = data['token'];
     _hiveRepository.add<User>(name: kUserName, key: 'user', item: user);
-    _hiveRepository.add<AppModel>(
-        name: kAppDataName, key: 'appModel', item: AppModel(token: _token));
+    _hiveRepository.add<AppModel>(name: kAppDataName, key: 'appModel', item: AppModel(token: _token));
   }
 }

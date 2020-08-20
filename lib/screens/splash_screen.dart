@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/models/app_model.dart';
@@ -7,6 +9,7 @@ import 'package:nkuzi_igbo/repository/hive_repository.dart';
 import 'package:nkuzi_igbo/screens/auth/welcome_screen.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   static String id = 'splash_screen';
@@ -46,12 +49,14 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   _prepareAppState() async {
-    await HiveRepository.openHives([kUserName, kAppDataName]);
+    await HiveRepository.openHives([kUserName, kAppDataName, kCategory]);
     User user;
     AppModel appModel;
+    List<dynamic> lesson;
     try {
       user = _hiveRepository.get<User>(key: 'user', name: kUserName);
       appModel = _hiveRepository.get<AppModel>(key: 'appModel', name: kAppDataName);
+      lesson = jsonDecode(_hiveRepository.get(key: 'category', name: kCategory));
     } catch (ex) {
       print(ex);
     }
@@ -61,6 +66,7 @@ class _SplashScreenState extends State<SplashScreen>
     } else {
       Auth.authProvider(context).setUser(user);
       Auth.authProvider(context).setToken(appModel.token);
+      Provider.of<Auth>(context, listen: false).setCategory(lesson);
       Navigator.of(context).pushNamedAndRemoveUntil(
           appModel?.lastRoute ?? HomePage.id, (Route<dynamic> route) => false);
     }

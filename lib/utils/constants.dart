@@ -26,3 +26,4 @@ const kHeaders = _headers;
 
 const String kUserName = 'user';
 const String kAppDataName = 'appData';
+const String kCategory = 'category';

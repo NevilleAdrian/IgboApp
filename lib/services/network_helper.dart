@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:nkuzi_igbo/models/category_model.dart';
 import 'package:nkuzi_igbo/models/login_model.dart';
 import 'package:nkuzi_igbo/models/register_model.dart';
+import 'package:nkuzi_igbo/repository/hive_repository.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
 
 /// Helper class to make http request
@@ -21,7 +23,11 @@ class NetworkHelper {
   }
 
   Future<dynamic> getCategory() async {
-    return await getRequest('$kAppAPIUrl/category/appflow');
+    var cat =  await getRequest('$kAppAPIUrl/category/appflow');
+    HiveRepository _hiveRepository = HiveRepository();
+    var category = cat['data'].map((e) => Category.fromJson(e)).toList();
+    _hiveRepository.add(name: kCategory, key: 'category', item: jsonEncode(category));
+    return cat;
   }
 
   Future<dynamic> getRequest( String url) async {

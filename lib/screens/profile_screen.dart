@@ -136,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             Text(
-                                              'Chisomokoro@gmail.com',
+                                           Auth.authProvider(context).user.email,
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 16),
@@ -161,7 +161,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       contentPadding:
                                           EdgeInsets.symmetric(vertical: 5),
                                       focusedBorder: InputBorder.none,
-                                      labelText: "Chisomokoro@gmail.com",
+                                      labelText: Auth.authProvider(context).user.name,
                                       labelStyle:
                                           TextStyle(color: Colors.black),
                                       fillColor: Colors.white,
@@ -207,7 +207,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             Text(
-                                              'Lagos Nigeria',
+                                              Auth.authProvider(context).user.location != null ?Auth.authProvider(context).user.location: 'Location',
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 16),
@@ -232,7 +232,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       contentPadding:
                                           EdgeInsets.symmetric(vertical: 5),
                                       focusedBorder: InputBorder.none,
-                                      labelText: 'Lagos Nigeria',
+                                      labelText:  Auth.authProvider(context).user.location,
                                       labelStyle:
                                           TextStyle(color: Colors.black),
                                       fillColor: Colors.white,
