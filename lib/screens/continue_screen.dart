@@ -3,11 +3,15 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/screens/quiz.dart';
 
 class ContinueList extends StatefulWidget {
-  ContinueList({ this.lessons, this.form, this.type, this.time });
+  ContinueList({ this.lessons, this.form, this.type, this.time, this.courses, this.description, this.category, this.id });
   final  List<dynamic>  lessons;
+  final List <dynamic> courses;
+  final String description;
   final String form;
   final String type;
   final String time;
+  final String category;
+  final String id;
 
   @override
   _ContinueListState createState() => _ContinueListState();
@@ -55,6 +59,10 @@ class _ContinueListState extends State<ContinueList> {
                               MaterialPageRoute(
                                   builder: (context) => QuizScreen(
                                     lessons: widget.lessons,
+                                    courses: widget.courses,
+                                    description: widget.description,
+                                    category: widget.category,
+                                    id: widget.id
                                   )
                               ),
                             );

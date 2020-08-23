@@ -315,8 +315,10 @@ class CategoryList extends StatelessWidget {
                 MaterialPageRoute(
                     builder: (context) => CategoriesScreen(
                         lessons: lessons[index]['sub_categories'],
-                        description:  lessons[index]['description']
-                      )),
+                        description:  lessons[index]['description'],
+                        id: lessons[index]['_id']
+                      )
+                ),
               );
             },
             child: Card(

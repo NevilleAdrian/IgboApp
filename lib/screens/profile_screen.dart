@@ -19,6 +19,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool name = true;
   bool location = true;
 
+
   @override
   void dispose() {
     _nameController.dispose();

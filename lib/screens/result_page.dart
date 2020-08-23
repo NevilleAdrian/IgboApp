@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:nkuzi_igbo/screens/categories_screen.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class ResultScreen extends StatefulWidget {
-  ResultScreen({this.lessons, this.percentage, this.score});
+  ResultScreen({this.lessons, this.percentage, this.score, this.courses, this.description});
 
   final List<dynamic> lessons;
+  final List<dynamic> courses;
   final List percentage;
   final int score;
+  final String description;
 
   @override
   _ResultScreenState createState() => _ResultScreenState();
@@ -110,7 +113,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             color: Color(0XFFF21600) ,
                               onPressed: () {
                                 Navigator.pushAndRemoveUntil(context,
-                                    MaterialPageRoute(builder: (BuildContext context) => HomePage()),
+                                    MaterialPageRoute(builder: (BuildContext context) => CategoriesScreen(lessons: widget.courses, description: widget.description,)),
                                     ModalRoute.withName('/'));
                               },
                               child: Text('Continue')

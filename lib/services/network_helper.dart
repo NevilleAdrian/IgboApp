@@ -22,6 +22,18 @@ class NetworkHelper {
     return await authRequest(body, '$kAppAPIUrl/auth/register');
   }
 
+  Future<dynamic> getCategoryList() async {
+    var cat =  await getRequest('$kAppAPIUrl/category/');
+    return cat['data'];
+  }
+
+  Future<dynamic> calculateResult(body) async {
+    var cat =  await authRequest(body,'$kAppAPIUrl/progress/');
+    return cat;
+  }
+
+
+
   Future<dynamic> getCategory() async {
     var cat =  await getRequest('$kAppAPIUrl/category/appflow');
     HiveRepository _hiveRepository = HiveRepository();
@@ -30,12 +42,15 @@ class NetworkHelper {
     return cat;
   }
 
+  Future<dynamic> getProgress(id, dropDownId) async {
+    var progress =  await getRequest('$kAppAPIUrl/progress/user/$id/$dropDownId');
+    return progress;
+  }
+
   Future<dynamic> getRequest( String url) async {
     var response = await http.get(url);
-    print(response.body);
     var decoded = jsonDecode(response.body);
     if (response.statusCode.toString().startsWith('2')) {
-      print(decoded);
       return decoded;
     } else {
       throw Exception(response.reasonPhrase);

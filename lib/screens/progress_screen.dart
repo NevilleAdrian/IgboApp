@@ -1,8 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nkuzi_igbo/models/progres_model.dart';
+import 'package:nkuzi_igbo/models/user_model.dart';
+import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/settings.dart';
+import 'package:nkuzi_igbo/services/network_helper.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:provider/provider.dart';
 
 class ProgressScreen extends StatefulWidget {
   @override
@@ -11,9 +16,88 @@ class ProgressScreen extends StatefulWidget {
 
 class _ProgressScreenState extends State<ProgressScreen> {
   String textValue;
+  User user = User();
+  NetworkHelper _helper = NetworkHelper();
+  dynamic progress;
+  dynamic catList;
+  String catNumber;
+  int number;
+
+  Progress pro = Progress();
+
+
+
+
+
+  dynamic myCatList () async {
+    var p  = await _helper.getCategoryList();
+    setState(() {
+      catList = p;
+    });
+    return p;
+  }
+
+  DropdownButton<String> androidDropdown() {
+
+    List<DropdownMenuItem<String>> dropdownItems = [];
+    for (int i = 0; i < catList.length; i++) {
+
+      String cath = catList[i]['name'];
+
+      var newItem = DropdownMenuItem(
+        child: Text(cath),
+        value:  cath,
+        onTap: () {
+          setState(() {
+            number = catList.indexOf(catList[i]);
+          });
+        }
+      );
+      dropdownItems.add(newItem);
+    }
+
+    return DropdownButton<String>(
+        hint: Text(
+          "Select a topic",
+          style: TextStyle(color: Colors.black),
+        ),
+        dropdownColor: Colors.white,
+        value: textValue,
+        items: dropdownItems,
+        onChanged: (value) {
+          setState(() {
+            print('value : $value');
+            print('num: $number');
+            textValue = value;
+            print('text : $textValue');
+          });
+        });
+  }
+
+
+  dynamic myProgress (number) async {
+   var category = Provider.of<Auth>(context, listen: false).category;
+   var p  = await _helper.getProgress(Auth.authProvider(context).user.sId, category[number == null ? 0 : number]['_id']);
+   setState(() {
+     progress = p;
+   });
+   return p;
+  }
+
+
+
+
+  @override
+  void initState() {
+    myCatList();
+    super.initState();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
+    myProgress(number);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Scaffold(
@@ -48,7 +132,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
         ),
         body: ListView(
           children: <Widget>[
-            Container(
+            progress != null && catList != null ? Container(
               padding: EdgeInsets.only(bottom: 40.0),
               child: Column(
                 children: <Widget>[
@@ -62,43 +146,21 @@ class _ProgressScreenState extends State<ProgressScreen> {
                           padding: EdgeInsets.symmetric(horizontal: 15),
                           height: 65,
                           child: Card(
-                            elevation: 0,
+                          elevation: 0,
                             shape: RoundedRectangleBorder(
-                              side: BorderSide(color: Colors.grey, width: 0.4),
-                              borderRadius: BorderRadius.circular(5),
+                          side: BorderSide(color: Colors.grey, width: 0.4),
+                          borderRadius: BorderRadius.circular(5),
                             ),
                             child: DropdownButtonHideUnderline(
-                              child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: DropdownButton(
-                                      hint: Text(
-                                        "Select a topic",
-                                        style: TextStyle(color: Colors.black),
-                                      ),
-                                      dropdownColor: Colors.white,
-                                      value: textValue,
-                                      items: [
-                                        DropdownMenuItem<String>(
-                                          child: Text("Learn Alphabets"),
-                                          value: "Learn Alphabets",
-                                        ),
-                                        DropdownMenuItem<String>(
-                                          child: Text("Learn Numbers"),
-                                          value: "Learn Numbers",
-                                        ),
-                                        DropdownMenuItem<String>(
-                                            child: Text("Learn Vowels"),
-                                            value: "Learn Vowels"),
-                                        DropdownMenuItem<String>(
-                                            child: Text("Learn Consonants"),
-                                            value: "Learn Consonants"),
-                                      ],
-                                      onChanged: (String value) {
-                                        setState(() {
-                                          textValue = value;
-                                          print('text: $textValue');
-                                        });
-                                      })),
+                          child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ListView(
+                                  scrollDirection: Axis.horizontal,
+                                  children: <Widget>[
+                                    androidDropdown()
+                                  ],
+                              )
+                          ),
                             ),
                           ),
                         ),
@@ -159,7 +221,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                         fontWeight: FontWeight.w500),
                                   ),
                                   Text(
-                                    '4',
+                                    progress['data']['basic'].toString(),
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 30,
@@ -221,7 +283,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                         fontWeight: FontWeight.w500),
                                   ),
                                   Text(
-                                    '23',
+                                    progress['data']['intermediate'].toString(),
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 30,
@@ -276,7 +338,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                         fontWeight: FontWeight.w500),
                                   ),
                                   Text(
-                                    '10',
+                                    progress['data']['advanced'].toString(),
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 30,
@@ -303,9 +365,9 @@ class _ProgressScreenState extends State<ProgressScreen> {
                     radius: 170.0,
                     lineWidth: 16.0,
                     animation: true,
-                    percent: 0.76,
+                    percent: progress['data']['alphabetsFluency'] == 0 ? double.parse('${progress['data']['alphabetsFluency']}.0'): (progress['data']['alphabetsFluency'])/100,
                     center: new Text(
-                      '76%',
+                     '${double.parse( progress['data']['alphabetsFluency'].toString()).toStringAsFixed(0)}%',
                       style: new TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 30.0,
@@ -330,12 +392,12 @@ class _ProgressScreenState extends State<ProgressScreen> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
                               Text(
-                                '23',
+                                progress['data']['totalLessons'].toString(),
                                 style: TextStyle(
                                     fontSize: 25, fontWeight: FontWeight.w500),
                               ),
                               Text(
-                                '/30',
+                                '/${progress['data']['totalTest'].toString()}',
                                 style: TextStyle(fontSize: 15),
                               ),
                             ],
@@ -347,17 +409,17 @@ class _ProgressScreenState extends State<ProgressScreen> {
                       ),
                       Column(
                         children: <Widget>[
-                          Text('Total\nLessons'),
+                          Text('Total\nPoints'),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
                               Text(
-                                '23',
+                                progress['data']['totalPoints'].toString(),
                                 style: TextStyle(
                                     fontSize: 25, fontWeight: FontWeight.w500),
                               ),
                               Text(
-                                '/30',
+                                '/${progress['data']['totalTest'].toString()}',
                                 style: TextStyle(fontSize: 15),
                               ),
                             ],
@@ -369,17 +431,17 @@ class _ProgressScreenState extends State<ProgressScreen> {
                       ),
                       Column(
                         children: <Widget>[
-                          Text('Total\nLessons'),
+                          Text('Test\nAttempted'),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
                               Text(
-                                '23',
+                                progress['data']['totalPoints'].toString(),
                                 style: TextStyle(
                                     fontSize: 25, fontWeight: FontWeight.w500),
                               ),
                               Text(
-                                '/30',
+                                '/${progress['data']['totalTest'].toString()}',
                                 style: TextStyle(fontSize: 15),
                               ),
                             ],
@@ -390,7 +452,18 @@ class _ProgressScreenState extends State<ProgressScreen> {
                   )
                 ],
               ),
-            ),
+            ) :
+           Container(
+             height: MediaQuery.of(context).size.height * 0.5,
+             child: Center(
+                 child: CircularProgressIndicator(
+                   strokeWidth: 2,
+                   backgroundColor: Colors.white,
+                   valueColor: AlwaysStoppedAnimation<Color>(
+                       Theme.of(context).primaryColor),
+                 )
+             ),
+           )
           ],
         ),
       ),

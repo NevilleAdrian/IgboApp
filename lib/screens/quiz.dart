@@ -1,17 +1,26 @@
 import 'package:audioplayers/audio_cache.dart';
+import 'package:flushbar/flushbar.dart';
 //import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/option_box.dart';
 import 'package:nkuzi_igbo/screens/categories_screen.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
 import 'package:nkuzi_igbo/screens/home_screen.dart';
 import 'package:nkuzi_igbo/screens/result_page.dart';
+import 'package:nkuzi_igbo/services/network_helper.dart';
+import 'package:provider/provider.dart';
 
 class QuizScreen extends StatefulWidget {
-  QuizScreen({this.lessons});
+  QuizScreen({this.lessons, this.courses, this.description, this.category, this.id});
   final List<dynamic> lessons;
+  final List<dynamic> courses;
+  final String description;
+  final String id;
+  final String category;
+
 
   @override
   _QuizScreenState createState() => _QuizScreenState();
@@ -22,6 +31,7 @@ class _QuizScreenState extends State<QuizScreen> {
     return MediaQuery.of(context).size.width * 0.5 * width;
   }
   bool correctAnswer;
+  bool _loading = false;
   bool correct;
   int number = 0;
   int testNumber =  0;
@@ -189,10 +199,16 @@ class _QuizScreenState extends State<QuizScreen> {
       MaterialPageRoute(
           builder: (context) => ResultScreen(
                 lessons: widget.lessons,
+                courses: widget.courses,
                 percentage: result,
-                score: results
+                score: results,
+                description: widget.description
               )),
     );
+  }
+
+  double score() {
+    return (results / result.length) * 100;
   }
 
   void _modalBottomSheetMenu() {
@@ -238,11 +254,55 @@ class _QuizScreenState extends State<QuizScreen> {
                             ),
                             isFinished()
                                 ? FlatButton(
-                                    onPressed: () {
-                                      resultPage();
+                                    onPressed: () async{
+                                      setState(() {
+                                        _loading = true;
+                                      });
+                                      NetworkHelper _helper = NetworkHelper();
+                                      Map<String, dynamic> body = {
+                                        "learning_type": widget.description,
+                                        "alphabetsFluency": score(),
+                                        "totalTest": result.length,
+                                        "wordsLearned": results,
+                                        "totalPoints": results,
+                                        "lesson": widget.id,
+                                        "user": Auth.authProvider(context).user.sId,
+                                        "category": widget.category
+                                      };
+                                      var data =  await _helper.calculateResult(body);
+                                      print('success: ${data['status']}');
+                                      if(data['status'] == 'success'){
+                                        setState(() {
+                                          _loading = false;
+                                        });
+                                        resultPage();
+                                      }else {
+                                        Flushbar(
+                                          backgroundColor:
+                                          Theme.of(context).accentColor,
+                                          message:
+                                          "Something went wrong",
+                                          duration: Duration(seconds: 3),
+                                          flushbarStyle:
+                                          FlushbarStyle.GROUNDED,
+                                        )..show(context);
+                                      }
+
+
+
                                     },
                                     color: Color(0XFF66C109),
-                                    child: Text('Continue', style: TextStyle(color: Colors.white),),
+                                    child:  _loading
+                                        ? CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      backgroundColor: Colors.white,
+                                      valueColor:
+                                      AlwaysStoppedAnimation<Color>(
+                                          Theme.of(context).primaryColor),
+                                    )
+                                        : Text('Continue', style: TextStyle(color: Colors.white),),
+
+
                                   )
                                 :
                             FlatButton(
@@ -320,11 +380,53 @@ class _QuizScreenState extends State<QuizScreen> {
                             ),
                             isFinished()
                                 ? FlatButton(
-                                    onPressed: () {
-                                      resultPage();
-                                    },
+                              onPressed: () async{
+                                setState(() {
+                                  _loading = true;
+                                });
+                                NetworkHelper _helper = NetworkHelper();
+                                Map<String, dynamic> body = {
+                                  "learning_type": widget.description,
+                                  "alphabetsFluency": score(),
+                                  "totalTest": result.length,
+                                  "wordsLearned": results,
+                                  "totalPoints": results,
+                                  "lesson": widget.id,
+                                  "user": Auth.authProvider(context).user.sId,
+                                  "category": widget.category
+                                };
+                                var data =  await _helper.calculateResult(body);
+                                print('success: ${data['status']}');
+                                if(data['status'] == 'success'){
+                                  setState(() {
+                                    _loading = false;
+                                  });
+                                  resultPage();
+                                }else {
+                                  Flushbar(
+                                    backgroundColor:
+                                    Theme.of(context).accentColor,
+                                    message:
+                                    "Something went wrong",
+                                    duration: Duration(seconds: 3),
+                                    flushbarStyle:
+                                    FlushbarStyle.GROUNDED,
+                                  )..show(context);
+                                }
+
+
+
+                              },
                                     color: Color(0XFF9D1000),
-                                    child: Text('Continue'),
+                              child:  _loading
+                                  ? CircularProgressIndicator(
+                                strokeWidth: 2,
+                                backgroundColor: Colors.white,
+                                valueColor:
+                                AlwaysStoppedAnimation<Color>(
+                                    Theme.of(context).primaryColor),
+                              )
+                                  : Text('Continue', style: TextStyle(color: Colors.white),),
                                   )
                                 :
                             FlatButton(
@@ -413,11 +515,53 @@ class _QuizScreenState extends State<QuizScreen> {
                         ),
                             isFinished()
                                 ? FlatButton(
-                                    onPressed: () {
-                                      resultPage();
-                                    },
+                              onPressed: () async{
+                                setState(() {
+                                  _loading = true;
+                                });
+                                NetworkHelper _helper = NetworkHelper();
+                                Map<String, dynamic> body = {
+                                  "learning_type": widget.description,
+                                  "alphabetsFluency": score(),
+                                  "totalTest": result.length,
+                                  "wordsLearned": results,
+                                  "totalPoints": results,
+                                  "lesson": widget.id,
+                                  "user": Auth.authProvider(context).user.sId,
+                                  "category": widget.category
+                                };
+                                var data =  await _helper.calculateResult(body);
+                                print('success: ${data['status']}');
+                                if(data['status'] == 'success'){
+                                  setState(() {
+                                    _loading = false;
+                                  });
+                                  resultPage();
+                                }else {
+                                  Flushbar(
+                                    backgroundColor:
+                                    Theme.of(context).accentColor,
+                                    message:
+                                    "Something went wrong",
+                                    duration: Duration(seconds: 3),
+                                    flushbarStyle:
+                                    FlushbarStyle.GROUNDED,
+                                  )..show(context);
+                                }
+
+
+
+                              },
                                     color: Color(0XFF66C109),
-                                    child: Text('Continue', style: TextStyle(color: Colors.white),),
+                              child:  _loading
+                                  ? CircularProgressIndicator(
+                                strokeWidth: 2,
+                                backgroundColor: Colors.white,
+                                valueColor:
+                                AlwaysStoppedAnimation<Color>(
+                                    Theme.of(context).primaryColor),
+                              )
+                                  : Text('Continue', style: TextStyle(color: Colors.white),),
                                   )
                                 :
                         FlatButton(
@@ -491,11 +635,53 @@ class _QuizScreenState extends State<QuizScreen> {
                         ),
                             isFinished()
                                 ? FlatButton(
-                                    onPressed: () {
-                                      resultPage();
-                                    },
+                              onPressed: () async{
+                                NetworkHelper _helper = NetworkHelper();
+                                setState(() {
+                                  _loading = true;
+                                });
+                                Map<String, dynamic> body = {
+                                  "learning_type": widget.description,
+                                  "alphabetsFluency": score(),
+                                  "totalTest": result.length,
+                                  "wordsLearned": results,
+                                  "totalPoints": results,
+                                  "lesson": widget.id,
+                                  "user": Auth.authProvider(context).user.sId,
+                                  "category": widget.category
+                                };
+                                var data =  await _helper.calculateResult(body);
+                                print('success: ${data['status']}');
+                                if(data['status'] == 'success'){
+                                  setState(() {
+                                    _loading = false;
+                                  });
+                                  resultPage();
+                                }else {
+                                  Flushbar(
+                                    backgroundColor:
+                                    Theme.of(context).accentColor,
+                                    message:
+                                    "Something went wrong",
+                                    duration: Duration(seconds: 3),
+                                    flushbarStyle:
+                                    FlushbarStyle.GROUNDED,
+                                  )..show(context);
+                                }
+
+
+
+                              },
                                     color: Color(0XFF9D1000),
-                                    child: Text('Continue'),
+                              child:  _loading
+                                  ? CircularProgressIndicator(
+                                strokeWidth: 2,
+                                backgroundColor: Colors.white,
+                                valueColor:
+                                AlwaysStoppedAnimation<Color>(
+                                    Theme.of(context).primaryColor),
+                              )
+                                  : Text('Continue', style: TextStyle(color: Colors.white),),
                                   )
                                 :
                         FlatButton(
@@ -547,7 +733,7 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void initState() {
     print('mylength: ${widget.lessons[number]['test'].length}');
-
+//    print('courses:${widget.lessons['form']}');
     print('${progressBar()}');
     super.initState();
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nkuzi_igbo/models/app_model.dart';
+import 'package:nkuzi_igbo/models/progres_model.dart';
 import 'package:nkuzi_igbo/models/user_model.dart';
 import 'package:nkuzi_igbo/repository/hive_repository.dart';
 import 'package:nkuzi_igbo/services/network_helper.dart';
@@ -14,9 +15,11 @@ class Auth extends ChangeNotifier {
   String _token;
   List<dynamic> _categories;
 
+
   User get user => _user;
   String get token => _token;
   dynamic get category => _categories;
+
 
   setUser(User user) => _user = user;
   setToken(String token) => _token = token;
