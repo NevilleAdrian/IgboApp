@@ -25,7 +25,6 @@ dependencies:
     sdk: flutter
   flutter_svg: ^0.17.4
   animations: ^1.0.0+5
-  audioplayer2: ^0.5.2
   http: ^0.12.2
   audioplayers: ^0.15.1
   percent_indicator: ^2.1.5
