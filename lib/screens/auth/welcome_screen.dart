@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/helpers/background_image_container.dart';
@@ -12,23 +13,20 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundImageContainer(
-        image: AssetImage('$kImageUrl/nkuzi_start_bg.png'),
+        padding: EdgeInsets.only(top: 70.0, bottom: 40.0),
+        colorFilter: ColorFilter.mode(Colors.black, BlendMode.dstATop),
+        image: AssetImage('$kImageUrl/onboarding.png'),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Expanded(
-                flex: 2,
-                child: SvgPicture.asset(
-                  '$kImageUrl/logo.svg',
-                  height: 100.0,
-                )),
+            SvgPicture.asset(
+              '$kImageUrl/logo.svg',
+              height: 100.0,
+            ),
             SizedBox(
               width: double.infinity,
             ),
-            Expanded(
-              child: StartAuthBottom(),
-            )
+            StartAuthBottom()
           ],
         ),
       ),
@@ -43,19 +41,11 @@ class StartAuthBottom extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 18.0),
       child: Column(
         children: <Widget>[
-          Column(
-            children: <Widget>[
-              Text(
-                'Your Igbo Learning',
-                style: kAuthTextBig,
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                'made easy',
-                style: kAuthTextBig,
-                textAlign: TextAlign.center,
-              ),
-            ],
+          Text(
+            'Your Igbo Learning\nmade easy',
+            style: kAuthTextBig.copyWith(
+                fontFamily: 'Baloo', fontWeight: FontWeight.w900, height: 1),
+            textAlign: TextAlign.center,
           ),
           SizedBox(
             height: 30,

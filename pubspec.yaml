@@ -78,5 +78,11 @@ flutter:
           weight: 800
         - asset: assets/fonts/Poppins-ExtraBold.ttf
           weight: 900
+    - family: Baloo
+      fonts:
+        - asset: assets/fonts/Baloo2-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Baloo2-ExtraBold.ttf
+          weight: 900
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
