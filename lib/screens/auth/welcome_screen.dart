@@ -14,8 +14,7 @@ class WelcomeScreen extends StatelessWidget {
       body: BackgroundImageContainer(
         image: AssetImage('$kImageUrl/nkuzi_start_bg.png'),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
           children: <Widget>[
             Expanded(
                 flex: 2,
