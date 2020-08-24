@@ -97,7 +97,7 @@ class _SplashScreenState extends State<SplashScreen>
                 flex: 1,
                 child: Text(
                   'Igbo Tutor Powered by Gtonia',
-                  style: TextStyle(color: Color(0XFFE20303), fontSize: 11),
+                  style: TextStyle(color: Colors.white, fontSize: 11),
                 ))
           ],
         ),
