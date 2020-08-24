@@ -8,12 +8,14 @@ class BackgroundImageContainer extends StatelessWidget {
   final EdgeInsets padding;
   final EdgeInsets margin;
   final bool hasShadow;
+  final ColorFilter colorFilter;
   final Color shadowColor;
   final ImageProvider<dynamic> image;
   const BackgroundImageContainer(
       {this.child,
       this.image,
       this.margin,
+      this.colorFilter,
       this.width,
       this.height,
       this.padding,
@@ -26,6 +28,7 @@ class BackgroundImageContainer extends StatelessWidget {
         image: new DecorationImage(
           image: image,
           fit: BoxFit.cover,
+          colorFilter: colorFilter,
         ),
         boxShadow: hasShadow
             ? [

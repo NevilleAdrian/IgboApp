@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nkuzi_igbo/helpers/background_image_container.dart';
 import 'package:nkuzi_igbo/models/app_model.dart';
 import 'package:nkuzi_igbo/models/user_model.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
@@ -76,10 +77,9 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-//      color: animation.value,
-//      animate: true,
+      body: BackgroundImageContainer(
+        colorFilter: ColorFilter.mode(Colors.black, BlendMode.dstATop),
+        image: AssetImage('$kImageUrl/starting-page.png'),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

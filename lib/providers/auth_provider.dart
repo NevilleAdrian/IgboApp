@@ -41,11 +41,18 @@ class Auth extends ChangeNotifier {
     }
   }
 
+  logout() {
+    setUser(null);
+    setToken(null);
+    _hiveRepository.clear<User>(name: kUserName);
+    _hiveRepository.clear<AppModel>(name: kAppDataName);
+  }
+
   void _setInitialData(data) {
-    _user = User.fromJson(data['user']);
-    _token = data['token'];
+    setUser(User.fromJson(data['user']));
+    setToken(data['token']);
     _hiveRepository.add<User>(name: kUserName, key: 'user', item: user);
     _hiveRepository.add<AppModel>(
-        name: kAppDataName, key: 'appModel', item: AppModel(token: _token));
+        name: kAppDataName, key: 'appModel', item: AppModel(token: token));
   }
 }
