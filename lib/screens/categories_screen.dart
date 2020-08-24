@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
 import 'package:nkuzi_igbo/screens/settings.dart';
 import 'package:nkuzi_igbo/screens/continue_screen.dart';
+import 'package:nkuzi_igbo/utils/constants.dart';
 
 class CategoriesScreen extends StatefulWidget {
   CategoriesScreen({this.lessons, this.description, this.id});
@@ -433,10 +434,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
                   child: Text(
                     '${widget.description}',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 25.0,
-                        fontWeight: FontWeight.w600),
+                    style: kAuthTextBig.copyWith(
+                        fontFamily: 'Baloo', fontWeight: FontWeight.w900, color: Colors.black),
                   )),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 25.0),
@@ -511,7 +510,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                       children: <Widget>[
                                                         widget.lessons[index][
                                                                     'premium_content'] ==
-                                                                true
+                                                                false
                                                             ? Positioned(
                                                                 right: -2,
                                                                 top: 9,
@@ -615,7 +614,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                       onTap: () {
                                         widget.lessons[index]
                                                     ['premium_content'] ==
-                                                true
+                                                false
                                             ? _modalBottomSheetMenu()
                                             : Navigator.push(
                                                 context,

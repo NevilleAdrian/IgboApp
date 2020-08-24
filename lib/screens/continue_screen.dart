@@ -32,6 +32,7 @@ class _ContinueListState extends State<ContinueList> {
         decoration: BoxDecoration(
           color: Color(0XFF7C0D00),
           image: DecorationImage(
+            colorFilter: ColorFilter.mode(Colors.black, BlendMode.dstATop),
             image: AssetImage("assets/images/bg.png"),
             fit: BoxFit.cover,
           ),

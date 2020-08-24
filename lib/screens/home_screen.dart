@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/categories_screen.dart';
+import 'package:nkuzi_igbo/utils/constants.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'home_screen';
@@ -184,106 +186,126 @@ class _HomeScreenState extends State<HomeScreen>
 
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          'Categories',
-          style: TextStyle(
-              fontSize: 18,
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-              fontFamily: 'Poppins'),
-        ),
-        centerTitle: false,
-        automaticallyImplyLeading: false,
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: GestureDetector(
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Dialog(
-                        backgroundColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(20.0)), //this right here
-                        child: Container(
-                          height: 100,
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TextFormField(
-                                    decoration: InputDecoration(
-                                        fillColor: Colors.white,
-                                        filled: true,
-                                        contentPadding: EdgeInsets.only(
-                                            top: 5, bottom: 5, left: 15),
-                                        //border: InputBorder.none,
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color(0xFFF7F7FB),
-                                              width: 0.5),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color(0xFFF7F7FB),
-                                              width: 0.5),
-                                        ),
-                                        hintText: 'Search with topic',
-                                        hintStyle:
-                                            TextStyle(color: Colors.black),
-                                        suffixIcon: GestureDetector(
-                                            onTap: () => Navigator.pop(context),
-                                            child: Icon(
-                                              Icons.search,
-                                              color: Colors.black,
-                                            ))),
-                                    style: TextStyle(
-                                        fontSize: 13.0, color: Colors.black),
-                                    controller: _nameController,
-                                    onChanged: (value) {
-                                      onSearch(value);
-                                      print('search:$value');
-                                    })
-                              ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 20.0),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title:
+          CircleAvatar(
+            radius: 28,
+            backgroundImage: NetworkImage(
+                'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'),
+          ),
+          centerTitle: false,
+          automaticallyImplyLeading: false,
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: GestureDetector(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Dialog(
+                          backgroundColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(20.0)), //this right here
+                          child: Container(
+                            height: 100,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextFormField(
+                                      decoration: InputDecoration(
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                          contentPadding: EdgeInsets.only(
+                                              top: 5, bottom: 5, left: 15),
+                                          //border: InputBorder.none,
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color(0xFFF7F7FB),
+                                                width: 0.5),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color(0xFFF7F7FB),
+                                                width: 0.5),
+                                          ),
+                                          hintText: 'Search with topic',
+                                          hintStyle:
+                                              TextStyle(color: Colors.black),
+                                          suffixIcon: GestureDetector(
+                                              onTap: () => Navigator.pop(context),
+                                              child: Icon(
+                                                Icons.search,
+                                                color: Colors.black,
+                                              ))),
+                                      style: TextStyle(
+                                          fontSize: 13.0, color: Colors.black),
+                                      controller: _nameController,
+                                      onChanged: (value) {
+                                        onSearch(value);
+                                        print('search:$value');
+                                      })
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    });
-              },
-              child: SvgPicture.asset("assets/images/search.svg",
-                  color: Colors.black),
-            ),
-          ),
-        ],
-        elevation: 0,
-      ),
-      body: ListView(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
-            child: Container(
-              color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Container(color: Colors.grey, height: 0.3),
-                  SizedBox(
-                    height: 25.0,
-                  ),
-                  CategoryList(lessons: filteredCategory)
-                ],
+                        );
+                      });
+                },
+                child: SvgPicture.asset("assets/images/search.svg",
+                    color: Colors.black),
               ),
             ),
-          )
-        ],
+          ],
+          elevation: 0,
+        ),
+        body: ListView(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0, top: 20.0),
+              child: Container(
+                color: Colors.white,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Text(
+                      'Hello ${(toBeginningOfSentenceCase(Auth.authProvider(context).user.name))}',
+                      textAlign: TextAlign.left,
+                      style: kAuthTextBig.copyWith(
+                          fontFamily: 'Baloo', fontWeight: FontWeight.w900, color: Colors.black),
+                    ),
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    Text(
+                      'What will you like to learn today',
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        color: Colors.black
+                      ),
+                    ),
+                    SizedBox(
+                      height: 25.0,
+                    ),
+                    Container(color: Colors.grey, height: 0.3),
+                    SizedBox(
+                      height: 25.0,
+                    ),
+                    CategoryList(lessons: filteredCategory)
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

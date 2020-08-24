@@ -49,7 +49,8 @@ class _ResultScreenState extends State<ResultScreen> {
           decoration: BoxDecoration(
             color: Colors.black,
             image: DecorationImage(
-              image: AssetImage("assets/images/bg.png"),
+              colorFilter: ColorFilter.mode(Colors.black, BlendMode.dstATop),
+              image: AssetImage("assets/images/Afterr-quiz.png"),
               fit: BoxFit.cover,
             ),
           ),

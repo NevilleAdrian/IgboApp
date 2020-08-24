@@ -26,7 +26,7 @@ class HiveRepository implements IRepository {
   }
 
   @override
-  remove({String key, String name}) {
+  remove<T>({String key, String name}) {
     var box = Hive.box(name);
     checkBoxState(box);
     return box.delete(key);
@@ -34,5 +34,12 @@ class HiveRepository implements IRepository {
 
   checkBoxState(box) {
     if (box == null) throw Exception('Box has not been set');
+  }
+
+  @override
+  clear<T>({String name}) async {
+    var box = Hive.box(name);
+    checkBoxState(box);
+    await box.clear();
   }
 }
