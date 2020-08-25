@@ -48,7 +48,7 @@ class StartAuthBottom extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           SizedBox(
-            height: 30,
+            height: 20,
           ),
           Container(
             width: double.infinity,
@@ -56,7 +56,10 @@ class StartAuthBottom extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pushNamed(SignUpScreen.id);
               },
-              child: Text('Start Learning'),
+              child: Text(
+                'Start Learning',
+                style: TextStyle(fontSize: 16.0),
+              ),
             ),
           ),
           SizedBox(
