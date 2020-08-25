@@ -23,51 +23,53 @@ class NetworkHelper {
   }
 
   Future<dynamic> getCategoryList() async {
-    var cat =  await getRequest('$kAppAPIUrl/category/');
+    var cat = await getRequest('$kAppAPIUrl/category/');
     return cat['data'];
   }
 
   Future<dynamic> calculateResult(body) async {
-    var cat =  await authRequest(body,'$kAppAPIUrl/progress/');
+    var cat = await authRequest(body, '$kAppAPIUrl/progress/');
     return cat;
   }
 
-
-
   Future<dynamic> getCategory() async {
-    var cat =  await getRequest('$kAppAPIUrl/category/appflow');
+    var cat = await getRequest('$kAppAPIUrl/category/appflow');
     HiveRepository _hiveRepository = HiveRepository();
     var category = cat['data'].map((e) => Category.fromJson(e)).toList();
-    _hiveRepository.add(name: kCategory, key: 'category', item: jsonEncode(category));
+    _hiveRepository.add(
+        name: kCategory, key: 'category', item: jsonEncode(category));
     return cat;
   }
 
   Future<dynamic> getProgress(id, dropDownId) async {
-    var progress =  await getRequest('$kAppAPIUrl/progress/user/$id/$dropDownId');
+    var progress =
+        await getRequest('$kAppAPIUrl/progress/user/$id/$dropDownId');
     return progress;
   }
 
-  Future<dynamic> getRequest( String url) async {
+  Future<dynamic> getRequest(String url) async {
     var response = await http.get(url);
     var decoded = jsonDecode(response.body);
     if (response.statusCode.toString().startsWith('2')) {
       return decoded;
     } else {
-      throw Exception(response.reasonPhrase);
+      throw Exception(decoded['message'] ?? response.reasonPhrase);
     }
   }
 
-
   Future<dynamic> authRequest(Map body, String url) async {
-    print(body);
-    var response = await http.post(url, headers: kHeaders(null), body: json.encode(body));
+    print('body is $body');
+    var response =
+        await http.post(url, headers: kHeaders(null), body: json.encode(body));
     print(response.body);
     var decoded = jsonDecode(response.body);
     if (response.statusCode.toString().startsWith('2')) {
       print(decoded);
       return decoded;
     } else {
-      throw Exception(response.reasonPhrase);
+      print(
+          'reason is ${response.reasonPhrase} message is ${decoded['message']}');
+      throw Exception(decoded['message'] ?? response.reasonPhrase);
     }
   }
 }
