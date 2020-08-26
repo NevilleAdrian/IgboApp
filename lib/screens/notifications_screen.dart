@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/screens/settings.dart';
+import 'package:nkuzi_igbo/utils/constants.dart';
 
 class NotificationScreen extends StatefulWidget {
   @override
@@ -17,11 +18,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
           backgroundColor: Colors.white,
           title: Text(
             'Notification',
-            style: TextStyle(
-                fontSize: 18,
-                color: Colors.black,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'Poppins'),
+            style: kAuthTextBig.copyWith(
+                fontFamily: 'Baloo', fontWeight: FontWeight.w900, color: Colors.black, fontSize: 25.0),
           ),
           centerTitle: false,
           automaticallyImplyLeading: false,

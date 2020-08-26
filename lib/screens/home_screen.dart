@@ -280,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen>
                       'Hello ${(toBeginningOfSentenceCase(Auth.authProvider(context).user.name))}',
                       textAlign: TextAlign.left,
                       style: kAuthTextBig.copyWith(
-                          fontFamily: 'Baloo', fontWeight: FontWeight.w900, color: Colors.black),
+                          fontFamily: 'Baloo', fontWeight: FontWeight.w900, color: Colors.black, fontSize: 22.0),
                     ),
                     SizedBox(
                       height: 5.0,

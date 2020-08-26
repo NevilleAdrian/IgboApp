@@ -13,7 +13,7 @@ import 'package:nkuzi_igbo/screens/result_page.dart';
 import 'package:nkuzi_igbo/services/network_helper.dart';
 import 'package:provider/provider.dart';
 
-class QuizScreen extends StatefulWidget {
+class QuizScreen extends StatefulWidget  {
   QuizScreen({this.lessons, this.courses, this.description, this.category, this.id});
   final List<dynamic> lessons;
   final List<dynamic> courses;
@@ -26,7 +26,7 @@ class QuizScreen extends StatefulWidget {
   _QuizScreenState createState() => _QuizScreenState();
 }
 
-class _QuizScreenState extends State<QuizScreen> {
+class _QuizScreenState extends State<QuizScreen> with AutomaticKeepAliveClientMixin  {
   double getWidth(BuildContext context, double width) {
     return MediaQuery.of(context).size.width * 0.5 * width;
   }
@@ -733,584 +733,495 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void initState() {
     print('mylength: ${widget.lessons[number]['test'].length}');
-//    print('courses:${widget.lessons['form']}');
     print('${progressBar()}');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: ListView(
         shrinkWrap: true,
+        scrollDirection: Axis.vertical,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: next ? EdgeInsets.only(left: 20.0,  top: 20.0, right: 20.0, bottom: 40): EdgeInsets.only(left: 20.0,  top: 20.0, right: 20.0, bottom: 40),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                        flex: 1,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomePage()),
-                            );
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  spreadRadius: 1,
-                                  blurRadius: 10,
-                                  offset: Offset(
-                                      -1, 1), // changes position of shadow
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                          flex: 1,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushAndRemoveUntil(context,
+                                  MaterialPageRoute(builder: (BuildContext context) => CategoriesScreen(lessons: widget.courses, description: widget.description,)),
+                                  ModalRoute.withName('/'));
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    spreadRadius: 1,
+                                    blurRadius: 10,
+                                    offset: Offset(
+                                        -1, 1), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              child: CircleAvatar(
+                                backgroundColor: Colors.white,
+                                radius: 15.0,
+                                child: SvgPicture.asset(
+                                  "assets/images/cancel.svg",
+                                  height: 20,
                                 ),
-                              ],
-                            ),
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              radius: 15.0,
-                              child: SvgPicture.asset(
-                                "assets/images/cancel.svg",
-                                height: 20,
                               ),
                             ),
-                          ),
-                        )),
-                    SizedBox(
-                      width: 15.0,
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                          height: 6,
-                          width: 100,
-                          color: Color(0XFFEDEDED),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: SizedBox(
-                              child: Container(
-                                  height: 6,
-                                  width: getWidth(context, progressBar()),
-                                  color: Colors.redAccent),
-                            ),
                           )),
-                    ),
-                    SizedBox(
-                      width: 25.0,
-                    ),
-                    Expanded(
-                        flex: 1,
-                        child: Text(
-                          '${number + 1}/${widget.lessons.length}',
-                          style: TextStyle(
-                              color: Colors.redAccent,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600),
-                        ))
-                  ],
-                ),
-                SizedBox(
-                  height: 50.0,
-                ),
-
-
-//                Column(
-//                  children: <Widget>[
-//                    widget.lessons[number]['type'] == 'toIgbo'
-//                        ? Column(
-//                      children: <Widget>[
-//                        Column(
-//                          children: <Widget>[
-//                            Text(
-//                              '${widget.lessons[number]['description']}',
-//                              textAlign: TextAlign.center,
-//                              style: TextStyle(
-//                                  fontSize: 20.0,
-//                                  fontWeight: FontWeight.w600),
-//                            ),
-//                            SizedBox(
-//                              height: 55.0,
-//                            ),
-//                            Container(
-//                                padding: EdgeInsets.symmetric(
-//                                    vertical: 25.0,
-//                                    horizontal: 25.0),
-//                                decoration: BoxDecoration(
-//                                    color: Colors.white,
-//                                    borderRadius: BorderRadius.only(
-//                                        topLeft: Radius.circular(5),
-//                                        topRight:
-//                                        Radius.circular(5),
-//                                        bottomLeft:
-//                                        Radius.circular(5),
-//                                        bottomRight:
-//                                        Radius.circular(5)),
-//                                    boxShadow: [
-//                                      BoxShadow(
-//                                        color: Colors.grey
-//                                            .withOpacity(0.3),
-//                                        spreadRadius: 1,
-//                                        blurRadius: 10,
-//                                        offset: Offset(-1,
-//                                            1), // changes position of shadow
-//                                      ),
-//                                    ]),
-//                                child: Image.asset(
-//                                  "${widget.lessons[number]['picture']}",
-//                                )),
-//                          ],
-//                        ),
-//                        SizedBox(
-//                          height: 100.0,
-//                        ),
-//                        Row(
-//                          mainAxisAlignment:
-//                          MainAxisAlignment.spaceBetween,
-//                          children: <Widget>[
-//                            number == 0
-//                                ? GestureDetector(
-//                              onTap: () {},
-//                              child: SvgPicture.asset(
-//                                "assets/images/left-grey.svg",
-//                              ),
-//                            )
-//                                : GestureDetector(
-//                              onTap: () {
-//                                setState(() {
-//                                  number--;
-//                                });
-//                              },
-//                              child: SvgPicture.asset(
-//                                "assets/images/left.svg",
-//                              ),
-//                            ),
-//                            GestureDetector(
-//                              onTap: () {
-//                                setState(() {
-//                                  next = true;
-//                                });
-//                              },
-//                              child: SvgPicture.asset(
-//                                "assets/images/right.svg",
-//                              ),
-//                            )
-//                          ],
-//                        )
-//                      ],
-//                    )
-//
-//                  ],
-//                ),
-                next ?
-                Column(
+                      SizedBox(
+                        width: 15.0,
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Container(
+                            height: 6,
+                            width: 100,
+                            color: Color(0XFFEDEDED),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: SizedBox(
+                                child: Container(
+                                    height: 6,
+                                    width: getWidth(context, progressBar()),
+                                    color: Colors.redAccent),
+                              ),
+                            )),
+                      ),
+                      SizedBox(
+                        width: 25.0,
+                      ),
+                      Expanded(
+                          flex: 1,
+                          child: Text(
+                            '${number + 1}/${widget.lessons.length}',
+                            style: TextStyle(
+                                color: Colors.redAccent,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600),
+                          ))
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.1,
+                  ),
+                  Column(
+                    children: <Widget>[
+                      next ?
+                      Column(
                         children: <Widget>[
                           widget.lessons[number]['test'][testNumber]['type'] == 'toIgbo'
                               ? Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: <Widget>[
-                                    Column(
-                                      children: <Widget>[
-                                        Text(
-                                          '${widget.lessons[number]['test'][testNumber]['question']}',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: 20.0,
-                                              fontWeight: FontWeight.w600),
+                            crossAxisAlignment:
+                            CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    '${widget.lessons[number]['test'][testNumber]['question']}',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      _isVisible
+                                          ? GestureDetector(
+                                        child: SvgPicture.asset(
+                                          "assets/images/audio.svg",
                                         ),
-                                        SizedBox(
-                                          height: 20.0,
+                                        onTap: () {
+                                          playSound(
+                                              widget.lessons[number]
+                                              ['voicing']);
+                                          pausePlayToggle();
+                                        },
+                                      )
+                                          : GestureDetector(
+                                        child: SvgPicture.asset(
+                                          "assets/images/pause.svg",
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: <Widget>[
-                                            _isVisible
-                                                ? GestureDetector(
-                                                    child: SvgPicture.asset(
-                                                      "assets/images/audio.svg",
-                                                    ),
-                                                    onTap: () {
-                                                      playSound(
-                                                          widget.lessons[number]
-                                                              ['voicing']);
-                                                      pausePlayToggle();
-                                                    },
-                                                  )
-                                                : GestureDetector(
-                                                    child: SvgPicture.asset(
-                                                      "assets/images/pause.svg",
-                                                    ),
-                                                    onTap: () {
-                                                      pauseSound();
-                                                      pausePlayToggle();
-                                                    },
-                                                  ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 20.0,
-                                        ),
-                                        Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                                flex: 1,
-                                                child: Container(
+                                        onTap: () {
+                                          pauseSound();
+                                          pausePlayToggle();
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                          flex: 1,
+                                          child: Container(
+                                              color: Colors.grey,
+                                              height: 0.3)),
+                                      Expanded(
+                                          flex: 1,
+                                          child: Center(
+                                              child: Text(
+                                                'in English',
+                                                style: TextStyle(
                                                     color: Colors.grey,
-                                                    height: 0.3)),
-                                            Expanded(
-                                                flex: 1,
-                                                child: Center(
-                                                    child: Text(
-                                                  'in English',
-                                                  style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontSize: 15.0),
-                                                ))),
-                                            Expanded(
-                                                flex: 1,
-                                                child: Container(
-                                                    color: Colors.grey,
-                                                    height: 0.3)),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 20.0,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    checkAnswer(widget.lessons[number]['test'][testNumber]['optionA']);
+                                                    fontSize: 15.0),
+                                              ))),
+                                      Expanded(
+                                          flex: 1,
+                                          child: Container(
+                                              color: Colors.grey,
+                                              height: 0.3)),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              checkAnswer(widget.lessons[number]['test'][testNumber]['optionA']);
 //                                                    optionA = widget.lessons[number]['test'][testNumber]['optionA'];
 //                                                    print('optionA: $optionA');
-                                                    clickedA = !clickedA;
-                                                    clickedB = false;
-                                                    clickedC = false;
-                                                    clickedD = false;
-                                                  });
-                                                },
-                                                child: Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 30.0,
-                                                            horizontal: 25.0),
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        border: clickedA
-                                                            ? Border.all(
-                                                                color: Color(
-                                                                    0XFFF59C01))
-                                                            : Border.all(
-                                                                color: Colors
-                                                                    .transparent),
-                                                        borderRadius: BorderRadius.only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    5),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    5),
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    5),
-                                                            bottomRight:
-                                                                Radius.circular(5)),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                            color: Colors.grey
-                                                                .withOpacity(
-                                                                    0.3),
-                                                            spreadRadius: 1,
-                                                            blurRadius: 10,
-                                                            offset: Offset(-1,
-                                                                1), // changes position of shadow
-                                                          ),
-                                                        ]),
-                                                    child: Container(
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: <Widget>[
-                                                          Container(
-                                                            height: 50.0,
-                                                            child: Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionAImage']}",))
-                                                          ),
-                                                          SizedBox(
-                                                            height: 15.0,
-                                                          ),
-                                                          Text(
-                                                              "${widget.lessons[number]['test'][testNumber]['optionA']}")
-                                                        ],
-                                                      ),
-                                                    )),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 30.0,
-                                            ),
-                                            Expanded(
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    checkAnswer(widget.lessons[number]['test'][testNumber]['optionB']);
+                                              clickedA = !clickedA;
+                                              clickedB = false;
+                                              clickedC = false;
+                                              clickedD = false;
+                                            });
+                                          },
+                                          child: Container(
+                                              padding:
+                                              EdgeInsets.symmetric(
+                                                  vertical: 30.0,
+                                                  horizontal: 25.0),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  border: clickedA
+                                                      ? Border.all(
+                                                      color: Color(
+                                                          0XFFF59C01))
+                                                      : Border.all(
+                                                      color: Colors
+                                                          .transparent),
+                                                  borderRadius: BorderRadius.only(
+                                                      topLeft:
+                                                      Radius.circular(
+                                                          5),
+                                                      topRight:
+                                                      Radius.circular(
+                                                          5),
+                                                      bottomLeft:
+                                                      Radius.circular(
+                                                          5),
+                                                      bottomRight:
+                                                      Radius.circular(5)),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey
+                                                          .withOpacity(
+                                                          0.3),
+                                                      spreadRadius: 1,
+                                                      blurRadius: 10,
+                                                      offset: Offset(-1,
+                                                          1), // changes position of shadow
+                                                    ),
+                                                  ]),
+                                              child: Container(
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                                  children: <Widget>[
+                                                    Container(
+                                                        height: 50.0,
+                                                        child: Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionAImage']}",))
+                                                    ),
+                                                    SizedBox(
+                                                      height: 15.0,
+                                                    ),
+                                                    Text(
+                                                      "${widget.lessons[number]['test'][testNumber]['optionA']}", style: TextStyle(fontSize: 18.0),)
+                                                  ],
+                                                ),
+                                              )),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 30.0,
+                                      ),
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              checkAnswer(widget.lessons[number]['test'][testNumber]['optionB']);
 //                                                    optionB = widget.lessons[number]['test'][testNumber]['optionB'];
 //                                                    print('optionB: $optionB');
-                                                    clickedA = false;
-                                                    clickedB = !clickedB;
-                                                    clickedC = false;
-                                                    clickedD = false;
-                                                  });
-                                                },
-                                                child: Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 30.0,
-                                                            horizontal: 25.0),
-                                                    decoration: BoxDecoration(
-                                                        border: clickedB
-                                                            ? Border.all(
-                                                                color: Color(
-                                                                    0XFFF59C01))
-                                                            : Border.all(
-                                                                color: Colors
-                                                                    .transparent),
-                                                        color: Colors.white,
-                                                        borderRadius: BorderRadius.only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    5),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    5),
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    5),
-                                                            bottomRight:
-                                                                Radius.circular(5)),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                            color: Colors.grey
-                                                                .withOpacity(
-                                                                    0.3),
-                                                            spreadRadius: 1,
-                                                            blurRadius: 10,
-                                                            offset: Offset(-1,
-                                                                1), // changes position of shadow
-                                                          ),
-                                                        ]),
-                                                    child: Container(
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: <Widget>[
-                                                          Container(
-                                                            height: 50.0,
-                                                            child: Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionBImage']}",)),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 15.0,
-                                                          ),
-                                                          Text(
-                                                              "${widget.lessons[number]['test'][testNumber]['optionB']}")
-                                                        ],
-                                                      ),
-                                                    )),
-                                              ),
-                                            ),
-                                          ],
+                                              clickedA = false;
+                                              clickedB = !clickedB;
+                                              clickedC = false;
+                                              clickedD = false;
+                                            });
+                                          },
+                                          child: Container(
+                                              padding:
+                                              EdgeInsets.symmetric(
+                                                  vertical: 30.0,
+                                                  horizontal: 25.0),
+                                              decoration: BoxDecoration(
+                                                  border: clickedB
+                                                      ? Border.all(
+                                                      color: Color(
+                                                          0XFFF59C01))
+                                                      : Border.all(
+                                                      color: Colors
+                                                          .transparent),
+                                                  color: Colors.white,
+                                                  borderRadius: BorderRadius.only(
+                                                      topLeft:
+                                                      Radius.circular(
+                                                          5),
+                                                      topRight:
+                                                      Radius.circular(
+                                                          5),
+                                                      bottomLeft:
+                                                      Radius.circular(
+                                                          5),
+                                                      bottomRight:
+                                                      Radius.circular(5)),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey
+                                                          .withOpacity(
+                                                          0.3),
+                                                      spreadRadius: 1,
+                                                      blurRadius: 10,
+                                                      offset: Offset(-1,
+                                                          1), // changes position of shadow
+                                                    ),
+                                                  ]),
+                                              child: Container(
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                                  children: <Widget>[
+                                                    Container(
+                                                      height: 50.0,
+                                                      child: Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionBImage']}",)),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 15.0,
+                                                    ),
+                                                    Text(
+                                                        "${widget.lessons[number]['test'][testNumber]['optionB']}", style: TextStyle(fontSize: 18.0))
+                                                  ],
+                                                ),
+                                              )),
                                         ),
-                                        SizedBox(
-                                          height: 40.0,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            Expanded(
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    checkAnswer(widget.lessons[number]['test'][testNumber]['optionC']);
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 40.0,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              checkAnswer(widget.lessons[number]['test'][testNumber]['optionC']);
 //                                                    optionC = widget.lessons[number]['test'][testNumber]['optionC'];
 //                                                    print('optionC: $optionC');
-                                                    clickedA = false;
-                                                    clickedB = false;
-                                                    clickedC = !clickedC;
-                                                    clickedD = false;
-                                                  });
-                                                },
-                                                child: Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 30.0,
-                                                            horizontal: 25.0),
-                                                    decoration: BoxDecoration(
-                                                        border: clickedC
-                                                            ? Border.all(
-                                                                color: Color(
-                                                                    0XFFF59C01))
-                                                            : Border.all(
-                                                                color: Colors
-                                                                    .transparent),
-                                                        color: Colors.white,
-                                                        borderRadius: BorderRadius.only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    5),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    5),
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    5),
-                                                            bottomRight:
-                                                                Radius.circular(5)),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                            color: Colors.grey
-                                                                .withOpacity(
-                                                                    0.3),
-                                                            spreadRadius: 1,
-                                                            blurRadius: 10,
-                                                            offset: Offset(-1,
-                                                                1), // changes position of shadow
-                                                          ),
-                                                        ]),
-                                                    child: Column(
-                                                      children: <Widget>[
-                                                        Container(
-                                                          height: 50.0,
-                                                          child:
-                                                          Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionCImage']}",))
-                                                        ),
-                                                        SizedBox(
-                                                          height: 15.0,
-                                                        ),
-                                                        Text(
-                                                            "${widget.lessons[number]['test'][testNumber]['optionC']}")
-                                                      ],
-                                                    )),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 30.0,
-                                            ),
-                                            Expanded(
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    checkAnswer(widget.lessons[number]['test'][testNumber]['optionD']);
+                                              clickedA = false;
+                                              clickedB = false;
+                                              clickedC = !clickedC;
+                                              clickedD = false;
+                                            });
+                                          },
+                                          child: Container(
+                                              padding:
+                                              EdgeInsets.symmetric(
+                                                  vertical: 30.0,
+                                                  horizontal: 25.0),
+                                              decoration: BoxDecoration(
+                                                  border: clickedC
+                                                      ? Border.all(
+                                                      color: Color(
+                                                          0XFFF59C01))
+                                                      : Border.all(
+                                                      color: Colors
+                                                          .transparent),
+                                                  color: Colors.white,
+                                                  borderRadius: BorderRadius.only(
+                                                      topLeft:
+                                                      Radius.circular(
+                                                          5),
+                                                      topRight:
+                                                      Radius.circular(
+                                                          5),
+                                                      bottomLeft:
+                                                      Radius.circular(
+                                                          5),
+                                                      bottomRight:
+                                                      Radius.circular(5)),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey
+                                                          .withOpacity(
+                                                          0.3),
+                                                      spreadRadius: 1,
+                                                      blurRadius: 10,
+                                                      offset: Offset(-1,
+                                                          1), // changes position of shadow
+                                                    ),
+                                                  ]),
+                                              child: Column(
+                                                children: <Widget>[
+                                                  Container(
+                                                      height: 50.0,
+                                                      child:
+                                                      Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionCImage']}",))
+                                                  ),
+                                                  SizedBox(
+                                                    height: 15.0,
+                                                  ),
+                                                  Text(
+                                                      "${widget.lessons[number]['test'][testNumber]['optionC']}",style: TextStyle(fontSize: 18.0))
+                                                ],
+                                              )),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 30.0,
+                                      ),
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              checkAnswer(widget.lessons[number]['test'][testNumber]['optionD']);
 //                                                    optionD = widget.lessons[number]['test'][testNumber]['optionD'];
 //                                                    print('optionD: $optionD');
-                                                    clickedA = false;
-                                                    clickedB = false;
-                                                    clickedC = false;
-                                                    clickedD = !clickedD;
-                                                  });
-                                                },
-                                                child: Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 30.0,
-                                                            horizontal: 25.0),
-                                                    decoration: BoxDecoration(
-                                                        border: clickedD
-                                                            ? Border.all(
-                                                                color: Color(
-                                                                    0XFFF59C01))
-                                                            : Border.all(
-                                                                color: Colors
-                                                                    .transparent),
-                                                        color: Colors.white,
-                                                        borderRadius: BorderRadius.only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    5),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    5),
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    5),
-                                                            bottomRight:
-                                                                Radius.circular(5)),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                            color: Colors.grey
-                                                                .withOpacity(
-                                                                    0.3),
-                                                            spreadRadius: 1,
-                                                            blurRadius: 10,
-                                                            offset: Offset(-1,
-                                                                1), // changes position of shadow
-                                                          ),
-                                                        ]),
-                                                    child: Column(
-                                                      children: <Widget>[
-                                                        Container(
-                                                          height: 50.0,
-                                                          child:
-                                                          Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionDImage']}",))
-                                                        ),
-                                                        SizedBox(
-                                                          height: 15.0,
-                                                        ),
-                                                        Text(
-                                                            "${widget.lessons[number]['test'][testNumber]['optionD']}")
-                                                      ],
-                                                    )),
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 60.0,
-                                    ),
-                                    FlatButton(
-                                        color: Color(0XFFF21600),
-                                        onPressed: () {
-                                          setState(() {
-                                          if(widget.lessons[number]['test'] != [] || widget.lessons[number]['test'].length != 0) {
-                                            _modalBottomSheetMenu();
-                                          }
-                                                result.add(correctAnswer);
-                                              correctAnswer ? results++ : 0;
-                                            print('result:$results');
-                                            print('result:$result');
+                                              clickedA = false;
+                                              clickedB = false;
+                                              clickedC = false;
+                                              clickedD = !clickedD;
+                                            });
+                                          },
+                                          child: Container(
+                                              padding:
+                                              EdgeInsets.symmetric(
+                                                  vertical: 30.0,
+                                                  horizontal: 25.0),
+                                              decoration: BoxDecoration(
+                                                  border: clickedD
+                                                      ? Border.all(
+                                                      color: Color(
+                                                          0XFFF59C01))
+                                                      : Border.all(
+                                                      color: Colors
+                                                          .transparent),
+                                                  color: Colors.white,
+                                                  borderRadius: BorderRadius.only(
+                                                      topLeft:
+                                                      Radius.circular(
+                                                          5),
+                                                      topRight:
+                                                      Radius.circular(
+                                                          5),
+                                                      bottomLeft:
+                                                      Radius.circular(
+                                                          5),
+                                                      bottomRight:
+                                                      Radius.circular(5)),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey
+                                                          .withOpacity(
+                                                          0.3),
+                                                      spreadRadius: 1,
+                                                      blurRadius: 10,
+                                                      offset: Offset(-1,
+                                                          1), // changes position of shadow
+                                                    ),
+                                                  ]),
+                                              child: Column(
+                                                children: <Widget>[
+                                                  Container(
+                                                      height: 50.0,
+                                                      child:
+                                                      Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionDImage']}",))
+                                                  ),
+                                                  SizedBox(
+                                                    height: 15.0,
+                                                  ),
+                                                  Text(
+                                                      "${widget.lessons[number]['test'][testNumber]['optionD']}",style: TextStyle(fontSize: 18.0))
+                                                ],
+                                              )),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: 60.0,
+                              ),
+                              FlatButton(
+                                  color: Color(0XFFF21600),
+                                  onPressed: () {
+                                    setState(() {
+                                      if(widget.lessons[number]['test'] != [] || widget.lessons[number]['test'].length != 0) {
+                                        _modalBottomSheetMenu();
+                                      }
+                                      result.add(correctAnswer);
+                                      correctAnswer ? results++ : 0;
+                                      print('result:$results');
+                                      print('result:$result');
 
-                                          });
-                                          print('CORRECT: ${ widget.lessons[number]['test'][testNumber]['correctOption']}');
-                                          print('A $checkAnswerA');
-                                          print('B $checkAnswerB');
-                                          print('C $checkAnswerC');
-                                          print('D $checkAnswerD');
+                                    });
+                                    print('CORRECT: ${ widget.lessons[number]['test'][testNumber]['correctOption']}');
+                                    print('A $checkAnswerA');
+                                    print('B $checkAnswerB');
+                                    print('C $checkAnswerC');
+                                    print('D $checkAnswerD');
 
-                                          print('answer:$correctAnswer');
-                                        },
-                                        child: Text(
-                                          'Continue',
-                                          style: TextStyle(color: Colors.white),
-                                        ))
-                                  ],
-                                )
+                                    print('answer:$correctAnswer');
+                                  },
+                                  child: Text(
+                                    'Continue',
+                                    style: TextStyle(color: Colors.white),
+                                  ))
+                            ],
+                          )
                               :  Column(
                             children: <Widget>[
                               Container(
@@ -1538,101 +1449,104 @@ class _QuizScreenState extends State<QuizScreen> {
                             ],
                           )
                         ],
-                      )
-                :   Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          '${widget.lessons[number]['description']}',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(
-                          height: 55.0,
-                        ),
-                        Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 25.0,
-                                horizontal: 25.0),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(5),
-                                    topRight:
-                                    Radius.circular(5),
-                                    bottomLeft:
-                                    Radius.circular(5),
-                                    bottomRight:
-                                    Radius.circular(5)),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey
-                                        .withOpacity(0.3),
-                                    spreadRadius: 1,
-                                    blurRadius: 10,
-                                    offset: Offset(-1,
-                                        1), // changes position of shadow
-                                  ),
-                                ]),
-                            child: Image(
-                              image: NetworkImage("${widget.lessons[number]['picture']}"),
-                            )
+                      ) :
+                      Column(
+                        children: <Widget>[
+                          Text(
+                            '${widget.lessons[number]['description']}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.15,
+                          ),
+                          Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 25.0,
+                                  horizontal: 25.0),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(5),
+                                      topRight:
+                                      Radius.circular(5),
+                                      bottomLeft:
+                                      Radius.circular(5),
+                                      bottomRight:
+                                      Radius.circular(5)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey
+                                          .withOpacity(0.3),
+                                      spreadRadius: 1,
+                                      blurRadius: 10,
+                                      offset: Offset(-1,
+                                          1), // changes position of shadow
+                                    ),
+                                  ]),
+                              child: Image(
+                                image: NetworkImage("${widget.lessons[number]['picture']}"),
+                              )
 
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 100.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        number == 0
-                            ? GestureDetector(
-                          onTap: () {},
-                          child: SvgPicture.asset(
-                            "assets/images/left-grey.svg",
                           ),
-                        )
-                            : GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              number--;
-                            });
-                          },
-                          child: SvgPicture.asset(
-                            "assets/images/left.svg",
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.2,
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              if(widget.lessons[number]['test'] == [] || widget.lessons[number]['test'].length == 0 ){
-                                next = false;
-                                number ++;
-                              }
-                              else {
-                                next = true;
-                              }
-                            });
-                          },
-                          child: SvgPicture.asset(
-                            "assets/images/right.svg",
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ]
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              number == 0
+                                  ? GestureDetector(
+                                onTap: () {},
+                                child: SvgPicture.asset(
+                                  "assets/images/left-grey.svg",
+                                ),
+                              )
+                                  : GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    number--;
+                                  });
+                                },
+                                child: SvgPicture.asset(
+                                  "assets/images/left.svg",
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    if(widget.lessons[number]['test'] == [] || widget.lessons[number]['test'].length == 0 ){
+                                      next = false;
+                                      number ++;
+                                    }
+                                    else {
+                                      next = true;
+                                    }
+                                  });
+                                },
+                                child: SvgPicture.asset(
+                                  "assets/images/right.svg",
+                                ),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  )
+
+                ]
             ),
           ),
         ],
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+
 }
