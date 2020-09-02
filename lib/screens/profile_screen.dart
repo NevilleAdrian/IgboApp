@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/settings.dart';
+import 'package:nkuzi_igbo/utils/constants.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -45,11 +46,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           backgroundColor: Colors.white,
           title: Text(
             'Profile',
-            style: TextStyle(
-                fontSize: 18,
-                color: Colors.black,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'Poppins'),
+            style: kAuthTextBig.copyWith(
+                fontFamily: 'Baloo', fontWeight: FontWeight.w900, color: Colors.black, fontSize: 25.0),
           ),
           centerTitle: false,
           automaticallyImplyLeading: false,
@@ -115,8 +113,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: <Widget>[
                         Column(
                           children: <Widget>[
-                            name
-                                ? GestureDetector(
+//                            name
+//                                ?
+                            GestureDetector(
                                     onTap: () {
                                       setState(() {
                                         name = !name;
@@ -142,46 +141,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   color: Colors.black,
                                                   fontSize: 16),
                                             ),
-                                            Text(
-                                              'edit',
-                                              style: TextStyle(
-                                                  color: Color(0XFFF21600)),
-                                            )
+//                                            Text(
+//                                              'edit',
+//                                              style: TextStyle(
+//                                                  color: Color(0XFFF21600)),
+//                                            )
                                           ],
                                         ),
                                       ),
                                     ),
                                   )
-                                : TextFormField(
-                                    controller: _nameController,
-                                    textInputAction: TextInputAction.next,
-                                    textCapitalization:
-                                        TextCapitalization.words,
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      contentPadding:
-                                          EdgeInsets.symmetric(vertical: 5),
-                                      focusedBorder: InputBorder.none,
-                                      labelText: Auth.authProvider(context).user.name,
-                                      labelStyle:
-                                          TextStyle(color: Colors.black),
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.grey),
-                                      ),
-                                    ),
-                                    validator: (String value) {
-                                      if (value.length < 1) {
-                                        return 'Please enter the right name';
-                                      } else {
-                                        return null;
-                                      }
-                                    },
-                                  ),
+//                                :
+//                            TextFormField(
+//                                    controller: _nameController,
+//                                    textInputAction: TextInputAction.next,
+//                                    textCapitalization:
+//                                        TextCapitalization.words,
+//                                    decoration: InputDecoration(
+//                                      border: InputBorder.none,
+//                                      contentPadding:
+//                                          EdgeInsets.symmetric(vertical: 5),
+//                                      focusedBorder: InputBorder.none,
+//                                      labelText: Auth.authProvider(context).user.name,
+//                                      labelStyle:
+//                                          TextStyle(color: Colors.black),
+//                                      fillColor: Colors.white,
+//                                      filled: true,
+//                                      errorBorder: InputBorder.none,
+//                                      disabledBorder: InputBorder.none,
+//                                      enabledBorder: UnderlineInputBorder(
+//                                        borderSide:
+//                                            BorderSide(color: Colors.grey),
+//                                      ),
+//                                    ),
+//                                    validator: (String value) {
+//                                      if (value.length < 1) {
+//                                        return 'Please enter the right name';
+//                                      } else {
+//                                        return null;
+//                                      }
+//                                    },
+//                                  ),
                           ],
                         ),
                         Column(

@@ -4,13 +4,15 @@ import 'package:nkuzi_igbo/screens/home_page.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class ResultScreen extends StatefulWidget {
-  ResultScreen({this.lessons, this.percentage, this.score, this.courses, this.description});
+  ResultScreen({this.lessons, this.percentage, this.score, this.courses, this.description, this.id});
 
   final List<dynamic> lessons;
   final List<dynamic> courses;
   final List percentage;
   final int score;
   final String description;
+  final String id;
+
 
   @override
   _ResultScreenState createState() => _ResultScreenState();
@@ -49,7 +51,8 @@ class _ResultScreenState extends State<ResultScreen> {
           decoration: BoxDecoration(
             color: Colors.black,
             image: DecorationImage(
-              image: AssetImage("assets/images/bg.png"),
+              colorFilter: ColorFilter.mode(Color(0XFF330000), BlendMode.dstATop),
+              image: AssetImage("assets/images/Afterr-quiz.png"),
               fit: BoxFit.cover,
             ),
           ),
@@ -85,23 +88,32 @@ class _ResultScreenState extends State<ResultScreen> {
                           SizedBox(height: 30,),
                           Text('${pass()}', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 18, )),
                           SizedBox(height: 30,),
-                          Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 30.0, right: 10.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: <Widget>[
                                 Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text('${widget.score}', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 40, )),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
                                     Text('Words learned', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300, fontSize: 18, ))
                                   ],
                                 ),
-                                SizedBox(width: 30.0,),
-                                Container(color: Colors.white , height: 70.0, width: 2,),
-                                SizedBox(width: 30.0,),
-
                                 Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text('${widget.score}', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 40, )),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
                                     Text('Total Points', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300, fontSize: 18, ))
                                   ],
                                 ),
@@ -113,7 +125,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             color: Color(0XFFF21600) ,
                               onPressed: () {
                                 Navigator.pushAndRemoveUntil(context,
-                                    MaterialPageRoute(builder: (BuildContext context) => CategoriesScreen(lessons: widget.courses, description: widget.description,)),
+                                    MaterialPageRoute(builder: (BuildContext context) => CategoriesScreen(lessons: widget.courses, description: widget.description, id: widget.id,)),
                                     ModalRoute.withName('/'));
                               },
                               child: Text('Continue')

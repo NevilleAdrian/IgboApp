@@ -6,6 +6,7 @@ import 'package:nkuzi_igbo/models/user_model.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/settings.dart';
 import 'package:nkuzi_igbo/services/network_helper.dart';
+import 'package:nkuzi_igbo/utils/constants.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
@@ -105,11 +106,8 @@ class _ProgressScreenState extends State<ProgressScreen> {
           backgroundColor: Colors.white,
           title: Text(
             'Progress',
-            style: TextStyle(
-                fontSize: 18,
-                color: Colors.black,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'Poppins'),
+            style: kAuthTextBig.copyWith(
+                fontFamily: 'Baloo', fontWeight: FontWeight.w900, color: Colors.black, fontSize: 25.0),
           ),
           centerTitle: false,
           automaticallyImplyLeading: false,
@@ -154,12 +152,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                             child: DropdownButtonHideUnderline(
                           child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: ListView(
-                                  scrollDirection: Axis.horizontal,
-                                  children: <Widget>[
-                                    androidDropdown()
-                                  ],
-                              )
+                              child: androidDropdown()
                           ),
                             ),
                           ),
@@ -171,7 +164,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                     height: 30.0,
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 23.0),
+                    padding: EdgeInsets.only(left: 23.0, right: 23),
                     height: 170,
                     width: MediaQuery.of(context).size.width,
                     child: ListView(
