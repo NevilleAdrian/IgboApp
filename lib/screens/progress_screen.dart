@@ -152,12 +152,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                             child: DropdownButtonHideUnderline(
                           child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: ListView(
-                                  scrollDirection: Axis.horizontal,
-                                  children: <Widget>[
-                                    androidDropdown()
-                                  ],
-                              )
+                              child: androidDropdown()
                           ),
                             ),
                           ),
@@ -169,7 +164,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                     height: 30.0,
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 23.0),
+                    padding: EdgeInsets.only(left: 23.0, right: 23),
                     height: 170,
                     width: MediaQuery.of(context).size.width,
                     child: ListView(

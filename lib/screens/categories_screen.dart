@@ -648,8 +648,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                             category: widget.lessons[index]['category'],
                                                             id: widget.id
                                                         )),
-                                              )
-                                        ;
+                                              );
                                         '';
                                       },
                                       child: Column(

@@ -6,7 +6,10 @@ class OptionBox extends StatelessWidget {
     @required this.option,
     this.color,
     this.gradient1,
-    this.gradient2
+    this.gradient2,
+    this.height,
+    this.width,
+    this.fontColor
 
   }) ;
 
@@ -14,6 +17,9 @@ class OptionBox extends StatelessWidget {
   final Color color;
   final Color gradient1;
   final Color gradient2;
+  final double height;
+  final double width;
+  final Color fontColor;
 
 
 
@@ -41,9 +47,11 @@ class OptionBox extends StatelessWidget {
               ),
             ]
         ),
+        height: height ,
+        width: width,
         child: Padding(
           padding: const EdgeInsets.symmetric( vertical: 10, horizontal: 5.0),
-          child: Text(option,textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 12),),
+          child: Text(option,textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 12, color: fontColor),),
         )
     );
   }

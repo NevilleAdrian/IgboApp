@@ -32,24 +32,27 @@ class _ContinueListState extends State<ContinueList> {
         decoration: BoxDecoration(
           color: Color(0XFF7C0D00),
           image: DecorationImage(
-            colorFilter: ColorFilter.mode(Colors.black, BlendMode.dstATop),
+            colorFilter: ColorFilter.mode(Color(0XFF330000), BlendMode.dstATop),
             image: AssetImage("assets/images/bg.png"),
             fit: BoxFit.cover,
           ),
         ),
         child: Container(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SafeArea(
                   child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
+                        SizedBox(height: 60.0,),
                         Column(
                           children: <Widget>[
                             Text('Lesson 1 - ${widget.form}', style: TextStyle(color: Colors.white, fontSize: 20.0),),
-                            Text('${widget.type} in Igbo', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 25, ),)
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                              child: Text('${widget.type} in Igbo', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 25, ),),
+                            )
                           ],
                         ),
                         SizedBox(height: 20.0,),
@@ -73,12 +76,6 @@ class _ContinueListState extends State<ContinueList> {
                             )
                         ),
                         SizedBox(height: 20.0,),
-                        Column(
-                          children: <Widget>[
-                            Text('Lesson duration', style: TextStyle(color: Colors.white, fontSize: 20.0),),
-                            Text('${widget.time}', style: TextStyle(color: Colors.white,fontWeight: FontWeight.w600, fontSize: 25),)
-                          ],
-                        ),
                       ],
                     ),
                   )

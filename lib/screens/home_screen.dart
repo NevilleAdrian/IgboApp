@@ -18,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen>
   final _nameController = TextEditingController();
   String searchText;
   List<dynamic> lesson;
+  ScrollController _controller;
   List<Map<String, dynamic>> lessons = [
     {
       "id": "1",
@@ -156,6 +157,7 @@ class _HomeScreenState extends State<HomeScreen>
     }
   ];
   List filteredCategory = [];
+  bool showNav = false;
 
   @override
   void dispose() {
@@ -163,13 +165,47 @@ class _HomeScreenState extends State<HomeScreen>
     super.dispose();
   }
 
+
   @override
   void initState() {
+    _controller = ScrollController();
+    _controller.addListener(_scrollListener);
     lesson = Provider.of<Auth>(context, listen: false).category;
-    filteredCategory = lesson;
+    // filteredCategory = lesson;
     print('filter:$filteredCategory');
      print('mylesson: ${lesson[0]['color']}');
+    print('image: ${lesson[0]['image']}');
+
     super.initState();
+  }
+
+  _scrollListener() {
+    if (_controller.offset >= _controller.position.maxScrollExtent &&
+        !_controller.position.outOfRange) {
+      setState(() {
+        print('offset : ${_controller.offset}');
+        print('max : ${_controller.position.maxScrollExtent}');
+
+        print("reach the bottom");
+       showNav = true;
+      });
+    }
+    if(_controller.offset != 0.0  && !_controller.position.outOfRange) {
+      setState(() {
+        print("updating");
+        showNav = true;
+
+      });
+    }
+    if (_controller.offset <= _controller.position.minScrollExtent &&
+        !_controller.position.outOfRange) {
+      setState(() {
+        print('offset : ${_controller.offset}');
+        print('max : ${_controller.position.maxScrollExtent}');
+        print("reach the top");
+        showNav = false;
+      });
+    }
   }
 
   onSearch(String term) {
@@ -184,15 +220,100 @@ class _HomeScreenState extends State<HomeScreen>
         || element['description'].toLowerCase().contains(term.toLowerCase()).toList());
   }
 
+
+
   Widget build(BuildContext context) {
     super.build(context);
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
       child: Scaffold(
-        appBar: AppBar(
+        appBar: showNav ?
+        AppBar(
+          elevation: 0,
           backgroundColor: Colors.white,
-          title:
-          CircleAvatar(
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: CircleAvatar(
+              radius: 30.0,
+             child: ClipRRect(
+               borderRadius: BorderRadius.circular(30.0),
+               child: Image(
+                   image: NetworkImage("https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80",)
+               ),
+             )
+            ),
+          ),
+          title: Text('What will you like to learn today?', style: TextStyle(fontSize: 14.0),),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: GestureDetector(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Dialog(
+                          backgroundColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.circular(20.0)), //this right here
+                          child: Container(
+                            height: 100,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextFormField(
+                                      decoration: InputDecoration(
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                          contentPadding: EdgeInsets.only(
+                                              top: 5, bottom: 5, left: 15),
+                                          //border: InputBorder.none,
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color(0xFFF7F7FB),
+                                                width: 0.5),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color(0xFFF7F7FB),
+                                                width: 0.5),
+                                          ),
+                                          hintText: 'Search with topic',
+                                          hintStyle:
+                                          TextStyle(color: Colors.black),
+                                          suffixIcon: GestureDetector(
+                                              onTap: () => Navigator.pop(context),
+                                              child: Icon(
+                                                Icons.search,
+                                                color: Colors.black,
+                                              ))),
+                                      style: TextStyle(
+                                          fontSize: 13.0, color: Colors.black),
+                                      controller: _nameController,
+                                      onChanged: (value) {
+                                        onSearch(value);
+                                        print('search:$value');
+                                      })
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      });
+                },
+                child: SvgPicture.asset("assets/images/search.svg",
+                    color: Colors.black),
+              ),
+            ),
+          ],
+        ) :
+        AppBar(
+          backgroundColor: Colors.white,
+          title: CircleAvatar(
             radius: 28,
             backgroundImage: NetworkImage(
                 'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'),
@@ -266,15 +387,16 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           ],
           elevation: 0,
-        ),
-        body: ListView(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0, top: 20.0),
-              child: Container(
-                color: Colors.white,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+        ) ,
+        body: Padding(
+          padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0, top: 20.0),
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+             showNav == false ?  Column(
+               crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       'Hello ${(toBeginningOfSentenceCase(Auth.authProvider(context).user.name))}',
@@ -288,8 +410,8 @@ class _HomeScreenState extends State<HomeScreen>
                     Text(
                       'What will you like to learn today',
                       style: TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.black
+                          fontSize: 14.0,
+                          color: Colors.black
                       ),
                     ),
                     SizedBox(
@@ -299,12 +421,22 @@ class _HomeScreenState extends State<HomeScreen>
                     SizedBox(
                       height: 25.0,
                     ),
-                    CategoryList(lessons: filteredCategory)
                   ],
-                ),
-              ),
-            )
-          ],
+                ) :SizedBox(height: 0,),
+                Expanded( 
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: ListView(
+                      controller: _controller,
+
+                      children: <Widget>[
+                      CategoryList(lessons: lesson)
+                    ],),
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -325,7 +457,12 @@ class CategoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView.separated(
+        separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(
+            height: 20,
+          );
+        },
         physics: ScrollPhysics(),
         shrinkWrap: true,
         itemCount: lessons.length,
@@ -343,33 +480,31 @@ class CategoryList extends StatelessWidget {
                 ),
               );
             },
-            child: Card(
-              color: Color(int.parse(lessons[index]['color'])),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(5),
-                    bottomRight: Radius.circular(5),
-                    topLeft: Radius.circular(5),
-                    topRight: Radius.circular(5)),
+            child: Container(
+              height: 126.0,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(lessons[index]['image']),
+                  fit: BoxFit.cover,
+                ),
+             borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(5),
+                bottomRight: Radius.circular(5),
+                topLeft: Radius.circular(5),
+                topRight: Radius.circular(5)),
               ),
+
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                     vertical: 25.0, horizontal: 25.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
                       '${lessons[index]['name']}',
-                      style: TextStyle(color: Colors.white, fontSize: 12),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text('${lessons[index]['description']}',
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500)),
+                      style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700),
+                    )
                   ],
                 ),
               ),

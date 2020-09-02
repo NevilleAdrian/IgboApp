@@ -11,11 +11,11 @@ import 'package:nkuzi_igbo/screens/auth/welcome_screen.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
 import 'package:nkuzi_igbo/screens/registration_screen.dart';
 import 'package:nkuzi_igbo/screens/splash_screen.dart';
-import 'package:nkuzi_igbo/utils/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as pp;
 import 'utils/theme_data.dart';
+
 
 void main() async {
   await _openHive();
@@ -31,17 +31,19 @@ _openHive() async {
 }
 
 class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
+
+
   @override
   void dispose() {
     Hive.close();
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {

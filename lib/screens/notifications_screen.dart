@@ -45,7 +45,62 @@ class _NotificationScreenState extends State<NotificationScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SvgPicture.asset("assets/images/banner.svg"),
+              Stack(
+                overflow: Overflow.visible,
+                alignment: Alignment.bottomCenter,
+                children: <Widget>[
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.transparent, width: 1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    color: Color(0XFF9D1001),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:12, right: 20,top: 30, bottom: 30),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                              child: Column(
+                                children: <Widget>[
+                                  Column(
+                                    children: <Widget>[
+                                      Text(
+                                        'Subcribe today and get 20% discount to access all of our contents',
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700
+                                        ),
+                                      ),
+                                      SizedBox(height: 10),
+                                      Text('Subscribe now', style: TextStyle(color: Color(0XFFF5A001)),)
+                                    ],
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                  ),
+                                ],
+                              )
+                          ),
+                          Expanded(
+                              child: Text('')
+                          )
+
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    right: -9,
+                    bottom: 5,
+                    child: Container(
+                      child: Image.asset(
+                        "assets/images/banner.png",
+                        width: 195.0,
+                      ) ,
+                    ),
+                  )
+                ],
+              ),
+
               SizedBox(
                 height: 20.0,
               ),
