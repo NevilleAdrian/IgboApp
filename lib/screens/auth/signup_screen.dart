@@ -126,14 +126,14 @@ class SignUpForm extends StatelessWidget {
     return Column(
       children: <Widget>[
         TextFormField(
-          keyboardType: TextInputType.emailAddress,
+          keyboardType: TextInputType.text,
           textInputAction: TextInputAction.next,
           decoration: const InputDecoration(
-            hintText: 'Email',
-            labelText: 'Email',
+            hintText: 'Name',
+            labelText: 'Name',
           ),
           onChanged: (value) {
-            onEmailChange(value);
+            onNameChange(value);
           },
           validator: (value) {
             if (value.isEmpty) {
@@ -146,14 +146,14 @@ class SignUpForm extends StatelessWidget {
           height: 10.0,
         ),
         TextFormField(
-          keyboardType: TextInputType.text,
+          keyboardType: TextInputType.emailAddress,
           textInputAction: TextInputAction.next,
           decoration: const InputDecoration(
-            hintText: 'Name',
-            labelText: 'Name',
+            hintText: 'Email',
+            labelText: 'Email',
           ),
           onChanged: (value) {
-            onNameChange(value);
+            onEmailChange(value);
           },
           validator: (value) {
             if (value.isEmpty) {

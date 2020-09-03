@@ -8,13 +8,16 @@ ThemeData myThemeData(BuildContext context) {
     primaryColor: kPrimary,
     accentColor: kAccent,
     buttonColor: kButtonColor,
-    textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
+    textTheme: Theme.of(context)
+        .textTheme
+        .apply(fontFamily: 'Poppins', fontSizeDelta: 1.5),
     primaryTextTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
     accentTextTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
     scaffoldBackgroundColor: Colors.white,
     backgroundColor: Colors.white,
 //    textTheme: TextTheme(bodyText2: TextStyle(color: Colors.black)),
     inputDecorationTheme: InputDecorationTheme(
+      labelStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
       contentPadding: EdgeInsets.all(2.0),
       focusedBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: kGoogleBorderColor, width: 1),
@@ -29,6 +32,7 @@ ThemeData myThemeData(BuildContext context) {
       buttonColor: kButtonColor,
       height: 50,
       // minWidth: double.infinity,
+
       textTheme: ButtonTextTheme.primary,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(100.0),

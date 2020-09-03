@@ -9,7 +9,7 @@ const Color kTextColor = Colors.white;
 const TextStyle kTextHeavyWeight = TextStyle(fontWeight: FontWeight.w600);
 const String kImageUrl = 'assets/images';
 const TextStyle kAuthTextBig = TextStyle(color: kTextColor, fontSize: 25.0);
-const TextStyle kAuthTextSmall = TextStyle(color: kTextColor, fontSize: 16.0);
+const TextStyle kAuthTextSmall = TextStyle(color: kTextColor, fontSize: 18.0);
 
 //app url
 const String kAppAPIUrl = 'https://nkuziigbo.herokuapp.com/igboapp/api';

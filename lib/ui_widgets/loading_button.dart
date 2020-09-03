@@ -36,7 +36,12 @@ class LoadingButton extends StatelessWidget {
           ).show(context);
         }
       },
-      child: isLoading ? _spinner(context) : Text(text),
+      child: isLoading
+          ? _spinner(context)
+          : Text(
+              text,
+              style: TextStyle(fontSize: 18.0),
+            ),
     );
   }
 }
