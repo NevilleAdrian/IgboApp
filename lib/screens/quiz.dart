@@ -847,10 +847,10 @@ class _QuizScreenState extends State<QuizScreen>  {
                                 next = true;
                               }
                               print('testNum: $testNumber');
-                              opt1 = false;
-                              opt2 = false;
-                              opt3 = false;
-                              opt4 = false;
+                              match1 = false;
+                              match2 = false;
+                              match3 = false;
+                              match4 = false;
                               print('numberss: $number');
                               print(
                                   'length:${widget.lessons.length}');
@@ -967,10 +967,10 @@ class _QuizScreenState extends State<QuizScreen>  {
                                 next = true;
                               }
                               print('testNum: $testNumber');
-                              opt1 = false;
-                              opt2 = false;
-                              opt3 = false;
-                              opt4 = false;
+                              match1 = false;
+                              match2 = false;
+                              match3 = false;
+                              match4 = false;
                               print('numberss: $number');
                               print(
                                   'length:${widget.lessons.length}');
@@ -1269,9 +1269,9 @@ class _QuizScreenState extends State<QuizScreen>  {
 
   @override
   Widget build(BuildContext context) {
-    if(widget.lessons[number]['test'].length != 0){
-      list = [...widget.lessons[number]['test'][testNumber]['words']] ;
-    }
+    // if(widget.lessons[number]['test'].length != 0){
+    //   list = [...widget.lessons[number]['test'][testNumber]['words']] ;
+    // }
 
     return Scaffold(
       body: ListView(

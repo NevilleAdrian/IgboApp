@@ -58,7 +58,8 @@ class Auth extends ChangeNotifier {
     setUser(User.fromJson(data['user']));
     setToken(data['token']);
     _hiveRepository.add<User>(name: kUserName, key: 'user', item: user);
-    _hiveRepository.add<AppModel>(
-        name: kAppDataName, key: 'appModel', item: AppModel(token: token));
+
+    _hiveRepository.add<AppModel>(name: kAppDataName, key: 'appModel', item: AppModel(token: token));
+
   }
 }
