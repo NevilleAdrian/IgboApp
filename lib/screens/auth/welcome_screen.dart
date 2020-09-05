@@ -13,7 +13,9 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundImageContainer(
-        padding: EdgeInsets.only(top: 70.0, bottom: 40.0),
+        padding: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.12,
+            bottom: MediaQuery.of(context).size.height * 0.05),
         colorFilter: ColorFilter.mode(Colors.black, BlendMode.dstATop),
         image: AssetImage('$kImageUrl/onboarding.png'),
         child: Column(
@@ -21,7 +23,7 @@ class WelcomeScreen extends StatelessWidget {
           children: <Widget>[
             SvgPicture.asset(
               '$kImageUrl/logo.svg',
-              height: 100.0,
+              height: 70.0,
             ),
             SizedBox(
               width: double.infinity,
@@ -44,7 +46,7 @@ class StartAuthBottom extends StatelessWidget {
           Text(
             'Your Igbo Learning\nmade easy',
             style: kAuthTextBig.copyWith(
-                fontFamily: 'Baloo', fontWeight: FontWeight.w900, height: 1),
+                fontFamily: 'Baloo', fontWeight: FontWeight.w900, height: 1.1),
             textAlign: TextAlign.center,
           ),
           SizedBox(
@@ -58,7 +60,7 @@ class StartAuthBottom extends StatelessWidget {
               },
               child: Text(
                 'Start Learning',
-                style: TextStyle(fontSize: 16.0),
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
               ),
             ),
           ),
