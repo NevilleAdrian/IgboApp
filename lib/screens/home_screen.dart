@@ -501,9 +501,12 @@ class CategoryList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(
-                      '${lessons[index]['name']}',
-                      style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 175.0),
+                      child: Text(
+                        '${lessons[index]['name']}',
+                        style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700),
+                      ),
                     )
                   ],
                 ),
