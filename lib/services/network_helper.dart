@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:nkuzi_igbo/Exceptions/api_failure_exception.dart';
 import 'package:nkuzi_igbo/models/category_model.dart';
 import 'package:nkuzi_igbo/models/login_model.dart';
 import 'package:nkuzi_igbo/models/register_model.dart';
@@ -53,7 +54,7 @@ class NetworkHelper {
     if (response.statusCode.toString().startsWith('2')) {
       return decoded;
     } else {
-      throw Exception(decoded['message'] ?? response.reasonPhrase);
+      throw ApiFailureException(decoded['message'] ?? response.reasonPhrase);
     }
   }
 
@@ -69,7 +70,7 @@ class NetworkHelper {
     } else {
       print(
           'reason is ${response.reasonPhrase} message is ${decoded['message']}');
-      throw Exception(decoded['message'] ?? response.reasonPhrase);
+      throw ApiFailureException(decoded['message'] ?? response.reasonPhrase);
     }
   }
 }

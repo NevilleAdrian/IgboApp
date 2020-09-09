@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nkuzi_igbo/Exceptions/api_failure_exception.dart';
 import 'package:nkuzi_igbo/helpers/auth_layout.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/auth/reset_screen.dart';
@@ -22,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return AuthLayout(
       title: 'Login',
+      authType: AuthType.Login,
       children: <Widget>[
         Form(
           key: _formKey,
@@ -44,7 +46,10 @@ class _LoginScreenState extends State<LoginScreen> {
         Container(
           width: double.infinity,
           child: LoadingButton(
-            text: 'Login',
+            display: Text(
+              'Login',
+              style: TextStyle(fontSize: 18.0),
+            ),
             isLoading: _loading,
             action: () async {
               if (_formKey.currentState.validate()) {
@@ -60,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   setState(() {
                     _loading = false;
                   });
-                  throw Exception(error);
+                  throw ApiFailureException(error);
                 });
                 Navigator.of(context).pushNamedAndRemoveUntil(
                     HomePage.id, (Route<dynamic> route) => false);

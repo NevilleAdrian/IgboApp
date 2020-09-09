@@ -4,12 +4,16 @@ import 'package:nkuzi_igbo/utils/constants.dart';
 
 class LoadingButton extends StatelessWidget {
   final bool isLoading;
-  final String text;
+  final Widget display;
   final Function action;
+  final Color color;
+  final bool isFlat;
   LoadingButton({
-    this.text,
+    this.display,
     this.isLoading,
     this.action,
+    this.color = kButtonColor,
+    this.isFlat = true,
   });
 
   Widget _spinner(BuildContext context) {
@@ -20,28 +24,39 @@ class LoadingButton extends StatelessWidget {
     );
   }
 
+  void _showFlush(BuildContext context, String message) {
+    Flushbar(
+      backgroundColor: kAccent,
+      message: message,
+      duration: Duration(seconds: 3),
+      flushbarStyle: FlushbarStyle.GROUNDED,
+    ).show(context);
+  }
+
+  Future<void> _onPressed(BuildContext context) async {
+    try {
+      await action();
+    } catch (ex) {
+      _showFlush(context, ex.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      color: kButtonColor,
-      onPressed: () async {
-        try {
-          await action();
-        } catch (ex) {
-          Flushbar(
-            backgroundColor: kAccent,
-            message: ex.toString(),
-            duration: Duration(seconds: 3),
-            flushbarStyle: FlushbarStyle.GROUNDED,
-          ).show(context);
-        }
-      },
-      child: isLoading
-          ? _spinner(context)
-          : Text(
-              text,
-              style: TextStyle(fontSize: 18.0),
-            ),
-    );
+    return isFlat
+        ? FlatButton(
+            color: color,
+            onPressed: () async {
+              await _onPressed(context);
+            },
+            child: isLoading ? _spinner(context) : display,
+          )
+        : OutlineButton(
+            color: color,
+            onPressed: () async {
+              await _onPressed(context);
+            },
+            child: isLoading ? _spinner(context) : display,
+          );
   }
 }

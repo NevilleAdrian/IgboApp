@@ -165,7 +165,6 @@ class _HomeScreenState extends State<HomeScreen>
     super.dispose();
   }
 
-
   @override
   void initState() {
     _controller = ScrollController();
@@ -173,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen>
     lesson = Provider.of<Auth>(context, listen: false).category;
     // filteredCategory = lesson;
     print('filter:$filteredCategory');
-     print('mylesson: ${lesson[0]['color']}');
+    print('mylesson: ${lesson[0]['color']}');
     print('image: ${lesson[0]['image']}');
 
     super.initState();
@@ -187,14 +186,13 @@ class _HomeScreenState extends State<HomeScreen>
         print('max : ${_controller.position.maxScrollExtent}');
 
         print("reach the bottom");
-       showNav = true;
+        showNav = true;
       });
     }
-    if(_controller.offset != 0.0  && !_controller.position.outOfRange) {
+    if (_controller.offset != 0.0 && !_controller.position.outOfRange) {
       setState(() {
         print("updating");
         showNav = true;
-
       });
     }
     if (_controller.offset <= _controller.position.minScrollExtent &&
@@ -216,222 +214,247 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   List onFilter(String term) {
-    return lesson.where((element) => element['name'].toLowerCase().contains(term.toLowerCase())
-        || element['description'].toLowerCase().contains(term.toLowerCase()).toList());
+    return lesson.where((element) =>
+        element['name'].toLowerCase().contains(term.toLowerCase()) ||
+        element['description']
+            .toLowerCase()
+            .contains(term.toLowerCase())
+            .toList());
   }
-
-
 
   Widget build(BuildContext context) {
     super.build(context);
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
       child: Scaffold(
-        appBar: showNav ?
-        AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: CircleAvatar(
-              radius: 30.0,
-             child: ClipRRect(
-               borderRadius: BorderRadius.circular(30.0),
-               child: Image(
-                   image: NetworkImage("https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80",)
-               ),
-             )
-            ),
-          ),
-          title: Text('What will you like to learn today?', style: TextStyle(fontSize: 14.0),),
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: GestureDetector(
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Dialog(
-                          backgroundColor: Colors.transparent,
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                              BorderRadius.circular(20.0)), //this right here
-                          child: Container(
-                            height: 100,
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  TextFormField(
-                                      decoration: InputDecoration(
-                                          fillColor: Colors.white,
-                                          filled: true,
-                                          contentPadding: EdgeInsets.only(
-                                              top: 5, bottom: 5, left: 15),
-                                          //border: InputBorder.none,
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xFFF7F7FB),
-                                                width: 0.5),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xFFF7F7FB),
-                                                width: 0.5),
-                                          ),
-                                          hintText: 'Search with topic',
-                                          hintStyle:
-                                          TextStyle(color: Colors.black),
-                                          suffixIcon: GestureDetector(
-                                              onTap: () => Navigator.pop(context),
-                                              child: Icon(
-                                                Icons.search,
-                                                color: Colors.black,
-                                              ))),
-                                      style: TextStyle(
-                                          fontSize: 13.0, color: Colors.black),
-                                      controller: _nameController,
-                                      onChanged: (value) {
-                                        onSearch(value);
-                                        print('search:$value');
-                                      })
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      });
-                },
-                child: SvgPicture.asset("assets/images/search.svg",
-                    color: Colors.black),
+        appBar: showNav
+            ? AppBar(
+                elevation: 0,
+                backgroundColor: Colors.white,
+                leading: Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: CircleAvatar(
+                      radius: 30.0,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30.0),
+                        child: Image(
+                            image: NetworkImage(
+                          "https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80",
+                        )),
+                      )),
+                ),
+                title: Text(
+                  'What will you like to learn today?',
+                  style: TextStyle(fontSize: 14.0),
+                ),
+                actions: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20),
+                    child: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Dialog(
+                                backgroundColor: Colors.transparent,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        20.0)), //this right here
+                                child: Container(
+                                  height: 100,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextFormField(
+                                            decoration: InputDecoration(
+                                                fillColor: Colors.white,
+                                                filled: true,
+                                                contentPadding: EdgeInsets.only(
+                                                    top: 5,
+                                                    bottom: 5,
+                                                    left: 15),
+                                                //border: InputBorder.none,
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Color(0xFFF7F7FB),
+                                                      width: 0.5),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Color(0xFFF7F7FB),
+                                                      width: 0.5),
+                                                ),
+                                                hintText: 'Search with topic',
+                                                hintStyle: TextStyle(
+                                                    color: Colors.black),
+                                                suffixIcon: GestureDetector(
+                                                    onTap: () =>
+                                                        Navigator.pop(context),
+                                                    child: Icon(
+                                                      Icons.search,
+                                                      color: Colors.black,
+                                                    ))),
+                                            style: TextStyle(
+                                                fontSize: 13.0,
+                                                color: Colors.black),
+                                            controller: _nameController,
+                                            onChanged: (value) {
+                                              onSearch(value);
+                                              print('search:$value');
+                                            })
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
+                      },
+                      child: SvgPicture.asset("assets/images/search.svg",
+                          color: Colors.black),
+                    ),
+                  ),
+                ],
+              )
+            : AppBar(
+                backgroundColor: Colors.white,
+                title: CircleAvatar(
+                  radius: 28,
+                  backgroundImage: NetworkImage(
+                      'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'),
+                ),
+                centerTitle: false,
+                automaticallyImplyLeading: false,
+                actions: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20),
+                    child: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Dialog(
+                                backgroundColor: Colors.transparent,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        20.0)), //this right here
+                                child: Container(
+                                  height: 100,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextFormField(
+                                            decoration: InputDecoration(
+                                                fillColor: Colors.white,
+                                                filled: true,
+                                                contentPadding: EdgeInsets.only(
+                                                    top: 5,
+                                                    bottom: 5,
+                                                    left: 15),
+                                                //border: InputBorder.none,
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Color(0xFFF7F7FB),
+                                                      width: 0.5),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Color(0xFFF7F7FB),
+                                                      width: 0.5),
+                                                ),
+                                                hintText: 'Search with topic',
+                                                hintStyle: TextStyle(
+                                                    color: Colors.black),
+                                                suffixIcon: GestureDetector(
+                                                    onTap: () =>
+                                                        Navigator.pop(context),
+                                                    child: Icon(
+                                                      Icons.search,
+                                                      color: Colors.black,
+                                                    ))),
+                                            style: TextStyle(
+                                                fontSize: 13.0,
+                                                color: Colors.black),
+                                            controller: _nameController,
+                                            onChanged: (value) {
+                                              onSearch(value);
+                                              print('search:$value');
+                                            })
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
+                      },
+                      child: SvgPicture.asset("assets/images/search.svg",
+                          color: Colors.black),
+                    ),
+                  ),
+                ],
+                elevation: 0,
               ),
-            ),
-          ],
-        ) :
-        AppBar(
-          backgroundColor: Colors.white,
-          title: CircleAvatar(
-            radius: 28,
-            backgroundImage: NetworkImage(
-                'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'),
-          ),
-          centerTitle: false,
-          automaticallyImplyLeading: false,
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: GestureDetector(
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Dialog(
-                          backgroundColor: Colors.transparent,
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(20.0)), //this right here
-                          child: Container(
-                            height: 100,
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  TextFormField(
-                                      decoration: InputDecoration(
-                                          fillColor: Colors.white,
-                                          filled: true,
-                                          contentPadding: EdgeInsets.only(
-                                              top: 5, bottom: 5, left: 15),
-                                          //border: InputBorder.none,
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xFFF7F7FB),
-                                                width: 0.5),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xFFF7F7FB),
-                                                width: 0.5),
-                                          ),
-                                          hintText: 'Search with topic',
-                                          hintStyle:
-                                              TextStyle(color: Colors.black),
-                                          suffixIcon: GestureDetector(
-                                              onTap: () => Navigator.pop(context),
-                                              child: Icon(
-                                                Icons.search,
-                                                color: Colors.black,
-                                              ))),
-                                      style: TextStyle(
-                                          fontSize: 13.0, color: Colors.black),
-                                      controller: _nameController,
-                                      onChanged: (value) {
-                                        onSearch(value);
-                                        print('search:$value');
-                                      })
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      });
-                },
-                child: SvgPicture.asset("assets/images/search.svg",
-                    color: Colors.black),
-              ),
-            ),
-          ],
-          elevation: 0,
-        ) ,
         body: Padding(
-          padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0, top: 20.0),
+          padding:
+              EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0, top: 20.0),
           child: Container(
             color: Colors.white,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-             showNav == false ?  Column(
-               crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Hello ${(toBeginningOfSentenceCase(Auth.authProvider(context).user.name))}',
-                      textAlign: TextAlign.left,
-                      style: kAuthTextBig.copyWith(
-                          fontFamily: 'Baloo', fontWeight: FontWeight.w900, color: Colors.black, fontSize: 22.0),
-                    ),
-                    SizedBox(
-                      height: 5.0,
-                    ),
-                    Text(
-                      'What will you like to learn today',
-                      style: TextStyle(
-                          fontSize: 14.0,
-                          color: Colors.black
+                showNav == false
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'Hello ${(toBeginningOfSentenceCase(Auth.authProvider(context).user.name))}',
+                            textAlign: TextAlign.left,
+                            style: kAuthTextBig.copyWith(
+                                fontFamily: 'Baloo',
+                                fontWeight: FontWeight.w900,
+                                color: Colors.black,
+                                fontSize: 22.0),
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                          Text(
+                            'What will you like to learn today',
+                            style:
+                                TextStyle(fontSize: 14.0, color: Colors.black),
+                          ),
+                          SizedBox(
+                            height: 25.0,
+                          ),
+                          Container(color: Colors.grey, height: 0.3),
+                          SizedBox(
+                            height: 25.0,
+                          ),
+                        ],
+                      )
+                    : SizedBox(
+                        height: 0,
                       ),
-                    ),
-                    SizedBox(
-                      height: 25.0,
-                    ),
-                    Container(color: Colors.grey, height: 0.3),
-                    SizedBox(
-                      height: 25.0,
-                    ),
-                  ],
-                ) :SizedBox(height: 0,),
-                Expanded( 
+                Expanded(
                   child: Container(
                     height: MediaQuery.of(context).size.height,
                     child: ListView(
                       controller: _controller,
-
-                      children: <Widget>[
-                      CategoryList(lessons: lesson)
-                    ],),
+                      children: <Widget>[CategoryList(lessons: lesson)],
+                    ),
                   ),
                 )
               ],
@@ -474,26 +497,23 @@ class CategoryList extends StatelessWidget {
                 MaterialPageRoute(
                     builder: (context) => CategoriesScreen(
                         lessons: lessons[index]['sub_categories'],
-                        description:  lessons[index]['description'],
-                        id: lessons[index]['_id']
-                      )
-                ),
+                        description: lessons[index]['description'],
+                        id: lessons[index]['_id'])),
               );
             },
             child: Container(
               height: 126.0,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(lessons[index]['image']),
-                  fit: BoxFit.cover,
-                ),
-             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(5),
-                bottomRight: Radius.circular(5),
-                topLeft: Radius.circular(5),
-                topRight: Radius.circular(5)),
-              ),
-
+              // decoration: BoxDecoration(
+              //   image: DecorationImage(
+              //     image: NetworkImage(lessons[index]['image']),
+              //     fit: BoxFit.cover,
+              //   ),
+              //   borderRadius: BorderRadius.only(
+              //       bottomLeft: Radius.circular(5),
+              //       bottomRight: Radius.circular(5),
+              //       topLeft: Radius.circular(5),
+              //       topRight: Radius.circular(5)),
+              // ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                     vertical: 25.0, horizontal: 25.0),
@@ -503,7 +523,10 @@ class CategoryList extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       '${lessons[index]['name']}',
-                      style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700),
                     )
                   ],
                 ),

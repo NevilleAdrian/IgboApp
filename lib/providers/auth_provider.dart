@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:nkuzi_igbo/Exceptions/api_failure_exception.dart';
 import 'package:nkuzi_igbo/models/app_model.dart';
 import 'package:nkuzi_igbo/models/user_model.dart';
 import 'package:nkuzi_igbo/repository/hive_repository.dart';
@@ -14,17 +15,16 @@ class Auth extends ChangeNotifier {
   String _token;
   List<dynamic> _categories;
 
-
   User get user => _user;
   String get token => _token;
   dynamic get category => _categories;
-
 
   setUser(User user) => _user = user;
   setToken(String token) => _token = token;
   setCategory(List<dynamic> category) => _categories = category;
 
-  static Auth authProvider(BuildContext context, {bool listen = false}) => Provider.of<Auth>(context, listen: listen);
+  static Auth authProvider(BuildContext context, {bool listen = false}) =>
+      Provider.of<Auth>(context, listen: listen);
 
   Future<void> loginUser(String email, String password) async {
     try {
@@ -33,7 +33,7 @@ class Auth extends ChangeNotifier {
       _setInitialData(data);
       _categories = category['data'];
     } catch (ex) {
-      throw Exception(ex);
+      throw ApiFailureException(ex);
     }
   }
 
@@ -43,7 +43,7 @@ class Auth extends ChangeNotifier {
       _setInitialData(data);
       print(_token);
     } catch (ex) {
-      throw Exception(ex);
+      throw ApiFailureException(ex);
     }
   }
 
@@ -59,7 +59,7 @@ class Auth extends ChangeNotifier {
     setToken(data['token']);
     _hiveRepository.add<User>(name: kUserName, key: 'user', item: user);
 
-    _hiveRepository.add<AppModel>(name: kAppDataName, key: 'appModel', item: AppModel(token: token));
-
+    _hiveRepository.add<AppModel>(
+        name: kAppDataName, key: 'appModel', item: AppModel(token: token));
   }
 }
