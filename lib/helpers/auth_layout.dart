@@ -39,7 +39,11 @@ class _AuthLayoutState extends State<AuthLayout> {
       _isGoogleBusy = true;
       var res = await _googleSignIn.signIn();
       _isGoogleBusy = false;
-      await _sendDetailsToServer(context, res.displayName, res.email);
+      if (res == null) {
+        _showError(context, 'An error occurred during the sign in process');
+      } else {
+        await _sendDetailsToServer(context, res.displayName, res.email);
+      }
       print(res);
     } catch (error) {
       print(error);
