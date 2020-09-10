@@ -170,8 +170,7 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
-    lesson = Provider.of<Auth>(context, listen: false).category;
-    // filteredCategory = lesson;
+    lesson = [...Provider.of<Auth>(context, listen: false).category];
     print('filter:$filteredCategory');
      print('mylesson: ${lesson[0]['color']}');
     print('image: ${lesson[0]['image']}');
