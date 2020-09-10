@@ -17,7 +17,7 @@ class Auth extends ChangeNotifier {
 
   User get user => _user;
   String get token => _token;
-  dynamic get category => _categories;
+  List<dynamic> get category => _categories;
 
   setUser(User user) => _user = user;
   setToken(String token) => _token = token;

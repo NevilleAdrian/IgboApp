@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/categories_screen.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -124,12 +125,18 @@ class _ResultScreenState extends State<ResultScreen> {
                           FlatButton(
                             color: Color(0XFFF21600) ,
                               onPressed: () {
+                              var data = Auth.authProvider(context).category.firstWhere((element) {
+                                print('element is $element');
+                                print('widget id is ${widget.id}');
+                                return element['_id'] == widget.id;
+                              });
+                              print(data);
                                 Navigator.pushAndRemoveUntil(context,
-                                    MaterialPageRoute(builder: (BuildContext context) => CategoriesScreen(lessons: widget.courses, description: widget.description, id: widget.id,)),
-                                    ModalRoute.withName('/'));
-                              },
-                              child: Text('Continue')
-                          )
+          MaterialPageRoute(builder: (BuildContext context) => CategoriesScreen(lessons: data['sub_categories'], description: widget.description, id: widget.id,)),
+    ModalRoute.withName('/'));
+  },
+  child: Text('Continue')
+  )
 
                         ],
                       )

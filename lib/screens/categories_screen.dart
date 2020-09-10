@@ -394,6 +394,32 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          centerTitle: false,
+          automaticallyImplyLeading: false,
+          title: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
+              },
+              child: Row(
+                children: <Widget>[
+                  SizedBox(
+                      child: Icon(Icons.arrow_back)
+                  ),
+                  SizedBox(width: 10.0,),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: Text(
+                      '${widget.description}',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle( fontFamily: 'Baloo', fontWeight: FontWeight.w900, color: Colors.black, fontSize: 20.0),
+                    ),
+                  )
+                ],
+              )
+          ),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(right: 20),
@@ -410,33 +436,15 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             ),
           ],
           elevation: 0,
-          leading: Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
-                  },
-                  child: SizedBox(
-                    height: 10.0,
-                    width: 10.0,
-                    child: Icon(Icons.arrow_back)
-                  )))),
+
+      )
+      ,
       body: ListView(
         children: <Widget>[
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
-                  child: Text(
-                    '${widget.description}',
-                    style: kAuthTextBig.copyWith(
-                        fontFamily: 'Baloo', fontWeight: FontWeight.w900, color: Colors.black),
-                  )),
+
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 25.0),
                 child: Column(

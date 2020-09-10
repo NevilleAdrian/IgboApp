@@ -185,6 +185,7 @@ class Test {
     this.createdon,
     this.v,
     this.matchQuestion,
+    this.matchQuestionImage,
     this.correctOption,
     this.optionIaudio,
     this.optionI,
@@ -223,6 +224,7 @@ class Test {
   DateTime createdon;
   int v;
   String matchQuestion;
+  String matchQuestionImage;
   String correctOption;
   String optionIaudio;
   String optionI;
@@ -254,6 +256,7 @@ class Test {
     question: json["question"],
     isSelected: false,
     mainQuestion: json["mainQuestion"] == null ? null : json["mainQuestion"],
+    matchQuestionImage: json["matchQuestionImage"] == null ? null : json["matchQuestionImage"],
     correctSentence: json["correctSentence"] == null ? null : List<String>.from(json["correctSentence"].map((x) => x)),
     words: json["words"] == null ? null : List<String>.from(json["words"].map((x) => x)),
     type: typeValues.map[json["type"]],
@@ -293,6 +296,7 @@ class Test {
     "question": question,
     'isSelected': isSelected,
     "mainQuestion": mainQuestion == null ? null : mainQuestion,
+    "matchQuestionImage": matchQuestionImage == null ? null : matchQuestionImage,
     "correctSentence": correctSentence == null ? null : List<dynamic>.from(correctSentence.map((x) => x)),
     "words": words == null ? null : List<dynamic>.from(words.map((x) => x)),
     "type": typeValues.reverse[type],
