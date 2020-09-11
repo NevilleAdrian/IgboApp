@@ -1,7 +1,9 @@
 class Category {
   List<SubCategories> subCategories;
   String sId;
+  int no;
   String name;
+  bool isAvaliable;
   String description;
   String color;
   String image;
@@ -12,6 +14,8 @@ class Category {
       {this.subCategories,
         this.sId,
         this.name,
+        this.isAvaliable,
+        this.no,
         this.description,
         this.color,
         this.image,
@@ -26,7 +30,9 @@ class Category {
       });
     }
     sId = json['_id'];
-    name = json['name'];
+    no = json["no"];
+    name = json["name"];
+    isAvaliable = json["isAvaliable"];
     description = json['description'];
     color = json['color'];
     image = json['image'];
@@ -41,7 +47,9 @@ class Category {
           this.subCategories.map((v) => v.toJson()).toList();
     }
     data['_id'] = this.sId;
-    data['name'] = this.name;
+    data["no"] = this.no ;
+    data["name"] = this.name;
+    data["isAvaliable"] = this.isAvaliable;
     data['description'] = this.description;
     data['color'] = this.color;
     data['image'] = this.image;

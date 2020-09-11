@@ -476,7 +476,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                 onTap: () {
                                   print('study: ${ widget.lessons[index]['study'].length}');
                                   widget.lessons[index]['study'].length == 0 ? SizedBox():
-                                  widget.lessons[index]['premium_content'] == false
+                                  widget.lessons[index]['premium_content'] == true
                                       ? _modalBottomSheetMenu()
                                       : Navigator.push(
                                     context,
@@ -487,7 +487,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                 courses: widget.lessons,
                                                 description: widget.description,
                                                 form: widget.lessons[index]['form'],
-                                                type: widget.lessons[index]['type'],
+                                                name: widget.lessons[index]['name'],
                                                 time: widget.lessons[index]['time'],
                                                 category: widget.lessons[index]['category'],
                                                 id: widget.id
@@ -522,7 +522,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                   children: <Widget>[
                                                     widget.lessons[index][
                                                     'premium_content'] ==
-                                                        false
+                                                        true
                                                         ? Positioned(
                                                         right: -2,
                                                         top: 9,
@@ -546,7 +546,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                     .start,
                                                 children: <Widget>[
                                                   Text(
-                                                    '${widget.lessons[index]['name']}',
+                                                    '${widget.lessons[index]['type']}',
                                                     style: TextStyle(
                                                         color:
                                                         Colors.black,
@@ -563,7 +563,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                       shrinkWrap: true,
                                                       children: <Widget>[
                                                         Text(
-                                                            '${widget.lessons[index]['type']}',
+                                                            '${widget.lessons[index]['name']}',
                                                             style: TextStyle(
                                                                 fontSize: 17.0,
                                                                 color: Colors
@@ -580,7 +580,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                           ),
                                           widget.lessons[index][
                                           'premium_content'] ==
-                                              false
+                                              true
                                               ? Container(
                                             child: SvgPicture.asset(
                                                 "assets/images/padlock.svg"),
@@ -640,7 +640,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                         print('study: ${ widget.lessons[index]['study'].length}');
                                         widget.lessons[index]['study'].length == 0 ?
                                         SizedBox():
-                                        widget.lessons[index]['premium_content'] == false
+                                        widget.lessons[index]['premium_content'] == true
                                             ? _modalBottomSheetMenu()
                                             : Navigator.push(
                                                 context,
@@ -651,7 +651,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                             courses: widget.lessons,
                                                             description: widget.description,
                                                             form: widget.lessons[index]['form'],
-                                                            type: widget.lessons[index]['type'],
+                                                            name: widget.lessons[index]['name'],
                                                             time: widget.lessons[index]['time'],
                                                             category: widget.lessons[index]['category'],
                                                             id: widget.id
@@ -686,7 +686,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                         children: <Widget>[
                                                           widget.lessons[index][
                                                                       'premium_content'] ==
-                                                                  false
+                                                                  true
                                                               ? Positioned(
                                                                   right: -2,
                                                                   top: 9,
@@ -710,7 +710,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                               .start,
                                                       children: <Widget>[
                                                         Text(
-                                                          '${widget.lessons[index]['name']}',
+                                                          '${widget.lessons[index]['type']}',
                                                           style: TextStyle(
                                                               color:
                                                                   Colors.black,
@@ -727,7 +727,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                             shrinkWrap: true,
                                                             children: <Widget>[
                                                               Text(
-                                                                  '${widget.lessons[index]['type']}',
+                                                                  '${widget.lessons[index]['name']}',
                                                                   style: TextStyle(
                                                                       fontSize: 17.0,
                                                                       color: Colors
@@ -744,7 +744,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                 ),
                                                 widget.lessons[index][
                                                             'premium_content'] ==
-                                                        false
+                                                        true
                                                     ? Container(
                                                         child: SvgPicture.asset(
                                                             "assets/images/padlock.svg"),
@@ -805,7 +805,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                   widget.lessons[index]['study'].length == 0 ?
                                   SizedBox():
                                   widget.lessons[index]['premium_content'] ==
-                                      false
+                                      true
                                       ? _modalBottomSheetMenu()
                                       : Navigator.push(
                                     context,
@@ -816,7 +816,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                 courses: widget.lessons,
                                                 description: widget.description,
                                                 form: widget.lessons[index]['form'],
-                                                type: widget.lessons[index]['type'],
+                                                name: widget.lessons[index]['name'],
                                                 time: widget.lessons[index]['time'],
                                                 category: widget.lessons[index]['category'],
                                                 id: widget.id
@@ -851,7 +851,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                   children: <Widget>[
                                                     widget.lessons[index][
                                                     'premium_content'] ==
-                                                        false
+                                                        true
                                                         ? Positioned(
                                                         right: -2,
                                                         top: 9,
@@ -875,7 +875,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                     .start,
                                                 children: <Widget>[
                                                   Text(
-                                                    '${widget.lessons[index]['name']}',
+                                                    '${widget.lessons[index]['type']}',
                                                     style: TextStyle(
                                                         color:
                                                         Colors.black,
@@ -892,7 +892,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                       shrinkWrap: true,
                                                       children: <Widget>[
                                                         Text(
-                                                            '${widget.lessons[index]['type']}',
+                                                            '${widget.lessons[index]['name']}',
                                                             style: TextStyle(
                                                                 fontSize: 17.0,
                                                                 color: Colors
@@ -909,7 +909,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                           ),
                                           widget.lessons[index][
                                           'premium_content'] ==
-                                              false
+                                              true
                                               ? Container(
                                             child: SvgPicture.asset(
                                                 "assets/images/padlock.svg"),

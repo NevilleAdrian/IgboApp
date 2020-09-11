@@ -3,12 +3,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/screens/quiz.dart';
 
 class ContinueList extends StatefulWidget {
-  ContinueList({ this.lessons, this.form, this.type, this.time, this.courses, this.description, this.category, this.id });
+  ContinueList({ this.lessons, this.form, this.name, this.time, this.courses, this.description, this.category, this.id });
   final  List<dynamic>  lessons;
   final List <dynamic> courses;
   final String description;
   final String form;
-  final String type;
+  final String name;
   final String time;
   final String category;
   final String id;
@@ -51,7 +51,7 @@ class _ContinueListState extends State<ContinueList> {
                             Text('Lesson 1 - ${widget.form}', style: TextStyle(color: Colors.white, fontSize: 20.0),),
                             Padding(
                               padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                              child: Text('${widget.type} in Igbo', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 25, ),),
+                              child: Text('${widget.name}', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 25, ),),
                             )
                           ],
                         ),

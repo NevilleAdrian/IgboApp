@@ -10,9 +10,11 @@ import 'package:nkuzi_igbo/screens/categories_screen.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
 import 'package:nkuzi_igbo/screens/home_screen.dart';
 import 'package:nkuzi_igbo/screens/result_page.dart';
+import 'package:nkuzi_igbo/screens/thankyou.dart';
 import 'package:nkuzi_igbo/services/network_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
 enum SectionDisplay{
   Learn, Quiz
@@ -36,8 +38,8 @@ class QuizScreen extends StatefulWidget  {
 }
 
 class _QuizScreenState extends State<QuizScreen>  {
-  double getWidth(BuildContext context, double width) {
-    return MediaQuery.of(context).size.width * 0.5 * width;
+  double getWidth(double parentWidth, double width) {
+    return parentWidth * width;
   }
   SectionDisplay display = SectionDisplay.Learn;
   TestType testType = TestType.None;
@@ -180,7 +182,8 @@ class _QuizScreenState extends State<QuizScreen>  {
 // }
 
   void playSound(String soundNumber) async {
-    audioPlayer = await player.play('$soundNumber');
+    int result  = await audioPlayer.play(soundNumber, isLocal: false);
+    print('result: $result');
     print('sound $soundNumber');
   }
 
@@ -423,6 +426,7 @@ class _QuizScreenState extends State<QuizScreen>  {
                                   testNumber++;
                                 }
                                 else if((testNumber) >= widget.lessons[number]['test'].length - 1){
+                                  display = SectionDisplay.Learn;
                                   number ++;
                                   next = false;
                                   testNumber = 0;
@@ -458,9 +462,7 @@ class _QuizScreenState extends State<QuizScreen>  {
             )
                 : Container(
               height: 200.0,
-              color: Color(
-                  0XFFFFF5EB), //could change this to Color(0xFF737373),
-              //so you don't have to change MaterialApp canvasColor
+              color: Color(0XFFFFF5EB),
               child: new Container(
                   decoration: new BoxDecoration(
                       color: Colors.white,
@@ -541,6 +543,7 @@ class _QuizScreenState extends State<QuizScreen>  {
                                   testNumber++;
                                 }
                                 else if((testNumber) >= widget.lessons[number]['test'].length - 1){
+                                  display = SectionDisplay.Learn;
                                   number ++;
                                   next = false;
                                   testNumber = 0;
@@ -634,10 +637,7 @@ class _QuizScreenState extends State<QuizScreen>  {
                               "wordsLearned": results,
                               "totalPoints": results,
                               "lesson": widget.id,
-                              "user": Auth
-                                  .authProvider(context)
-                                  .user
-                                  .sId,
+                              "user": Auth.authProvider(context).user.sId,
                               "category": widget.category
                             };
                             var data = await _helper.calculateResult(body);
@@ -687,8 +687,8 @@ class _QuizScreenState extends State<QuizScreen>  {
                                     widget.lessons[number]['test'].length - 1) {
                                   testNumber++;
                                 }
-                                else if ((testNumber) >=
-                                    widget.lessons[number]['test'].length - 1) {
+                                else if ((testNumber) >= widget.lessons[number]['test'].length - 1) {
+                                  display = SectionDisplay.Learn;
                                   number ++;
                                   next = false;
                                   testNumber = 0;
@@ -963,6 +963,7 @@ class _QuizScreenState extends State<QuizScreen>  {
                                 }
                                 else if ((testNumber) >=
                                     widget.lessons[number]['test'].length - 1) {
+                                  display = SectionDisplay.Learn;
                                   number ++;
                                   next = false;
                                   testNumber = 0;
@@ -1089,6 +1090,7 @@ class _QuizScreenState extends State<QuizScreen>  {
                                 }
                                 else if ((testNumber) >=
                                     widget.lessons[number]['test'].length - 1) {
+                                  display = SectionDisplay.Learn;
                                   number ++;
                                   next = false;
                                   testNumber = 0;
@@ -1239,6 +1241,7 @@ class _QuizScreenState extends State<QuizScreen>  {
                                 }
                                 else if ((testNumber) >=
                                     widget.lessons[number]['test'].length - 1) {
+                                  display = SectionDisplay.Learn;
                                   number ++;
                                   next = false;
                                   testNumber = 0;
@@ -1366,6 +1369,7 @@ class _QuizScreenState extends State<QuizScreen>  {
                                 }
                                 else if ((testNumber) >=
                                     widget.lessons[number]['test'].length - 1) {
+                                  display = SectionDisplay.Learn;
                                   number ++;
                                   next = false;
                                   testNumber = 0;
@@ -1414,6 +1418,13 @@ class _QuizScreenState extends State<QuizScreen>  {
   }
 
   @override
+  void dispose() {
+    audioPlayer?.stop();
+    audioPlayer.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // if(widget.lessons[number]['test'].length != 0){
     //   list = [...widget.lessons[number]['test'][testNumber]['words']] ;
@@ -1428,72 +1439,74 @@ class _QuizScreenState extends State<QuizScreen>  {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Expanded(
-                        flex: 1,
-                        child: GestureDetector(
-                          onTap: () {
-                            var data = Auth.authProvider(context).category.firstWhere((element) {
-                              return element['_id'] == widget.id;
-                            });
-                            Navigator.pushAndRemoveUntil(context,
-                                MaterialPageRoute(builder: (BuildContext context) => CategoriesScreen(lessons: data['sub_categories'], description: widget.description,)),
-                                ModalRoute.withName('/'));
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  spreadRadius: 1,
-                                  blurRadius: 10,
-                                  offset: Offset(
-                                      -1, 1), // changes position of shadow
-                                ),
-                              ],
+                    GestureDetector(
+                      onTap: () {
+                        // var data = Auth.authProvider(context).category.firstWhere((element) {
+                        //   return element['_id'] == widget.id;
+                        // });
+                        Navigator.pushAndRemoveUntil(context,
+                            MaterialPageRoute(builder: (BuildContext context) => CategoriesScreen(lessons: widget.courses, description: widget.description,)),
+                            ModalRoute.withName('/'));
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 1,
+                              blurRadius: 10,
+                              offset: Offset(
+                                  -1, 1), // changes position of shadow
                             ),
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              radius: 15.0,
-                              child: SvgPicture.asset(
-                                "assets/images/cancel.svg",
-                                height: 20,
-                              ),
-                            ),
+                          ],
+                        ),
+                        child: CircleAvatar(
+
+                          backgroundColor: Colors.white,
+                          radius: 15.0,
+                          child: SvgPicture.asset(
+                            "assets/images/cancel.svg",
+                            height: 20,
                           ),
-                        )),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       width: 15.0,
                     ),
                     Expanded(
-                      flex: 3,
-                      child: Container(
-                          height: 6,
-                          width: 100,
-                          color: Color(0XFFEDEDED),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: SizedBox(
-                              child: Container(
-                                  height: 6,
-                                  width: getWidth(context, progressBar()),
-                                  color: Colors.redAccent),
-                            ),
-                          )),
+                      flex: 5,
+                      child: LayoutBuilder(
+                          builder:(context, constraints){
+                            return Container(
+                                height: 6,
+                                width: 100,
+                                color: Color(0XFFEDEDED),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: SizedBox(
+                                    child: Container(
+                                        height: 6,
+                                        width: getWidth(constraints.maxWidth, progressBar()),
+                                        color: Colors.redAccent),
+                                  ),
+                                )
+                            );
+                          }
+                      ),
                     ),
                     SizedBox(
                       width: 25.0,
                     ),
-                    Expanded(
-                        flex: 1,
-                        child: Text(
-                          '${number + 1}/${widget.lessons.length}',
-                          style: TextStyle(
-                              color: Colors.redAccent,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600),
-                        ))
+                    Text(
+                      '${number + 1}/${widget.lessons.length}',
+                      style: TextStyle(
+                          color: Colors.redAccent,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600),
+                    )
                   ],
                 ),
                 SizedBox(height: 40.0,),
@@ -1504,7 +1517,8 @@ class _QuizScreenState extends State<QuizScreen>  {
                     _isVisible
                         ? GestureDetector(
                       child: SvgPicture.asset(
-                        "assets/images/audio.svg",
+                        "assets/images/play-button.svg",
+                        height: 40,
                       ),
                       onTap: () {
                         playSound(
@@ -1532,8 +1546,7 @@ class _QuizScreenState extends State<QuizScreen>  {
                       children: <Widget>[
                         Column(
                           children: <Widget>[
-                            next ?
-                            Column(
+                            if (next) Column(
                               children: <Widget>[
                                 if( widget.lessons[number]['test'][testNumber]['type'] == 'toIgbo')
                                   Column(
@@ -1545,12 +1558,10 @@ class _QuizScreenState extends State<QuizScreen>  {
                                           SizedBox(
                                             height: 20.0,
                                           ),
-                                          Text(
-                                            '${widget.lessons[number]['test'][testNumber]['question']}',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.w600),
+                                          Center(
+                                            child: HtmlWidget(
+                                              '${widget.lessons[number]['test'][testNumber]['question']}',
+                                            ),
                                           ),
                                           SizedBox(
                                             height: 20.0,
@@ -1581,299 +1592,306 @@ class _QuizScreenState extends State<QuizScreen>  {
                                           SizedBox(
                                             height: 20.0,
                                           ),
-                                          Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Expanded(
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      checkAnswer(widget.lessons[number]['test'][testNumber]['optionA']);
+                                          Padding(padding: EdgeInsets.all(10),
+                                              child: Column(
+                                                  children: <Widget>[
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment.spaceBetween,
+                                                      children: <Widget>[
+                                                        Expanded(
+                                                          child: GestureDetector(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                checkAnswer(widget.lessons[number]['test'][testNumber]['optionA']);
 //                                                    optionA = widget.lessons[number]['test'][testNumber]['optionA'];
 //                                                    print('optionA: $optionA');
-                                                      clickedA = !clickedA;
-                                                      clickedB = false;
-                                                      clickedC = false;
-                                                      clickedD = false;
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                      padding:
-                                                      EdgeInsets.symmetric(
-                                                          vertical: 30.0,
-                                                          horizontal: 25.0),
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.white,
-                                                          border: clickedA
-                                                              ? Border.all(
-                                                              color: Color(
-                                                                  0XFFF59C01))
-                                                              : Border.all(
-                                                              color: Colors
-                                                                  .transparent),
-                                                          borderRadius: BorderRadius.only(
-                                                              topLeft:
-                                                              Radius.circular(
-                                                                  5),
-                                                              topRight:
-                                                              Radius.circular(
-                                                                  5),
-                                                              bottomLeft:
-                                                              Radius.circular(
-                                                                  5),
-                                                              bottomRight:
-                                                              Radius.circular(5)),
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              color: Colors.grey
-                                                                  .withOpacity(
-                                                                  0.3),
-                                                              spreadRadius: 1,
-                                                              blurRadius: 10,
-                                                              offset: Offset(-1,
-                                                                  1), // changes position of shadow
-                                                            ),
-                                                          ]),
-                                                      child: Container(
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                          children: <Widget>[
-                                                            Container(
-                                                                height: 50.0,
-                                                                child: Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionAImage']}",))
-                                                            ),
-                                                            SizedBox(
-                                                              height: 15.0,
-                                                            ),
-                                                            Text(
-                                                              "${widget.lessons[number]['test'][testNumber]['optionA']}", style: TextStyle(fontSize: 18.0),)
-                                                          ],
+                                                                clickedA = !clickedA;
+                                                                clickedB = false;
+                                                                clickedC = false;
+                                                                clickedD = false;
+                                                              });
+                                                            },
+                                                            child: Container(
+                                                                padding:
+                                                                EdgeInsets.symmetric(
+                                                                    vertical: 30.0,
+                                                                    horizontal: 25.0),
+                                                                decoration: BoxDecoration(
+                                                                    color: Colors.white,
+                                                                    border: clickedA
+                                                                        ? Border.all(
+                                                                        color: Color(
+                                                                            0XFFF59C01))
+                                                                        : Border.all(
+                                                                        color: Colors
+                                                                            .transparent),
+                                                                    borderRadius: BorderRadius.only(
+                                                                        topLeft:
+                                                                        Radius.circular(
+                                                                            5),
+                                                                        topRight:
+                                                                        Radius.circular(
+                                                                            5),
+                                                                        bottomLeft:
+                                                                        Radius.circular(
+                                                                            5),
+                                                                        bottomRight:
+                                                                        Radius.circular(5)),
+                                                                    boxShadow: [
+                                                                      BoxShadow(
+                                                                        color: Colors.grey
+                                                                            .withOpacity(
+                                                                            0.3),
+                                                                        spreadRadius: 1,
+                                                                        blurRadius: 10,
+                                                                        offset: Offset(-1,
+                                                                            1), // changes position of shadow
+                                                                      ),
+                                                                    ]),
+                                                                child: Container(
+                                                                  child: Column(
+                                                                    mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                    children: <Widget>[
+                                                                      Container(
+                                                                          height: 50.0,
+                                                                          child: Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionAImage']}",))
+                                                                      ),
+                                                                      SizedBox(
+                                                                        height: 15.0,
+                                                                      ),
+                                                                      Text(
+                                                                        "${widget.lessons[number]['test'][testNumber]['optionA']}", style: TextStyle(fontSize: 18.0),)
+                                                                    ],
+                                                                  ),
+                                                                )),
+                                                          ),
                                                         ),
-                                                      )),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 30.0,
-                                              ),
-                                              Expanded(
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      checkAnswer(widget.lessons[number]['test'][testNumber]['optionB']);
+                                                        SizedBox(
+                                                          width: 30.0,
+                                                        ),
+                                                        Expanded(
+                                                          child: GestureDetector(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                checkAnswer(widget.lessons[number]['test'][testNumber]['optionB']);
 //                                                    optionB = widget.lessons[number]['test'][testNumber]['optionB'];
 //                                                    print('optionB: $optionB');
-                                                      clickedA = false;
-                                                      clickedB = !clickedB;
-                                                      clickedC = false;
-                                                      clickedD = false;
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                      padding:
-                                                      EdgeInsets.symmetric(
-                                                          vertical: 30.0,
-                                                          horizontal: 25.0),
-                                                      decoration: BoxDecoration(
-                                                          border: clickedB
-                                                              ? Border.all(
-                                                              color: Color(
-                                                                  0XFFF59C01))
-                                                              : Border.all(
-                                                              color: Colors
-                                                                  .transparent),
-                                                          color: Colors.white,
-                                                          borderRadius: BorderRadius.only(
-                                                              topLeft:
-                                                              Radius.circular(
-                                                                  5),
-                                                              topRight:
-                                                              Radius.circular(
-                                                                  5),
-                                                              bottomLeft:
-                                                              Radius.circular(
-                                                                  5),
-                                                              bottomRight:
-                                                              Radius.circular(5)),
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              color: Colors.grey
-                                                                  .withOpacity(
-                                                                  0.3),
-                                                              spreadRadius: 1,
-                                                              blurRadius: 10,
-                                                              offset: Offset(-1,
-                                                                  1), // changes position of shadow
-                                                            ),
-                                                          ]),
-                                                      child: Container(
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                          children: <Widget>[
-                                                            Container(
-                                                              height: 50.0,
-                                                              child: Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionBImage']}",)),
-                                                            ),
-                                                            SizedBox(
-                                                              height: 15.0,
-                                                            ),
-                                                            Text(
-                                                                "${widget.lessons[number]['test'][testNumber]['optionB']}", style: TextStyle(fontSize: 18.0))
-                                                          ],
+                                                                clickedA = false;
+                                                                clickedB = !clickedB;
+                                                                clickedC = false;
+                                                                clickedD = false;
+                                                              });
+                                                            },
+                                                            child: Container(
+                                                                padding:
+                                                                EdgeInsets.symmetric(
+                                                                    vertical: 30.0,
+                                                                    horizontal: 25.0),
+                                                                decoration: BoxDecoration(
+                                                                    border: clickedB
+                                                                        ? Border.all(
+                                                                        color: Color(
+                                                                            0XFFF59C01))
+                                                                        : Border.all(
+                                                                        color: Colors
+                                                                            .transparent),
+                                                                    color: Colors.white,
+                                                                    borderRadius: BorderRadius.only(
+                                                                        topLeft:
+                                                                        Radius.circular(
+                                                                            5),
+                                                                        topRight:
+                                                                        Radius.circular(
+                                                                            5),
+                                                                        bottomLeft:
+                                                                        Radius.circular(
+                                                                            5),
+                                                                        bottomRight:
+                                                                        Radius.circular(5)),
+                                                                    boxShadow: [
+                                                                      BoxShadow(
+                                                                        color: Colors.grey
+                                                                            .withOpacity(
+                                                                            0.3),
+                                                                        spreadRadius: 1,
+                                                                        blurRadius: 10,
+                                                                        offset: Offset(-1,
+                                                                            1), // changes position of shadow
+                                                                      ),
+                                                                    ]),
+                                                                child: Container(
+                                                                  child: Column(
+                                                                    mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                    children: <Widget>[
+                                                                      Container(
+                                                                        height: 50.0,
+                                                                        child: Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionBImage']}",)),
+                                                                      ),
+                                                                      SizedBox(
+                                                                        height: 15.0,
+                                                                      ),
+                                                                      Text(
+                                                                          "${widget.lessons[number]['test'][testNumber]['optionB']}", style: TextStyle(fontSize: 18.0))
+                                                                    ],
+                                                                  ),
+                                                                )),
+                                                          ),
                                                         ),
-                                                      )),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 40.0,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Expanded(
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      checkAnswer(widget.lessons[number]['test'][testNumber]['optionC']);
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 40.0,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment.spaceBetween,
+                                                      children: <Widget>[
+                                                        Expanded(
+                                                          child: GestureDetector(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                checkAnswer(widget.lessons[number]['test'][testNumber]['optionC']);
 //                                                    optionC = widget.lessons[number]['test'][testNumber]['optionC'];
 //                                                    print('optionC: $optionC');
-                                                      clickedA = false;
-                                                      clickedB = false;
-                                                      clickedC = !clickedC;
-                                                      clickedD = false;
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                      padding:
-                                                      EdgeInsets.symmetric(
-                                                          vertical: 30.0,
-                                                          horizontal: 25.0),
-                                                      decoration: BoxDecoration(
-                                                          border: clickedC
-                                                              ? Border.all(
-                                                              color: Color(
-                                                                  0XFFF59C01))
-                                                              : Border.all(
-                                                              color: Colors
-                                                                  .transparent),
-                                                          color: Colors.white,
-                                                          borderRadius: BorderRadius.only(
-                                                              topLeft:
-                                                              Radius.circular(
-                                                                  5),
-                                                              topRight:
-                                                              Radius.circular(
-                                                                  5),
-                                                              bottomLeft:
-                                                              Radius.circular(
-                                                                  5),
-                                                              bottomRight:
-                                                              Radius.circular(5)),
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              color: Colors.grey
-                                                                  .withOpacity(
-                                                                  0.3),
-                                                              spreadRadius: 1,
-                                                              blurRadius: 10,
-                                                              offset: Offset(-1,
-                                                                  1), // changes position of shadow
-                                                            ),
-                                                          ]),
-                                                      child: Column(
-                                                        children: <Widget>[
-                                                          Container(
-                                                              height: 50.0,
-                                                              child:
-                                                              Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionCImage']}",))
+                                                                clickedA = false;
+                                                                clickedB = false;
+                                                                clickedC = !clickedC;
+                                                                clickedD = false;
+                                                              });
+                                                            },
+                                                            child: Container(
+                                                                padding:
+                                                                EdgeInsets.symmetric(
+                                                                    vertical: 30.0,
+                                                                    horizontal: 25.0),
+                                                                decoration: BoxDecoration(
+                                                                    border: clickedC
+                                                                        ? Border.all(
+                                                                        color: Color(
+                                                                            0XFFF59C01))
+                                                                        : Border.all(
+                                                                        color: Colors
+                                                                            .transparent),
+                                                                    color: Colors.white,
+                                                                    borderRadius: BorderRadius.only(
+                                                                        topLeft:
+                                                                        Radius.circular(
+                                                                            5),
+                                                                        topRight:
+                                                                        Radius.circular(
+                                                                            5),
+                                                                        bottomLeft:
+                                                                        Radius.circular(
+                                                                            5),
+                                                                        bottomRight:
+                                                                        Radius.circular(5)),
+                                                                    boxShadow: [
+                                                                      BoxShadow(
+                                                                        color: Colors.grey
+                                                                            .withOpacity(
+                                                                            0.3),
+                                                                        spreadRadius: 1,
+                                                                        blurRadius: 10,
+                                                                        offset: Offset(-1,
+                                                                            1), // changes position of shadow
+                                                                      ),
+                                                                    ]),
+                                                                child: Column(
+                                                                  children: <Widget>[
+                                                                    Container(
+                                                                        height: 50.0,
+                                                                        child:
+                                                                        Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionCImage']}",))
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height: 15.0,
+                                                                    ),
+                                                                    Text(
+                                                                        "${widget.lessons[number]['test'][testNumber]['optionC']}",style: TextStyle(fontSize: 18.0))
+                                                                  ],
+                                                                )),
                                                           ),
-                                                          SizedBox(
-                                                            height: 15.0,
-                                                          ),
-                                                          Text(
-                                                              "${widget.lessons[number]['test'][testNumber]['optionC']}",style: TextStyle(fontSize: 18.0))
-                                                        ],
-                                                      )),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 30.0,
-                                              ),
-                                              Expanded(
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      checkAnswer(widget.lessons[number]['test'][testNumber]['optionD']);
+                                                        ),
+                                                        SizedBox(
+                                                          width: 30.0,
+                                                        ),
+                                                        Expanded(
+                                                          child: GestureDetector(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                checkAnswer(widget.lessons[number]['test'][testNumber]['optionD']);
 //                                                    optionD = widget.lessons[number]['test'][testNumber]['optionD'];
 //                                                    print('optionD: $optionD');
-                                                      clickedA = false;
-                                                      clickedB = false;
-                                                      clickedC = false;
-                                                      clickedD = !clickedD;
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                      padding:
-                                                      EdgeInsets.symmetric(
-                                                          vertical: 30.0,
-                                                          horizontal: 25.0),
-                                                      decoration: BoxDecoration(
-                                                          border: clickedD
-                                                              ? Border.all(
-                                                              color: Color(
-                                                                  0XFFF59C01))
-                                                              : Border.all(
-                                                              color: Colors
-                                                                  .transparent),
-                                                          color: Colors.white,
-                                                          borderRadius: BorderRadius.only(
-                                                              topLeft:
-                                                              Radius.circular(
-                                                                  5),
-                                                              topRight:
-                                                              Radius.circular(
-                                                                  5),
-                                                              bottomLeft:
-                                                              Radius.circular(
-                                                                  5),
-                                                              bottomRight:
-                                                              Radius.circular(5)),
-                                                          boxShadow: [
-                                                            BoxShadow(
-                                                              color: Colors.grey
-                                                                  .withOpacity(
-                                                                  0.3),
-                                                              spreadRadius: 1,
-                                                              blurRadius: 10,
-                                                              offset: Offset(-1,
-                                                                  1), // changes position of shadow
-                                                            ),
-                                                          ]),
-                                                      child: Column(
-                                                        children: <Widget>[
-                                                          Container(
-                                                              height: 50.0,
-                                                              child:
-                                                              Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionDImage']}",))
+                                                                clickedA = false;
+                                                                clickedB = false;
+                                                                clickedC = false;
+                                                                clickedD = !clickedD;
+                                                              });
+                                                            },
+                                                            child: Container(
+                                                                padding:
+                                                                EdgeInsets.symmetric(
+                                                                    vertical: 30.0,
+                                                                    horizontal: 25.0),
+                                                                decoration: BoxDecoration(
+                                                                    border: clickedD
+                                                                        ? Border.all(
+                                                                        color: Color(
+                                                                            0XFFF59C01))
+                                                                        : Border.all(
+                                                                        color: Colors
+                                                                            .transparent),
+                                                                    color: Colors.white,
+                                                                    borderRadius: BorderRadius.only(
+                                                                        topLeft:
+                                                                        Radius.circular(
+                                                                            5),
+                                                                        topRight:
+                                                                        Radius.circular(
+                                                                            5),
+                                                                        bottomLeft:
+                                                                        Radius.circular(
+                                                                            5),
+                                                                        bottomRight:
+                                                                        Radius.circular(5)),
+                                                                    boxShadow: [
+                                                                      BoxShadow(
+                                                                        color: Colors.grey
+                                                                            .withOpacity(
+                                                                            0.3),
+                                                                        spreadRadius: 1,
+                                                                        blurRadius: 10,
+                                                                        offset: Offset(-1,
+                                                                            1), // changes position of shadow
+                                                                      ),
+                                                                    ]),
+                                                                child: Column(
+                                                                  children: <Widget>[
+                                                                    Container(
+                                                                        height: 50.0,
+                                                                        child:
+                                                                        Image(image: NetworkImage("${widget.lessons[number]['test'][testNumber]['optionDImage']}",))
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height: 15.0,
+                                                                    ),
+                                                                    Text(
+                                                                        "${widget.lessons[number]['test'][testNumber]['optionD']}",style: TextStyle(fontSize: 18.0))
+                                                                  ],
+                                                                )),
                                                           ),
-                                                          SizedBox(
-                                                            height: 15.0,
-                                                          ),
-                                                          Text(
-                                                              "${widget.lessons[number]['test'][testNumber]['optionD']}",style: TextStyle(fontSize: 18.0))
-                                                        ],
-                                                      )),
-                                                ),
-                                              ),
-                                            ],
-                                          )
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                              )
+                                          ),
+
                                         ],
                                       ),
                                       SizedBox(
@@ -1917,12 +1935,10 @@ class _QuizScreenState extends State<QuizScreen>  {
                                           crossAxisAlignment:
                                           CrossAxisAlignment.stretch,
                                           children: <Widget>[
-                                            Text(
-                                              '${ widget.lessons[number]['test'][testNumber]['question']}',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  fontSize: 20.0,
-                                                  fontWeight: FontWeight.w600),
+                                            Center(
+                                              child: HtmlWidget(
+                                                '${ widget.lessons[number]['test'][testNumber]['question']}',
+                                              ),
                                             ),
                                             SizedBox(
                                               height: 20.0,
@@ -1959,115 +1975,106 @@ class _QuizScreenState extends State<QuizScreen>  {
                                             Column(
                                               children: <Widget>[
                                                 Wrap(
-                                                  runAlignment: WrapAlignment.spaceBetween,
+                                                  runSpacing: 20,
+                                                  spacing: 10,
+                                                  alignment: WrapAlignment.spaceEvenly,
                                                   children: <Widget>[
-                                                    Expanded(
-                                                        child: GestureDetector(
-                                                            onTap: () {
-                                                              setState(() {
-                                                                checkAnswer2(widget.lessons[number]['test'][testNumber]['option1']);
-                                                                opt1 = !opt1;
-                                                                opt2 = false;
-                                                                opt3 = false;
-                                                                opt4 = false;
-                                                                print('text1:$text1');
-                                                              });
-                                                            },
-                                                            child: OptionBox(
-                                                              option:
-                                                              widget.lessons[number]['test'][testNumber]['option1'],
-                                                              gradient1: opt1
-                                                                  ? Color(
-                                                                  0XFFF7B500)
-                                                                  : Colors.white,
-                                                              gradient2: opt1
-                                                                  ? Color(
-                                                                  0XFFF48C02)
-                                                                  : Colors.white,
-                                                            ))),
-                                                    SizedBox(
-                                                      width: 15.0,
-                                                    ),
-                                                    Expanded(
-                                                        child: GestureDetector(
-                                                            onTap: () {
-                                                              setState(() {
-                                                                checkAnswer2(widget.lessons[number]['test'][testNumber]['option2']);
-                                                                opt2 = !opt2;
-                                                                opt1 = false;
-                                                                opt3 = false;
-                                                                opt4 = false;
-                                                                print(
-                                                                    'text2:$text2');
-                                                              });
-                                                            },
-                                                            child: OptionBox(
-                                                              option: widget.lessons[number]['test'][testNumber]['option2'],
-                                                              gradient1: opt2
-                                                                  ? Color(
-                                                                  0XFFF7B500)
-                                                                  : Colors.white,
-                                                              gradient2: opt2
-                                                                  ? Color(
-                                                                  0XFFF48C02)
-                                                                  : Colors.white,
-                                                            ))),
-                                                    SizedBox(
-                                                      width: 15.0,
-                                                    ),
-                                                    Expanded(
-                                                        child: GestureDetector(
-                                                            onTap: () {
-                                                              setState(() {
-                                                                checkAnswer2(widget.lessons[number]['test'][testNumber]['option3']);
-                                                                opt3 = !opt3;
-                                                                opt2 = false;
-                                                                opt1 = false;
-                                                                opt4 = false;
-                                                                print(
-                                                                    'text1:$text3');
-                                                              });
-                                                            },
-                                                            child: OptionBox(
-                                                              option:
-                                                              widget.lessons[number]['test'][testNumber]['option3'],
-                                                              gradient1: opt3
-                                                                  ? Color(
-                                                                  0XFFF7B500)
-                                                                  : Colors.white,
-                                                              gradient2: opt3
-                                                                  ? Color(
-                                                                  0XFFF48C02)
-                                                                  : Colors.white,
-                                                            ))),
-                                                    SizedBox(
-                                                      width: 15.0,
-                                                    ),
-                                                    Expanded(
-                                                        child: GestureDetector(
-                                                            onTap: () {
-                                                              setState(() {
-                                                                checkAnswer2(widget.lessons[number]['test'][testNumber]['option4']);
-                                                                opt4 = !opt4;
-                                                                opt2 = false;
-                                                                opt3 = false;
-                                                                opt1 = false;
-                                                                print(
-                                                                    'text4:$text4');
-                                                              });
-                                                            },
-                                                            child: OptionBox(
-                                                              option:
-                                                              widget.lessons[number]['test'][testNumber]['option4'],
-                                                              gradient1: opt4
-                                                                  ? Color(
-                                                                  0XFFF7B500)
-                                                                  : Colors.white,
-                                                              gradient2: opt4
-                                                                  ? Color(
-                                                                  0XFFF48C02)
-                                                                  : Colors.white,
-                                                            ))),
+                                                    GestureDetector(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            checkAnswer2(widget.lessons[number]['test'][testNumber]['option1']);
+                                                            opt1 = !opt1;
+                                                            opt2 = false;
+                                                            opt3 = false;
+                                                            opt4 = false;
+                                                            print('text1:$text1');
+                                                          });
+                                                        },
+                                                        child: OptionBox(
+                                                          option:
+                                                          widget.lessons[number]['test'][testNumber]['option1'],
+                                                          gradient1: opt1
+                                                              ? Color(
+                                                              0XFFF7B500)
+                                                              : Colors.white,
+                                                          gradient2: opt1
+                                                              ? Color(
+                                                              0XFFF48C02)
+                                                              : Colors.white,
+                                                        )),
+                                                  
+                                                    GestureDetector(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            checkAnswer2(widget.lessons[number]['test'][testNumber]['option2']);
+                                                            opt2 = !opt2;
+                                                            opt1 = false;
+                                                            opt3 = false;
+                                                            opt4 = false;
+                                                            print(
+                                                                'text2:$text2');
+                                                          });
+                                                        },
+                                                        child: OptionBox(
+                                                          option: widget.lessons[number]['test'][testNumber]['option2'],
+                                                          gradient1: opt2
+                                                              ? Color(
+                                                              0XFFF7B500)
+                                                              : Colors.white,
+                                                          gradient2: opt2
+                                                              ? Color(
+                                                              0XFFF48C02)
+                                                              : Colors.white,
+                                                        )),
+                                                    GestureDetector(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            checkAnswer2(widget.lessons[number]['test'][testNumber]['option3']);
+                                                            opt3 = !opt3;
+                                                            opt2 = false;
+                                                            opt1 = false;
+                                                            opt4 = false;
+                                                            print(
+                                                                'text1:$text3');
+                                                          });
+                                                        },
+                                                        child: OptionBox(
+                                                          option:
+                                                          widget.lessons[number]['test'][testNumber]['option3'],
+                                                          gradient1: opt3
+                                                              ? Color(
+                                                              0XFFF7B500)
+                                                              : Colors.white,
+                                                          gradient2: opt3
+                                                              ? Color(
+                                                              0XFFF48C02)
+                                                              : Colors.white,
+                                                        )),
+                                                   
+                                                    GestureDetector(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            checkAnswer2(widget.lessons[number]['test'][testNumber]['option4']);
+                                                            opt4 = !opt4;
+                                                            opt2 = false;
+                                                            opt3 = false;
+                                                            opt1 = false;
+                                                            print(
+                                                                'text4:$text4');
+                                                          });
+                                                        },
+                                                        child: OptionBox(
+                                                          option:
+                                                          widget.lessons[number]['test'][testNumber]['option4'],
+                                                          gradient1: opt4
+                                                              ? Color(
+                                                              0XFFF7B500)
+                                                              : Colors.white,
+                                                          gradient2: opt4
+                                                              ? Color(
+                                                              0XFFF48C02)
+                                                              : Colors.white,
+                                                        )),
                                                   ],
                                                 ),
                                                 SizedBox(
@@ -2100,12 +2107,10 @@ class _QuizScreenState extends State<QuizScreen>  {
                                     children: <Widget>[
                                       Column(
                                         children: <Widget>[
-                                          Text(
-                                            '${widget.lessons[number]['test'][testNumber]['question']}',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.w600),
+                                          Center(
+                                            child: HtmlWidget(
+                                              '${widget.lessons[number]['test'][testNumber]['question']}',
+                                            ),
                                           ),
                                           SizedBox(
                                             height: 20.0,
@@ -2133,7 +2138,7 @@ class _QuizScreenState extends State<QuizScreen>  {
                                                   boxShadow: [
                                                     BoxShadow(
                                                       color: Colors.grey
-                                                          .withOpacity(0.3),
+                                                          .withOpacity(0.2),
                                                       spreadRadius: 1,
                                                       blurRadius: 10,
                                                       offset: Offset(-1,
@@ -2158,6 +2163,7 @@ class _QuizScreenState extends State<QuizScreen>  {
                                             children: <Widget>[
                                               Wrap(
                                                 runSpacing: 20,
+                                                alignment: WrapAlignment.spaceEvenly,
                                                 children: <Widget>[
                                                   GestureDetector(
                                                       onTap: () {
@@ -2171,16 +2177,11 @@ class _QuizScreenState extends State<QuizScreen>  {
                                                         });
                                                       },
                                                       child: OptionBox(
-                                                        option:
-                                                        widget.lessons[number]['test'][testNumber]['optionI'],
-                                                        gradient1: match1
-                                                            ? Color(
-                                                            0XFFF7B500)
-                                                            : Colors.white,
-                                                        gradient2: match1
-                                                            ? Color(
-                                                            0XFFF48C02)
-                                                            : Colors.white,
+                                                        option: widget.lessons[number]['test'][testNumber]['optionI'],
+                                                        gradient1: match1 ? Color(0XFFF7B500) : Colors.white,
+                                                        gradient2: match1 ? Color(0XFFF48C02) : Colors.white,
+                                                        fontColor: match1 ?Colors.white : Colors.black,
+
                                                       )),
                                                   SizedBox(
                                                     width: 15.0,
@@ -2208,6 +2209,7 @@ class _QuizScreenState extends State<QuizScreen>  {
                                                                 ? Color(
                                                                 0XFFF48C02)
                                                                 : Colors.white,
+                                                            fontColor: match2 ?Colors.white : Colors.black,
                                                           ))),
                                                   SizedBox(
                                                     width: 15.0,
@@ -2236,6 +2238,7 @@ class _QuizScreenState extends State<QuizScreen>  {
                                                                 ? Color(
                                                                 0XFFF48C02)
                                                                 : Colors.white,
+                                                            fontColor: match3 ?Colors.white : Colors.black,
                                                           ))),
                                                   SizedBox(
                                                     width: 15.0,
@@ -2264,6 +2267,7 @@ class _QuizScreenState extends State<QuizScreen>  {
                                                                 ? Color(
                                                                 0XFFF48C02)
                                                                 : Colors.white,
+                                                            fontColor: match4 ?Colors.white : Colors.black,
                                                           ))),
                                                 ],
                                               ),
@@ -2277,12 +2281,10 @@ class _QuizScreenState extends State<QuizScreen>  {
                                 if( widget.lessons[number]['test'][testNumber]['type'] == 'sentence')
                                   Column(
                                     children: <Widget>[
-                                      Text(
-                                        '${widget.lessons[number]['test'][testNumber]['question']}',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.w600),
+                                      Center(
+                                        child: HtmlWidget(
+                                          '${widget.lessons[number]['test'][testNumber]['question']}',
+                                        ),
                                       ),
                                       SizedBox(
                                         height: 30.0,
@@ -2324,67 +2326,32 @@ class _QuizScreenState extends State<QuizScreen>  {
                                           height: 0.3
                                       ),
                                       SizedBox(height: 20.0,),
-                                      SizedBox(
-                                        width: MediaQuery.of(context).size.width,
-                                        height: 50,
-                                        child:  Wrap(
-                                          runSpacing: 20.0,
-                                          children: <Widget>[
-                                            ...words.map((word){
-                                              int index = words.indexOf(word);
-                                              return Padding(
-                                              padding: const EdgeInsets.only(left: 15.0),
-                                              child: GestureDetector(
-                                                  onTap: () {
-                                                            print('remove : $words');
-                                                            setState(() {
-                                                              words.remove(words[index]);
-                                                              print('words: $words');
-                                                            });
+                                      Wrap(
+                                        alignment: WrapAlignment.spaceEvenly,
+                                        runSpacing: 20.0,
+                                        children: <Widget>[
+                                          ...words.map((word){
+                                            int index = words.indexOf(word);
+                                            return Padding(
+                                            padding: const EdgeInsets.only(left: 15.0),
+                                            child: GestureDetector(
+                                                onTap: () {
+                                                          print('remove : $words');
+                                                          setState(() {
+                                                            words.remove(words[index]);
+                                                            print('words: $words');
+                                                          });
 
-                                                          },
-                                                child: OptionBox(
-                                                  width: 50.0,
-                                                  option: word,
-                                                  gradient1: Colors.white,
-                                                  gradient2: Colors.white,
-                                                  color: Colors.white,
-                                                ),
+                                                        },
+                                              child: OptionBox(
+                                                option: word,
+                                                gradient1: Colors.white,
+                                                gradient2: Colors.white,
+                                                color: Colors.white,
                                               ),
-                                            );}).toList(),
-                                          ],
-                                        ),
-
-                                        // ListView.separated(
-                                        //     separatorBuilder: (context, index) => Text(''),
-                                        //     scrollDirection: Axis.horizontal,
-                                        //     shrinkWrap: true,
-                                        //     itemCount: words.length,
-                                        //     itemBuilder: (BuildContext context, int index) {
-                                        //       return GestureDetector(
-                                        //         onTap: () {
-                                        //           print('remove : $words');
-                                        //           setState(() {
-                                        //             words.remove(words[index]);
-                                        //             print('words: $words');
-                                        //           });
-                                        //
-                                        //         },
-                                        //         child: Padding(
-                                        //           padding: const EdgeInsets.only(left: 15.0),
-                                        //           child: Center(
-                                        //             child: OptionBox(
-                                        //               width: 50.0,
-                                        //               option: words[index],
-                                        //               gradient1: Colors.white,
-                                        //               gradient2: Colors.white,
-                                        //               color: Colors.white,
-                                        //             ),
-                                        //           ),
-                                        //         ),
-                                        //       );
-                                        //     }
-                                        // ),
+                                            ),
+                                          );}).toList(),
+                                        ],
                                       ),
                                       SizedBox(height: 20.0,),
 
@@ -2393,53 +2360,90 @@ class _QuizScreenState extends State<QuizScreen>  {
                                           height: 0.3
                                       ),
                                       SizedBox(height: 30.0,),
-                                      SizedBox(
-                                        width: MediaQuery.of(context).size.width,
-                                        height: 180,
-                                        child: GridView.builder(
-                                            gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 4,
-                                              childAspectRatio: 1,
-                                              mainAxisSpacing: 0.0,
-                                              crossAxisSpacing: 2.0,
-                                            ),
-                                            itemCount: widget.lessons[number]['test'][testNumber]['words'].length,
-                                            itemBuilder: (BuildContext context, int index) {
-                                              return GestureDetector(
-                                                onTap: () {
-                                                  print('tapped : ${widget.lessons[number]['test'][testNumber]['words'][index]}');
-                                                  setState(() {
-                                                    words.add(widget.lessons[number]['test'][testNumber]['words'][index]);
+                                      Wrap(
+                                        alignment: WrapAlignment.spaceEvenly,
+                                        runSpacing: 20.0,
+                                        children: <Widget>[
+                                          ...widget.lessons[number]['test'][testNumber]['words'].map((word){
+                                            int index =  widget.lessons[number]['test'][testNumber]['words'].indexOf(word);
+                                            return GestureDetector(
+                                              onTap: () {
+                                                print('tapped : ${widget.lessons[number]['test'][testNumber]['words'][index]}');
+                                                setState(() {
+                                                  words.add(widget.lessons[number]['test'][testNumber]['words'][index]);
 
 
 
-                                                    widget.lessons[number]['test'][testNumber]['words'].replaceRange(index, (index + 1), ['']);
-                                                    print('list$list');
-                                                    print('widget: ${widget.lessons[number]['test'][testNumber]['words']}');
+                                                  widget.lessons[number]['test'][testNumber]['words'].replaceRange(index, (index + 1), ['']);
+                                                  print('list$list');
+                                                  print('widget: ${widget.lessons[number]['test'][testNumber]['words']}');
 
-                                                    _onSelected(index);
-                                                    print('ind $index');
-                                                    print('words: $words');
-                                                  });
+                                                  _onSelected(index);
+                                                  print('ind $index');
+                                                  print('words: $words');
+                                                });
 
-                                                },
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(left: 15.0),
-                                                  child: Center(
-                                                    child: OptionBox(
-                                                      width: 50.0,
-                                                      option: widget.lessons[number]['test'][testNumber]['words'][index],
-                                                      gradient1:  _selectedIndex != null && _selectedIndex == index ? Color(0XFFF7F7F7) :  Colors.white,
-                                                      gradient2:  _selectedIndex != null && _selectedIndex == index ? Color(0XFFF7F7F7) :  Colors.white,
-                                                      color: Colors.white,
-                                                      fontColor: _selectedIndex != null && _selectedIndex == index ? Colors.transparent :  Colors.black,
-                                                    ),
-                                                  ),
+                                              },
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(left: 15.0),
+                                                child: OptionBox(
+                                                  option: widget.lessons[number]['test'][testNumber]['words'][index],
+                                                  gradient1:  _selectedIndex != null && _selectedIndex == index ? Color(0XFFF7F7F7) :  Colors.white,
+                                                  gradient2:  _selectedIndex != null && _selectedIndex == index ? Color(0XFFF7F7F7) :  Colors.white,
+                                                  color: Colors.white,
+                                                  fontColor: _selectedIndex != null && _selectedIndex == index ? Colors.transparent :  Colors.black,
                                                 ),
-                                              );
-                                            }
-                                        ),
+                                              ),
+                                            );}).toList(),
+                                        ],
                                       ),
+                                      // SizedBox(
+                                      //   width: MediaQuery.of(context).size.width,
+                                      //   height: 180,
+                                      //   child: GridView.builder(
+                                      //       gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                                      //         crossAxisCount: 4,
+                                      //         childAspectRatio: 1,
+                                      //         mainAxisSpacing: 0.0,
+                                      //         crossAxisSpacing: 15.0,
+                                      //       ),
+                                      //       itemCount: widget.lessons[number]['test'][testNumber]['words'].length,
+                                      //       itemBuilder: (BuildContext context, int index) {
+                                      //         return GestureDetector(
+                                      //           onTap: () {
+                                      //             print('tapped : ${widget.lessons[number]['test'][testNumber]['words'][index]}');
+                                      //             setState(() {
+                                      //               words.add(widget.lessons[number]['test'][testNumber]['words'][index]);
+                                      //
+                                      //
+                                      //
+                                      //               widget.lessons[number]['test'][testNumber]['words'].replaceRange(index, (index + 1), ['']);
+                                      //               print('list$list');
+                                      //               print('widget: ${widget.lessons[number]['test'][testNumber]['words']}');
+                                      //
+                                      //               _onSelected(index);
+                                      //               print('ind $index');
+                                      //               print('words: $words');
+                                      //             });
+                                      //
+                                      //           },
+                                      //           child: Padding(
+                                      //             padding: const EdgeInsets.only(left: 15.0),
+                                      //             child: Center(
+                                      //               child: OptionBox(
+                                      //                 width: 50.0,
+                                      //                 option: widget.lessons[number]['test'][testNumber]['words'][index],
+                                      //                 gradient1:  _selectedIndex != null && _selectedIndex == index ? Color(0XFFF7F7F7) :  Colors.white,
+                                      //                 gradient2:  _selectedIndex != null && _selectedIndex == index ? Color(0XFFF7F7F7) :  Colors.white,
+                                      //                 color: Colors.white,
+                                      //                 fontColor: _selectedIndex != null && _selectedIndex == index ? Colors.transparent :  Colors.black,
+                                      //               ),
+                                      //             ),
+                                      //           ),
+                                      //         );
+                                      //       }
+                                      //   ),
+                                      // ),
                                       SizedBox(
                                         height: 10.0,
                                       ),
@@ -2447,15 +2451,10 @@ class _QuizScreenState extends State<QuizScreen>  {
                                     ],
                                   )
                               ],
-                            ) :
-                            Column(
+                            ) else Column(
                               children: <Widget>[
-                                Text(
+                                HtmlWidget(
                                   '${widget.lessons[number]['description']}',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w600),
                                 ),
                                 SizedBox(
                                   height: 40
@@ -2463,7 +2462,7 @@ class _QuizScreenState extends State<QuizScreen>  {
                                 Padding(
                                   padding: EdgeInsets.symmetric(
                                       vertical: 25.0,
-                                      horizontal: 40.0),
+                                      horizontal: 25.0),
                                   child: Container(
                                      
                                       decoration: BoxDecoration(
@@ -2493,7 +2492,7 @@ class _QuizScreenState extends State<QuizScreen>  {
                                               image: NetworkImage("${widget.lessons[number]['picture']}"),
                                             ),
                                             SizedBox(height: 5,),
-                                            Text('${widget.lessons[number]['igbo']}', textAlign: TextAlign.center, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600,),)
+                                            HtmlWidget('${widget.lessons[number]['igbo']}',)
                                           ],
                                         ),
                                       )
@@ -2521,6 +2520,8 @@ class _QuizScreenState extends State<QuizScreen>  {
                         : GestureDetector(
                       onTap: () {
                         setState(() {
+                          audioPlayer?.stop();
+                          _isVisible = true;
                           number--;
                         });
                       },
@@ -2531,9 +2532,28 @@ class _QuizScreenState extends State<QuizScreen>  {
                     GestureDetector(
                       onTap: () {
                         setState(() {
+                          audioPlayer?.stop();
+                          _isVisible = true;
                           if(widget.lessons[number]['test'] == [] || widget.lessons[number]['test'].length == 0 ){
                             next = false;
-                            number ++;
+                            if(widget.lessons.length - 1 == number){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ThankYou(
+                                        lessons: widget.lessons,
+                                        courses: widget.courses,
+                                        id: widget.id,
+                                        description: widget.description
+                                    )),
+                              );
+                            }
+                            else {
+                              number ++;
+                            }
+
+                            print('num: $number');
+                            print('next:${widget.lessons.length}');
                           }
                           else {
                             next = true;
@@ -2547,7 +2567,8 @@ class _QuizScreenState extends State<QuizScreen>  {
                       ),
                     )
                   ],
-                ) : Column(
+                ) :
+                   Column(
                      crossAxisAlignment: CrossAxisAlignment.stretch,
                      children: <Widget>[
                        FlatButton(
