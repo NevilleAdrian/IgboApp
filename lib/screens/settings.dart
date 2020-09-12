@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
+import 'package:nkuzi_igbo/screens/profile_screen.dart';
 import 'package:nkuzi_igbo/screens/splash_screen.dart';
 
 class Settings extends StatefulWidget {
@@ -13,7 +14,29 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          centerTitle: false,
+          automaticallyImplyLeading: false,
+          title: GestureDetector(
+              onTap: () {
+               Navigator.pop(context);
+              },
+              child: Row(
+                children: <Widget>[
+                  SizedBox(
+                      child: Icon(Icons.arrow_back)
+                  ),
+                  SizedBox(width: 10.0,),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: Text(
+                      'Settings',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle( fontFamily: 'Baloo', fontWeight: FontWeight.w900, color: Colors.black, fontSize: 20.0),
+                    ),
+                  )
+                ],
+              )
+          ),
           elevation: 0,
         ),
         body: Padding(
@@ -21,13 +44,6 @@ class _SettingsState extends State<Settings> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                'Settings',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 25.0,
-                    fontWeight: FontWeight.w600),
-              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -37,21 +53,6 @@ class _SettingsState extends State<Settings> {
                   Text(
                     'GENERAL',
                     style: TextStyle(color: Colors.grey, fontSize: 14.0),
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      SvgPicture.asset("assets/images/email.svg"),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        'Change Email',
-                        style: TextStyle(color: Colors.black, fontSize: 15),
-                      )
-                    ],
                   ),
                   SizedBox(
                     height: 30.0,
@@ -71,18 +72,18 @@ class _SettingsState extends State<Settings> {
                   SizedBox(
                     height: 30.0,
                   ),
-                  Row(
-                    children: <Widget>[
-                      SvgPicture.asset("assets/images/notifications.svg"),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        'Notification Settings',
-                        style: TextStyle(color: Colors.black, fontSize: 15),
-                      )
-                    ],
-                  ),
+                  // Row(
+                  //   children: <Widget>[
+                  //     SvgPicture.asset("assets/images/notifications.svg"),
+                  //     SizedBox(
+                  //       width: 20.0,
+                  //     ),
+                  //     Text(
+                  //       'Notification Settings',
+                  //       style: TextStyle(color: Colors.black, fontSize: 15),
+                  //     )
+                  //   ],
+                  // ),
                 ],
               ),
               Column(
@@ -143,21 +144,21 @@ class _SettingsState extends State<Settings> {
                   SizedBox(
                     height: 30.0,
                   ),
-                  Row(
-                    children: <Widget>[
-                      SvgPicture.asset("assets/images/update.svg"),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        'Check for Update',
-                        style: TextStyle(color: Colors.black, fontSize: 15),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
+                  // Row(
+                  //   children: <Widget>[
+                  //     SvgPicture.asset("assets/images/update.svg"),
+                  //     SizedBox(
+                  //       width: 20.0,
+                  //     ),
+                  //     Text(
+                  //       'Check for Update',
+                  //       style: TextStyle(color: Colors.black, fontSize: 15),
+                  //     )
+                  //   ],
+                  // ),
+                  // SizedBox(
+                  //   height: 30.0,
+                  // ),
                   Row(
                     children: <Widget>[
                       SvgPicture.asset("assets/images/logout.svg"),

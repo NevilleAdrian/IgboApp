@@ -40,7 +40,7 @@ class OptionBox extends StatelessWidget {
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
+                color: Colors.grey.withOpacity(0.2),
                 spreadRadius: 1,
                 blurRadius: 10,
                 offset: Offset(-1, 1), // changes position of shadow
@@ -50,7 +50,7 @@ class OptionBox extends StatelessWidget {
         height: height ,
         width: width,
         child: Padding(
-          padding: const EdgeInsets.symmetric( vertical: 10, horizontal: 5.0),
+          padding: const EdgeInsets.symmetric( vertical: 10, horizontal: 13.0),
           child: Text(option,textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 12, color: fontColor),),
         )
     );

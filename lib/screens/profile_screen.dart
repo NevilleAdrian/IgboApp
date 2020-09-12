@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
+import 'package:nkuzi_igbo/screens/banner.dart';
 import 'package:nkuzi_igbo/screens/settings.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
 
@@ -293,7 +294,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SizedBox(
                     height: 35.0,
                   ),
-                  SvgPicture.asset("assets/images/banner.svg"),
+                 Padding(
+                   padding: const EdgeInsets.only(top: 40.0),
+                   child: NotificationBanner(),
+                 ),
                   SizedBox(
                     height: 30.0,
                   ),

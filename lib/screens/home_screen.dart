@@ -468,7 +468,8 @@ class CategoryList extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {
-              Navigator.push(
+              if(lessons[index]['isAvaliable'])
+                Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => CategoriesScreen(
@@ -482,7 +483,7 @@ class CategoryList extends StatelessWidget {
             child: Container(
               height: 126.0,
               decoration: BoxDecoration(
-                image: DecorationImage(
+                image: DecorationImage( colorFilter: !lessons[index]['isAvaliable'] ? ColorFilter.mode(Colors.grey, BlendMode.saturation,): null,
                   image: NetworkImage(lessons[index]['image']),
                   fit: BoxFit.cover,
                 ),
@@ -492,22 +493,49 @@ class CategoryList extends StatelessWidget {
                 topLeft: Radius.circular(5),
                 topRight: Radius.circular(5)),
               ),
-
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 25.0, horizontal: 25.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(right: 175.0),
-                      child: Text(
-                        '${lessons[index]['name']}',
-                        style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(right: 40.0),
+                            child: Text(
+                              '${lessons[index]['name']}',
+                              style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                        ],
                       ),
-                    )
+                    ),
+                   if (!lessons[index]['isAvaliable'])Expanded(
+                      child:  Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                             Container(
+                              margin: EdgeInsets.only(top: 20.0),
+                              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              child: Text('Coming soon', style: TextStyle(color: Colors.white, fontSize: 10.0),),
+                              decoration: BoxDecoration(
+                                color: Color(0XFFF31601) ,
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(5),
+                                    bottomRight: Radius.circular(5),
+                                    topLeft: Radius.circular(5),
+                                    topRight: Radius.circular(5)),
+                              ),
+                            )
+                          ],
+                      )
+                    ),
                   ],
+
                 ),
               ),
             ),
