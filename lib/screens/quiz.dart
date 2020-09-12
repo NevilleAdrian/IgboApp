@@ -2337,8 +2337,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                       ['type'] ==
                                   'match')
                                 Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: <Widget>[
                                     Column(
                                       children: <Widget>[
@@ -2404,9 +2403,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                         Column(
                                           children: <Widget>[
                                             Wrap(
+                                              spacing: 20.0,
                                               runSpacing: 20,
-                                              alignment:
-                                                  WrapAlignment.spaceEvenly,
+                                              alignment: WrapAlignment.spaceEvenly,
                                               children: <Widget>[
                                                 GestureDetector(
                                                     onTap: () {

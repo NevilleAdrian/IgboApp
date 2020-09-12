@@ -356,212 +356,226 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 5.0),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Container(
-                                                width: 40.0,
-                                                height: 40.0,
-                                                decoration: new BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                      begin: Alignment.topRight,
-                                                      end: Alignment.bottomLeft,
-                                                      colors: [
-                                                        Color(0XFFF7B500),
-                                                        Color(0XFFF48C02)
-                                                      ]),
-                                                  shape: BoxShape.circle,
-                                                )),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              'Mon',
-                                              style: TextStyle(fontSize: 12.0),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 5.0),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Container(
-                                                width: 40.0,
-                                                height: 40.0,
-                                                decoration: new BoxDecoration(
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 5.0),
+                                          child: Column(
+                                            children: <Widget>[
+                                              Container(
+                                                  width: 40.0,
+                                                  height: 40.0,
+                                                  decoration: new BoxDecoration(
                                                     gradient: LinearGradient(
-                                                        begin:
-                                                            Alignment.topRight,
-                                                        end: Alignment
-                                                            .bottomLeft,
+                                                        begin: Alignment.topRight,
+                                                        end: Alignment.bottomLeft,
                                                         colors: [
-                                                          Colors.white,
-                                                          Colors.white
+                                                          Color(0XFFF7B500),
+                                                          Color(0XFFF48C02)
                                                         ]),
                                                     shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                        color: Colors.grey,
-                                                        width: 0.4))),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              'Tue',
-                                              style: TextStyle(fontSize: 12.0),
-                                            )
-                                          ],
+                                                  )),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                'Mon',
+                                                style: TextStyle(fontSize: 12.0),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 5.0),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Container(
-                                                width: 40.0,
-                                                height: 40.0,
-                                                decoration: new BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                      begin: Alignment.topRight,
-                                                      end: Alignment.bottomLeft,
-                                                      colors: [
-                                                        Color(0XFFF7B500),
-                                                        Color(0XFFF48C02)
-                                                      ]),
-                                                  shape: BoxShape.circle,
-                                                )),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              'Wed',
-                                              style: TextStyle(fontSize: 12.0),
-                                            )
-                                          ],
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 5.0),
+                                          child: Column(
+                                            children: <Widget>[
+                                              Container(
+                                                  width: 40.0,
+                                                  height: 40.0,
+                                                  decoration: new BoxDecoration(
+                                                      gradient: LinearGradient(
+                                                          begin:
+                                                              Alignment.topRight,
+                                                          end: Alignment
+                                                              .bottomLeft,
+                                                          colors: [
+                                                            Colors.white,
+                                                            Colors.white
+                                                          ]),
+                                                      shape: BoxShape.circle,
+                                                      border: Border.all(
+                                                          color: Colors.grey,
+                                                          width: 0.4))),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                'Tue',
+                                                style: TextStyle(fontSize: 12.0),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 5.0),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Container(
-                                                width: 40.0,
-                                                height: 40.0,
-                                                decoration: new BoxDecoration(
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 5.0),
+                                          child: Column(
+                                            children: <Widget>[
+                                              Container(
+                                                  width: 40.0,
+                                                  height: 40.0,
+                                                  decoration: new BoxDecoration(
                                                     gradient: LinearGradient(
-                                                        begin:
-                                                            Alignment.topRight,
-                                                        end: Alignment
-                                                            .bottomLeft,
+                                                        begin: Alignment.topRight,
+                                                        end: Alignment.bottomLeft,
                                                         colors: [
-                                                          Colors.white,
-                                                          Colors.white
+                                                          Color(0XFFF7B500),
+                                                          Color(0XFFF48C02)
                                                         ]),
                                                     shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                        color: Colors.grey,
-                                                        width: 0.4))),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              'Thu',
-                                              style: TextStyle(fontSize: 12.0),
-                                            )
-                                          ],
+                                                  )),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                'Wed',
+                                                style: TextStyle(fontSize: 12.0),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 5.0),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Container(
-                                                width: 40.0,
-                                                height: 40.0,
-                                                decoration: new BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                      begin: Alignment.topRight,
-                                                      end: Alignment.bottomLeft,
-                                                      colors: [
-                                                        Color(0XFFF7B500),
-                                                        Color(0XFFF48C02)
-                                                      ]),
-                                                  shape: BoxShape.circle,
-                                                )),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              'Fri',
-                                              style: TextStyle(fontSize: 12.0),
-                                            )
-                                          ],
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 5.0),
+                                          child: Column(
+                                            children: <Widget>[
+                                              Container(
+                                                  width: 40.0,
+                                                  height: 40.0,
+                                                  decoration: new BoxDecoration(
+                                                      gradient: LinearGradient(
+                                                          begin:
+                                                              Alignment.topRight,
+                                                          end: Alignment
+                                                              .bottomLeft,
+                                                          colors: [
+                                                            Colors.white,
+                                                            Colors.white
+                                                          ]),
+                                                      shape: BoxShape.circle,
+                                                      border: Border.all(
+                                                          color: Colors.grey,
+                                                          width: 0.4))),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                'Thu',
+                                                style: TextStyle(fontSize: 12.0),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 5.0),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Container(
-                                                width: 40.0,
-                                                height: 40.0,
-                                                decoration: new BoxDecoration(
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 5.0),
+                                          child: Column(
+                                            children: <Widget>[
+                                              Container(
+                                                  width: 40.0,
+                                                  height: 40.0,
+                                                  decoration: new BoxDecoration(
                                                     gradient: LinearGradient(
-                                                        begin:
-                                                            Alignment.topRight,
-                                                        end: Alignment
-                                                            .bottomLeft,
+                                                        begin: Alignment.topRight,
+                                                        end: Alignment.bottomLeft,
                                                         colors: [
-                                                          Colors.white,
-                                                          Colors.white
+                                                          Color(0XFFF7B500),
+                                                          Color(0XFFF48C02)
                                                         ]),
                                                     shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                        color: Colors.grey,
-                                                        width: 0.4))),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              'Sat',
-                                              style: TextStyle(fontSize: 12.0),
-                                            )
-                                          ],
+                                                  )),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                'Fri',
+                                                style: TextStyle(fontSize: 12.0),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 5.0),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Container(
-                                                width: 40.0,
-                                                height: 40.0,
-                                                decoration: new BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                      begin: Alignment.topRight,
-                                                      end: Alignment.bottomLeft,
-                                                      colors: [
-                                                        Color(0XFFF7B500),
-                                                        Color(0XFFF48C02)
-                                                      ]),
-                                                  shape: BoxShape.circle,
-                                                )),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              'Sun',
-                                              style: TextStyle(fontSize: 12.0),
-                                            )
-                                          ],
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 5.0),
+                                          child: Column(
+                                            children: <Widget>[
+                                              Container(
+                                                  width: 40.0,
+                                                  height: 40.0,
+                                                  decoration: new BoxDecoration(
+                                                      gradient: LinearGradient(
+                                                          begin:
+                                                              Alignment.topRight,
+                                                          end: Alignment
+                                                              .bottomLeft,
+                                                          colors: [
+                                                            Colors.white,
+                                                            Colors.white
+                                                          ]),
+                                                      shape: BoxShape.circle,
+                                                      border: Border.all(
+                                                          color: Colors.grey,
+                                                          width: 0.4))),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                'Sat',
+                                                style: TextStyle(fontSize: 12.0),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 5.0),
+                                          child: Column(
+                                            children: <Widget>[
+                                              Container(
+                                                  width: 40.0,
+                                                  height: 40.0,
+                                                  decoration: new BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                        begin: Alignment.topRight,
+                                                        end: Alignment.bottomLeft,
+                                                        colors: [
+                                                          Color(0XFFF7B500),
+                                                          Color(0XFFF48C02)
+                                                        ]),
+                                                    shape: BoxShape.circle,
+                                                  )),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                'Sun',
+                                                style: TextStyle(fontSize: 12.0),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ],
