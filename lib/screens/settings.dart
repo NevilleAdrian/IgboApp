@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
+import 'package:nkuzi_igbo/screens/change_password.dart';
 import 'package:nkuzi_igbo/screens/profile_screen.dart';
 import 'package:nkuzi_igbo/screens/splash_screen.dart';
 
@@ -63,9 +64,18 @@ class _SettingsState extends State<Settings> {
                       SizedBox(
                         width: 26.0,
                       ),
-                      Text(
-                        'Change Password',
-                        style: TextStyle(color: Colors.black, fontSize: 15),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ChangePassword()),
+                          );
+                        },
+
+                        child: Text(
+                          'Change Password',
+                          style: TextStyle(color: Colors.black, fontSize: 15),
+                        ),
                       )
                     ],
                   ),
