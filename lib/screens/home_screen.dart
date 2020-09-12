@@ -504,7 +504,7 @@ class CategoryList extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.only(right: 40.0),
+                            padding: lessons[index]['isAvaliable'] ? const EdgeInsets.only(right: 120.0) : const EdgeInsets.only(right: 40.0),
                             child: Text(
                               '${lessons[index]['name']}',
                               style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700),

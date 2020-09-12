@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nkuzi_igbo/screens/text_input.dart';
 
 class ChangePassword extends StatefulWidget {
   @override
@@ -25,7 +26,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.7,
                   child: Text(
-                    'Settings',
+                    'Change Password',
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle( fontFamily: 'Baloo', fontWeight: FontWeight.w900, color: Colors.black, fontSize: 20.0),
                   ),
@@ -35,6 +36,28 @@ class _ChangePasswordState extends State<ChangePassword> {
         ),
         elevation: 0,
       ),
-    );
+      body: Padding(
+      padding: const EdgeInsets.only(left: 25.0, right: 25.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            TextInput(text: 'Current Password',),
+            SizedBox(height: 20.0,),
+            TextInput(text: 'New Password (Minimum 6 characters)',),
+            SizedBox(height: 20.0,),
+            TextInput(text: 'Confirm Password',),
+            SizedBox(height: 40.0,),
+
+            FlatButton(
+              color: Colors.red,
+                onPressed: () {
+
+                },
+                child: Text('Save New Password', style: TextStyle(fontSize: 16.0),)
+            )
+          ],
+        )
+    ));
   }
 }
+
