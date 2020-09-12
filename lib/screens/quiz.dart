@@ -2439,120 +2439,99 @@ class _QuizScreenState extends State<QuizScreen> {
                                                           ? Colors.white
                                                           : Colors.black,
                                                     )),
-                                                SizedBox(
-                                                  width: 15.0,
-                                                ),
-                                                Expanded(
-                                                    child: GestureDetector(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            checkAnswer3(widget.lessons[
-                                                                            number]
+                                                GestureDetector(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        checkAnswer3(
+                                                            widget.lessons[number]
                                                                         ['test']
                                                                     [testNumber]
                                                                 ['optionII']);
-                                                            match2 = !match2;
-                                                            match1 = false;
-                                                            match3 = false;
-                                                            match4 = false;
-                                                            print(
-                                                                'text2:$match2');
-                                                          });
-                                                        },
-                                                        child: OptionBox(
-                                                          option: widget.lessons[
-                                                                          number]
+                                                        match2 = !match2;
+                                                        match1 = false;
+                                                        match3 = false;
+                                                        match4 = false;
+                                                        print('text2:$match2');
+                                                      });
+                                                    },
+                                                    child: OptionBox(
+                                                      option:
+                                                          widget.lessons[number]
                                                                       ['test']
                                                                   [testNumber]
                                                               ['optionII'],
-                                                          gradient1: match2
-                                                              ? Color(
-                                                                  0XFFF7B500)
-                                                              : Colors.white,
-                                                          gradient2: match2
-                                                              ? Color(
-                                                                  0XFFF48C02)
-                                                              : Colors.white,
-                                                          fontColor: match2
-                                                              ? Colors.white
-                                                              : Colors.black,
-                                                        ))),
-                                                SizedBox(
-                                                  width: 15.0,
-                                                ),
-                                                Expanded(
-                                                    child: GestureDetector(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            checkAnswer3(widget.lessons[
-                                                                            number]
+                                                      gradient1: match2
+                                                          ? Color(0XFFF7B500)
+                                                          : Colors.white,
+                                                      gradient2: match2
+                                                          ? Color(0XFFF48C02)
+                                                          : Colors.white,
+                                                      fontColor: match2
+                                                          ? Colors.white
+                                                          : Colors.black,
+                                                    )),
+                                                GestureDetector(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        checkAnswer3(
+                                                            widget.lessons[number]
                                                                         ['test']
                                                                     [testNumber]
                                                                 ['optionIII']);
-                                                            match3 = !match3;
-                                                            match2 = false;
-                                                            match1 = false;
-                                                            match4 = false;
-                                                            print(
-                                                                'text1:$match3');
-                                                          });
-                                                        },
-                                                        child: OptionBox(
-                                                          option: widget.lessons[
-                                                                          number]
+                                                        match3 = !match3;
+                                                        match2 = false;
+                                                        match1 = false;
+                                                        match4 = false;
+                                                        print('text1:$match3');
+                                                      });
+                                                    },
+                                                    child: OptionBox(
+                                                      option:
+                                                          widget.lessons[number]
                                                                       ['test']
                                                                   [testNumber]
                                                               ['optionIII'],
-                                                          gradient1: match3
-                                                              ? Color(
-                                                                  0XFFF7B500)
-                                                              : Colors.white,
-                                                          gradient2: match3
-                                                              ? Color(
-                                                                  0XFFF48C02)
-                                                              : Colors.white,
-                                                          fontColor: match3
-                                                              ? Colors.white
-                                                              : Colors.black,
-                                                        ))),
-                                                SizedBox(
-                                                  width: 15.0,
-                                                ),
-                                                Expanded(
-                                                    child: GestureDetector(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            checkAnswer3(widget.lessons[
-                                                                            number]
+                                                      gradient1: match3
+                                                          ? Color(0XFFF7B500)
+                                                          : Colors.white,
+                                                      gradient2: match3
+                                                          ? Color(0XFFF48C02)
+                                                          : Colors.white,
+                                                      fontColor: match3
+                                                          ? Colors.white
+                                                          : Colors.black,
+                                                    )),
+                                                GestureDetector(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        checkAnswer3(
+                                                            widget.lessons[number]
                                                                         ['test']
                                                                     [testNumber]
                                                                 ['optionIV']);
-                                                            match4 = !match4;
-                                                            match2 = false;
-                                                            match3 = false;
-                                                            match1 = false;
-                                                            print(
-                                                                'text4:$match4');
-                                                          });
-                                                        },
-                                                        child: OptionBox(
-                                                          option: widget.lessons[
-                                                                          number]
+                                                        match4 = !match4;
+                                                        match2 = false;
+                                                        match3 = false;
+                                                        match1 = false;
+                                                        print('text4:$match4');
+                                                      });
+                                                    },
+                                                    child: OptionBox(
+                                                      option:
+                                                          widget.lessons[number]
                                                                       ['test']
                                                                   [testNumber]
                                                               ['optionIV'],
-                                                          gradient1: match4
-                                                              ? Color(
-                                                                  0XFFF7B500)
-                                                              : Colors.white,
-                                                          gradient2: match4
-                                                              ? Color(
-                                                                  0XFFF48C02)
-                                                              : Colors.white,
-                                                          fontColor: match4
-                                                              ? Colors.white
-                                                              : Colors.black,
-                                                        ))),
+                                                      gradient1: match4
+                                                          ? Color(0XFFF7B500)
+                                                          : Colors.white,
+                                                      gradient2: match4
+                                                          ? Color(0XFFF48C02)
+                                                          : Colors.white,
+                                                      fontColor: match4
+                                                          ? Colors.white
+                                                          : Colors.black,
+                                                    )),
                                               ],
                                             ),
                                           ],

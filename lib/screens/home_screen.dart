@@ -38,6 +38,8 @@ class _HomeScreenState extends State<HomeScreen>
     print('mylesson: ${lesson[0]['color']}');
     print('image: ${lesson[0]['image']}');
 
+    _nameController.addListener(onSearch);
+
     super.initState();
   }
 
@@ -69,20 +71,20 @@ class _HomeScreenState extends State<HomeScreen>
     }
   }
 
-  onSearch(String term) {
+  onSearch() {
+    print('text is ${_nameController.text}');
     setState(() {
-      searchText = term;
-      filteredCategory = onFilter(term);
+      searchText = _nameController.text;
+      filteredCategory = onFilter(_nameController.text);
     });
   }
 
   List onFilter(String term) {
-    return lesson.where((element) =>
-        element['name'].toLowerCase().contains(term.toLowerCase()) ||
-        element['description']
-            .toLowerCase()
-            .contains(term.toLowerCase())
-            .toList());
+    return lesson
+        .where((element) =>
+            element['name'].toLowerCase().contains(term.toLowerCase()) ||
+            element['description'].toLowerCase().contains(term.toLowerCase()))
+        .toList();
   }
 
   Widget build(BuildContext context) {
@@ -134,44 +136,37 @@ class _HomeScreenState extends State<HomeScreen>
                                           CrossAxisAlignment.start,
                                       children: [
                                         TextFormField(
-                                            decoration: InputDecoration(
-                                                fillColor: Colors.white,
-                                                filled: true,
-                                                contentPadding: EdgeInsets.only(
-                                                    top: 5,
-                                                    bottom: 5,
-                                                    left: 15),
-                                                //border: InputBorder.none,
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Color(0xFFF7F7FB),
-                                                      width: 0.5),
-                                                ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Color(0xFFF7F7FB),
-                                                      width: 0.5),
-                                                ),
-                                                hintText: 'Search with topic',
-                                                hintStyle: TextStyle(
-                                                    color: Colors.black),
-                                                suffixIcon: GestureDetector(
-                                                    onTap: () =>
-                                                        Navigator.pop(context),
-                                                    child: Icon(
-                                                      Icons.search,
-                                                      color: Colors.black,
-                                                    ))),
-                                            style: TextStyle(
-                                                fontSize: 13.0,
-                                                color: Colors.black),
-                                            controller: _nameController,
-                                            onChanged: (value) {
-                                              onSearch(value);
-                                              print('search:$value');
-                                            })
+                                          decoration: InputDecoration(
+                                              fillColor: Colors.white,
+                                              filled: true,
+                                              contentPadding: EdgeInsets.only(
+                                                  top: 5, bottom: 5, left: 15),
+                                              //border: InputBorder.none,
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Color(0xFFF7F7FB),
+                                                    width: 0.5),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Color(0xFFF7F7FB),
+                                                    width: 0.5),
+                                              ),
+                                              hintText: 'Search with topic',
+                                              hintStyle: TextStyle(
+                                                  color: Colors.black),
+                                              suffixIcon: GestureDetector(
+                                                  onTap: () =>
+                                                      Navigator.pop(context),
+                                                  child: Icon(
+                                                    Icons.search,
+                                                    color: Colors.black,
+                                                  ))),
+                                          style: TextStyle(
+                                              fontSize: 13.0,
+                                              color: Colors.black),
+                                          controller: _nameController,
+                                        )
                                       ],
                                     ),
                                   ),
@@ -218,44 +213,37 @@ class _HomeScreenState extends State<HomeScreen>
                                           CrossAxisAlignment.start,
                                       children: [
                                         TextFormField(
-                                            decoration: InputDecoration(
-                                                fillColor: Colors.white,
-                                                filled: true,
-                                                contentPadding: EdgeInsets.only(
-                                                    top: 5,
-                                                    bottom: 5,
-                                                    left: 15),
-                                                //border: InputBorder.none,
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Color(0xFFF7F7FB),
-                                                      width: 0.5),
-                                                ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Color(0xFFF7F7FB),
-                                                      width: 0.5),
-                                                ),
-                                                hintText: 'Search with topic',
-                                                hintStyle: TextStyle(
-                                                    color: Colors.black),
-                                                suffixIcon: GestureDetector(
-                                                    onTap: () =>
-                                                        Navigator.pop(context),
-                                                    child: Icon(
-                                                      Icons.search,
-                                                      color: Colors.black,
-                                                    ))),
-                                            style: TextStyle(
-                                                fontSize: 13.0,
-                                                color: Colors.black),
-                                            controller: _nameController,
-                                            onChanged: (value) {
-                                              onSearch(value);
-                                              print('search:$value');
-                                            })
+                                          decoration: InputDecoration(
+                                              fillColor: Colors.white,
+                                              filled: true,
+                                              contentPadding: EdgeInsets.only(
+                                                  top: 5, bottom: 5, left: 15),
+                                              //border: InputBorder.none,
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Color(0xFFF7F7FB),
+                                                    width: 0.5),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Color(0xFFF7F7FB),
+                                                    width: 0.5),
+                                              ),
+                                              hintText: 'Search with topic',
+                                              hintStyle: TextStyle(
+                                                  color: Colors.black),
+                                              suffixIcon: GestureDetector(
+                                                  onTap: () =>
+                                                      Navigator.pop(context),
+                                                  child: Icon(
+                                                    Icons.search,
+                                                    color: Colors.black,
+                                                  ))),
+                                          style: TextStyle(
+                                              fontSize: 13.0,
+                                              color: Colors.black),
+                                          controller: _nameController,
+                                        )
                                       ],
                                     ),
                                   ),
@@ -316,7 +304,9 @@ class _HomeScreenState extends State<HomeScreen>
                     height: MediaQuery.of(context).size.height,
                     child: ListView(
                       controller: _controller,
-                      children: <Widget>[CategoryList(lessons: lesson)],
+                      children: <Widget>[
+                        CategoryList(lessons: filteredCategory)
+                      ],
                     ),
                   ),
                 )
