@@ -123,7 +123,7 @@ class _AuthLayoutState extends State<AuthLayout> {
             padding:
                 const EdgeInsets.symmetric(horizontal: 47.0, vertical: 20.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 SizedBox(
                   width: double.infinity,
