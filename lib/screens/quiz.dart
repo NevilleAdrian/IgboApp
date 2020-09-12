@@ -375,6 +375,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                   isFinished()
                                       ? FlatButton(
                                           onPressed: () async {
+                                            audioPlayer?.stop();
                                             NetworkHelper _helper =
                                                 NetworkHelper();
                                             Map<String, dynamic> body = {
@@ -430,6 +431,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                         )
                                       : FlatButton(
                                           onPressed: () {
+                                            audioPlayer?.stop();
                                             setState(() {
                                               if (widget.lessons[number]
                                                           ['test'] !=
@@ -519,6 +521,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                   isFinished()
                                       ? FlatButton(
                                           onPressed: () async {
+                                            audioPlayer?.stop();
                                             NetworkHelper _helper =
                                                 NetworkHelper();
                                             Map<String, dynamic> body = {
@@ -574,6 +577,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                         )
                                       : FlatButton(
                                           onPressed: () {
+                                            audioPlayer?.stop();
                                             setState(() {
                                               if (widget.lessons[number]
                                                           ['test'] !=
@@ -681,6 +685,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                   isFinished()
                                       ? FlatButton(
                                           onPressed: () async {
+                                            audioPlayer?.stop();
                                             NetworkHelper _helper =
                                                 NetworkHelper();
                                             Map<String, dynamic> body = {
@@ -736,6 +741,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                         )
                                       : FlatButton(
                                           onPressed: () {
+                                            audioPlayer?.stop();
                                             setState(() {
                                               if (widget.lessons[number]
                                                           ['test'] !=
@@ -823,6 +829,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                   isFinished()
                                       ? FlatButton(
                                           onPressed: () async {
+                                            audioPlayer?.stop();
                                             NetworkHelper _helper =
                                                 NetworkHelper();
                                             Map<String, dynamic> body = {
@@ -878,6 +885,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                         )
                                       : FlatButton(
                                           onPressed: () {
+                                            audioPlayer?.stop();
                                             setState(() {
                                               if (widget.lessons[number]
                                                       ['test'] !=
@@ -978,6 +986,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                   isFinished()
                                       ? FlatButton(
                                           onPressed: () async {
+                                            audioPlayer?.stop();
                                             NetworkHelper _helper =
                                                 NetworkHelper();
                                             Map<String, dynamic> body = {
@@ -1033,6 +1042,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                         )
                                       : FlatButton(
                                           onPressed: () {
+                                            audioPlayer?.stop();
                                             setState(() {
                                               if (widget.lessons[number]
                                                           ['test'] !=
@@ -1120,6 +1130,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                   isFinished()
                                       ? FlatButton(
                                           onPressed: () async {
+                                            audioPlayer?.stop();
                                             NetworkHelper _helper =
                                                 NetworkHelper();
                                             Map<String, dynamic> body = {
@@ -1175,6 +1186,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                         )
                                       : FlatButton(
                                           onPressed: () {
+                                            audioPlayer?.stop();
                                             setState(() {
                                               if (widget.lessons[number]
                                                       ['test'] !=
@@ -1277,6 +1289,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                   isFinished()
                                       ? FlatButton(
                                           onPressed: () async {
+                                            audioPlayer?.stop();
                                             print('id: ${widget.id}');
 
                                             NetworkHelper _helper =
@@ -1334,6 +1347,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                         )
                                       : FlatButton(
                                           onPressed: () {
+                                            audioPlayer?.stop();
                                             setState(() {
                                               if (widget.lessons[number]
                                                           ['test'] !=
@@ -1421,6 +1435,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                   isFinished()
                                       ? FlatButton(
                                           onPressed: () async {
+                                            audioPlayer?.stop();
                                             print('id: ${widget.id}');
                                             NetworkHelper _helper =
                                                 NetworkHelper();
@@ -1477,6 +1492,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                         )
                                       : FlatButton(
                                           onPressed: () {
+                                            audioPlayer?.stop();
                                             setState(() {
                                               if (widget.lessons[number]
                                                       ['test'] !=
