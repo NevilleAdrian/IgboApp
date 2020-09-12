@@ -9,13 +9,15 @@ import 'package:nkuzi_igbo/screens/auth/reset_success.dart';
 import 'package:nkuzi_igbo/screens/auth/signup_screen.dart';
 import 'package:nkuzi_igbo/screens/auth/welcome_screen.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
+import 'package:nkuzi_igbo/screens/payment/payment_page.dart';
 import 'package:nkuzi_igbo/screens/registration_screen.dart';
 import 'package:nkuzi_igbo/screens/splash_screen.dart';
+import 'package:nkuzi_igbo/screens/static/about_page.dart';
+import 'package:nkuzi_igbo/screens/static/terms_page.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as pp;
 import 'utils/theme_data.dart';
-
 
 void main() async {
   await _openHive();
@@ -36,14 +38,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-
   @override
   void dispose() {
     Hive.close();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +63,8 @@ class _MyAppState extends State<MyApp> {
           RegistrationScreen.id: (context) => RegistrationScreen(),
           HomePage.id: (context) => HomePage(),
           SplashScreen.id: (context) => SplashScreen(),
+          AboutPage.id: (context) => AboutPage(),
+          TermsPage.id: (context) => TermsPage()
         },
       ),
     );
