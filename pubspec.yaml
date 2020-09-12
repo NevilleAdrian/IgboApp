@@ -23,7 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: ^0.17.4
+  flutter_svg: ^0.18.0
   animations: ^1.0.0+5
   http: ^0.12.2
   audioplayers: ^0.15.1

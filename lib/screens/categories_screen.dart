@@ -846,7 +846,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                             ? SizedBox()
                                             : widget.lessons[index]
                                                         ['premium_content'] ==
-                                                    true
+                                                    false
                                                 ? _modalBottomSheetMenu()
                                                 : Navigator.push(
                                                     context,

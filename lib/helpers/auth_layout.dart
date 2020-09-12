@@ -125,9 +125,14 @@ class _AuthLayoutState extends State<AuthLayout> {
                 SizedBox(
                   width: double.infinity,
                 ),
-                Text(
-                  widget.title,
-                  style: kTextHeavyWeight,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      widget.title,
+                      style: kTextHeavyWeight,
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 60.0,
