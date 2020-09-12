@@ -12,6 +12,8 @@ import 'package:nkuzi_igbo/screens/home_page.dart';
 import 'package:nkuzi_igbo/screens/payment/payment_page.dart';
 import 'package:nkuzi_igbo/screens/registration_screen.dart';
 import 'package:nkuzi_igbo/screens/splash_screen.dart';
+import 'package:nkuzi_igbo/screens/static/about_page.dart';
+import 'package:nkuzi_igbo/screens/static/terms_page.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as pp;
@@ -60,7 +62,9 @@ class _MyAppState extends State<MyApp> {
           ResetSuccess.id: (context) => ResetSuccess(),
           RegistrationScreen.id: (context) => RegistrationScreen(),
           HomePage.id: (context) => HomePage(),
-          SplashScreen.id: (context) => SplashScreen()
+          SplashScreen.id: (context) => SplashScreen(),
+          AboutPage.id: (context) => AboutPage(),
+          TermsPage.id: (context) => TermsPage()
         },
       ),
     );

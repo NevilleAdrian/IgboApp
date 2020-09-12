@@ -4,6 +4,8 @@ import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/change_password.dart';
 import 'package:nkuzi_igbo/screens/profile_screen.dart';
 import 'package:nkuzi_igbo/screens/splash_screen.dart';
+import 'package:nkuzi_igbo/screens/static/about_page.dart';
+import 'package:nkuzi_igbo/screens/static/terms_page.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -19,25 +21,28 @@ class _SettingsState extends State<Settings> {
           automaticallyImplyLeading: false,
           title: GestureDetector(
               onTap: () {
-               Navigator.pop(context);
+                Navigator.pop(context);
               },
               child: Row(
                 children: <Widget>[
+                  SizedBox(child: Icon(Icons.arrow_back)),
                   SizedBox(
-                      child: Icon(Icons.arrow_back)
+                    width: 10.0,
                   ),
-                  SizedBox(width: 10.0,),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.7,
                     child: Text(
                       'Settings',
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle( fontFamily: 'Baloo', fontWeight: FontWeight.w900, color: Colors.black, fontSize: 20.0),
+                      style: TextStyle(
+                          fontFamily: 'Baloo',
+                          fontWeight: FontWeight.w900,
+                          color: Colors.black,
+                          fontSize: 20.0),
                     ),
                   )
                 ],
-              )
-          ),
+              )),
           elevation: 0,
         ),
         body: Padding(
@@ -68,10 +73,10 @@ class _SettingsState extends State<Settings> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ChangePassword()),
+                            MaterialPageRoute(
+                                builder: (context) => ChangePassword()),
                           );
                         },
-
                         child: Text(
                           'Change Password',
                           style: TextStyle(color: Colors.black, fontSize: 15),
@@ -109,32 +114,42 @@ class _SettingsState extends State<Settings> {
                   SizedBox(
                     height: 30.0,
                   ),
-                  Row(
-                    children: <Widget>[
-                      SvgPicture.asset("assets/images/about.svg"),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        'About Nkuzi Igbo',
-                        style: TextStyle(color: Colors.black, fontSize: 15),
-                      )
-                    ],
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(AboutPage.id);
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        SvgPicture.asset("assets/images/about.svg"),
+                        SizedBox(
+                          width: 20.0,
+                        ),
+                        Text(
+                          'About Nkuzi Igbo',
+                          style: TextStyle(color: Colors.black, fontSize: 15),
+                        )
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: 30.0,
                   ),
-                  Row(
-                    children: <Widget>[
-                      SvgPicture.asset("assets/images/document.svg"),
-                      SizedBox(
-                        width: 20.0,
-                      ),
-                      Text(
-                        'Term of Service',
-                        style: TextStyle(color: Colors.black, fontSize: 15),
-                      )
-                    ],
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(TermsPage.id);
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        SvgPicture.asset("assets/images/document.svg"),
+                        SizedBox(
+                          width: 20.0,
+                        ),
+                        Text(
+                          'Term of Service',
+                          style: TextStyle(color: Colors.black, fontSize: 15),
+                        )
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: 30.0,
