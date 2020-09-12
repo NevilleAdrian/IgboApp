@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_svg/svg.dart';
@@ -68,11 +67,9 @@ class _AuthLayoutState extends State<AuthLayout> {
         break;
       case FacebookLoginStatus.cancelledByUser:
         _showError(context, 'Authentication flow canceled by you.');
-        //_showFlush(context, 'Authentication flow canceled by you.');
         break;
       case FacebookLoginStatus.error:
         _showError(context, result.errorMessage);
-        //_showFlush(context, result.errorMessage);
         break;
     }
   }
@@ -123,7 +120,7 @@ class _AuthLayoutState extends State<AuthLayout> {
             padding:
                 const EdgeInsets.symmetric(horizontal: 47.0, vertical: 20.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 SizedBox(
                   width: double.infinity,
