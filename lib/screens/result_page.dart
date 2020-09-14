@@ -5,7 +5,7 @@ import 'package:nkuzi_igbo/screens/home_page.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class ResultScreen extends StatefulWidget {
-  ResultScreen({this.lessons, this.percentage, this.score, this.courses, this.description, this.id});
+  ResultScreen({this.lessons, this.percentage, this.score, this.courses, this.description, this.id, this.title});
 
   final List<dynamic> lessons;
   final List<dynamic> courses;
@@ -13,6 +13,7 @@ class ResultScreen extends StatefulWidget {
   final int score;
   final String description;
   final String id;
+  final String title;
 
 
   @override
@@ -134,7 +135,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                 Navigator.pushAndRemoveUntil(context,
                                     MaterialPageRoute(builder: (BuildContext context) =>
                                         CategoriesScreen(lessons: data['sub_categories'],
-                                          description: widget.description, id: widget.id,)),
+                                          description: widget.description, id: widget.id, title: widget.title,)),
                                     ModalRoute.withName('/'));
                                 },
                                 child: Text('Continue')

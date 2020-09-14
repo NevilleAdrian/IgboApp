@@ -6,10 +6,11 @@ import 'package:nkuzi_igbo/screens/continue_screen.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
 
 class CategoriesScreen extends StatefulWidget {
-  CategoriesScreen({this.lessons, this.description, this.id});
+  CategoriesScreen({this.lessons, this.description, this.id, this.title});
   final List<dynamic> lessons;
   final String description;
   final String id;
+  final String title;
 
   @override
   _CategoriesScreenState createState() => _CategoriesScreenState();
@@ -478,9 +479,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                         widget.lessons[index]['study'].length ==
                                                 0
                                             ? SizedBox()
-                                            : widget.lessons[index]
-                                                        ['premium_content'] ==
-                                                    true
+                                            : widget.lessons[index]['premium_content'] == true
                                                 ? _modalBottomSheetMenu()
                                                 : Navigator.push(
                                                     context,
@@ -505,6 +504,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                             category: widget
                                                                     .lessons[index]
                                                                 ['category'],
+                                                            title: widget.title,
                                                             id: widget.id)),
                                                   );
                                         '';
@@ -663,7 +663,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                             ? SizedBox()
                                             : widget.lessons[index]
                                                         ['premium_content'] ==
-                                                    true
+                                                    false
                                                 ? _modalBottomSheetMenu()
                                                 : Navigator.push(
                                                     context,
@@ -688,6 +688,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                             category: widget
                                                                     .lessons[index]
                                                                 ['category'],
+                                                            title: widget.title,
                                                             id: widget.id)),
                                                   );
                                         '';
@@ -719,7 +720,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                         children: <Widget>[
                                                           widget.lessons[index][
                                                                       'premium_content'] ==
-                                                                  true
+                                                                  false
                                                               ? Positioned(
                                                                   right: -2,
                                                                   top: 9,
@@ -783,7 +784,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                 ),
                                                 widget.lessons[index][
                                                             'premium_content'] ==
-                                                        true
+                                                        false
                                                     ? Container(
                                                         child: SvgPicture.asset(
                                                             "assets/images/padlock.svg"),
@@ -871,6 +872,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                             category: widget
                                                                     .lessons[index]
                                                                 ['category'],
+                                                            title: widget.title,
+
                                                             id: widget.id)),
                                                   );
                                         '';
@@ -902,7 +905,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                         children: <Widget>[
                                                           widget.lessons[index][
                                                                       'premium_content'] ==
-                                                                  true
+                                                                  false
                                                               ? Positioned(
                                                                   right: -2,
                                                                   top: 9,
@@ -966,7 +969,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                 ),
                                                 widget.lessons[index][
                                                             'premium_content'] ==
-                                                        true
+                                                        false
                                                     ? Container(
                                                         child: SvgPicture.asset(
                                                             "assets/images/padlock.svg"),

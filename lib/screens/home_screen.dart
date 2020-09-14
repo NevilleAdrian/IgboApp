@@ -352,7 +352,9 @@ class CategoryList extends StatelessWidget {
                       builder: (context) => CategoriesScreen(
                           lessons: lessons[index]['sub_categories'],
                           description: lessons[index]['description'],
-                          id: lessons[index]['_id'])),
+                          id: lessons[index]['_id'],
+                          title: lessons[index]['name'],
+                      )),
                 );
             },
             child: Container(

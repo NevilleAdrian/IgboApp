@@ -22,12 +22,14 @@ enum TestType { ToEnglish, ToIgbo, Sentence, Match, None }
 
 class QuizScreen extends StatefulWidget {
   QuizScreen(
-      {this.lessons, this.courses, this.description, this.category, this.id});
+      {this.lessons, this.courses, this.description, this.category, this.id, this.name, this.title});
   final List<dynamic> lessons;
   final List<dynamic> courses;
   final String description;
   final String id;
   final String category;
+  final String name;
+  final String title;
 
   @override
   _QuizScreenState createState() => _QuizScreenState();
@@ -320,7 +322,9 @@ class _QuizScreenState extends State<QuizScreen> {
               percentage: result,
               score: results,
               id: widget.id,
-              description: widget.description)),
+              description: widget.description,
+              title: widget.title,
+          )),
     );
   }
 
@@ -1550,6 +1554,7 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void initState() {
     print('mylength: ${widget.lessons[number]['test'].length}');
+    print('name: ${widget.title}');
     print('${progressBar()}');
     super.initState();
   }
@@ -2786,10 +2791,11 @@ class _QuizScreenState extends State<QuizScreen> {
                                       padding: const EdgeInsets.all(20.0),
                                       child: Column(
                                         children: <Widget>[
-                                          Image(
-                                            image: NetworkImage(
-                                                "${widget.lessons[number]['picture']}"),
-                                          ),
+                                         widget.title == 'Numbers' ? SvgPicture.network(widget.lessons[number]['picture']):
+                                        Image(
+                                          image: NetworkImage(
+                                          "${widget.lessons[number]['picture']}"),
+                                      ),
                                           SizedBox(
                                             height: 5,
                                           ),

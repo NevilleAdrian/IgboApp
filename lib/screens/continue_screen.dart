@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/screens/quiz.dart';
 
 class ContinueList extends StatefulWidget {
-  ContinueList({ this.lessons, this.form, this.name, this.time, this.courses, this.description, this.category, this.id });
+  ContinueList({ this.lessons, this.form, this.name, this.time, this.courses, this.description, this.category, this.id, this.title });
   final  List<dynamic>  lessons;
   final List <dynamic> courses;
   final String description;
@@ -12,6 +12,7 @@ class ContinueList extends StatefulWidget {
   final String time;
   final String category;
   final String id;
+  final String title;
 
   @override
   _ContinueListState createState() => _ContinueListState();
@@ -66,7 +67,9 @@ class _ContinueListState extends State<ContinueList> {
                                     courses: widget.courses,
                                     description: widget.description,
                                     category: widget.category,
-                                    id: widget.id
+                                    id: widget.id,
+                                    name: widget.name,
+                                    title: widget.title
                                   )
                               ),
                             );
