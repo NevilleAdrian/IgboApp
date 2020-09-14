@@ -1586,6 +1586,7 @@ class _QuizScreenState extends State<QuizScreen> {
                             builder: (BuildContext context) => CategoriesScreen(
                                   lessons: widget.courses,
                                   description: widget.description,
+                                  id: widget.id
                                 )),
                         ModalRoute.withName('/'));
                   },

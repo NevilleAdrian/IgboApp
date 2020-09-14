@@ -132,11 +132,13 @@ class _ResultScreenState extends State<ResultScreen> {
                               });
                               print(data);
                                 Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (BuildContext context) => CategoriesScreen(lessons: data['sub_categories'], description: widget.description, id: widget.id,)),
-    ModalRoute.withName('/'));
-  },
-  child: Text('Continue')
-  )
+                                    MaterialPageRoute(builder: (BuildContext context) =>
+                                        CategoriesScreen(lessons: data['sub_categories'],
+                                          description: widget.description, id: widget.id,)),
+                                    ModalRoute.withName('/'));
+                                },
+                                child: Text('Continue')
+                                )
 
                         ],
                       )
