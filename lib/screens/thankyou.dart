@@ -6,12 +6,13 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 class ThankYou extends StatefulWidget {
 
-  ThankYou({this.lessons, this.courses, this.description, this.id});
+  ThankYou({this.lessons, this.courses, this.description, this.id, this.thumbnail});
 
   final List<dynamic> lessons;
   final List<dynamic> courses;
   final String description;
   final String id;
+  final String thumbnail;
   @override
   _ThankYouState createState() => _ThankYouState();
 }
@@ -59,7 +60,7 @@ class _ThankYouState extends State<ThankYou> {
                               });
                               print(data);
                               Navigator.pushAndRemoveUntil(context,
-                                  MaterialPageRoute(builder: (BuildContext context) => CategoriesScreen(lessons: data['sub_categories'], description: widget.description, id: widget.id,)),
+                                  MaterialPageRoute(builder: (BuildContext context) => CategoriesScreen(lessons: data['sub_categories'], description: widget.description, id: widget.id, thumbnail: widget.thumbnail,)),
                                   ModalRoute.withName('/'));
                                     },
                                     child: Text('Continue')

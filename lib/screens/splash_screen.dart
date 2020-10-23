@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
 
     controller = AnimationController(
-      duration: Duration(seconds: 2),
+      duration: Duration(seconds: 1),
       vsync: this,
     );
 
@@ -38,15 +38,16 @@ class _SplashScreenState extends State<SplashScreen>
 
     controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        controller.reverse(from: 1.0);
+        controller.reverse(from: 5.0);
       } else if (status == AnimationStatus.dismissed) {
         controller.forward();
+        _prepareAppState();
+
       }
     });
     controller.addListener(() {
       setState(() {});
     });
-    _prepareAppState();
   }
 
   _prepareAppState() async {

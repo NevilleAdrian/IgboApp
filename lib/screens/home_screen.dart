@@ -345,7 +345,7 @@ class CategoryList extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {
-              if (lessons[index]['isAvaliable'])
+              // if (lessons[index]['isAvaliable'])
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -353,6 +353,7 @@ class CategoryList extends StatelessWidget {
                           lessons: lessons[index]['sub_categories'],
                           description: lessons[index]['description'],
                           id: lessons[index]['_id'],
+                          thumbnail:lessons[index]['thumbnail'],
                           title: lessons[index]['name'],
                       )),
                 );
@@ -361,12 +362,13 @@ class CategoryList extends StatelessWidget {
               height: 126.0,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  colorFilter: !lessons[index]['isAvaliable']
-                      ? ColorFilter.mode(
-                          Colors.grey,
-                          BlendMode.saturation,
-                        )
-                      : null,
+                  // colorFilter: !lessons[index]['isAvaliable']
+                  //     ?
+                  // ColorFilter.mode(
+                  //         Colors.grey,
+                  //         BlendMode.saturation,
+                  //       )
+                  //     : null,
                   image: NetworkImage(lessons[index]['image']),
                   fit: BoxFit.cover,
                 ),
@@ -387,7 +389,10 @@ class CategoryList extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Padding(
-                            padding: lessons[index]['isAvaliable'] ? const EdgeInsets.only(right: 120.0) : const EdgeInsets.only(right: 40.0),
+                            padding:
+                            // lessons[index]['isAvaliable'] ?
+                            // const EdgeInsets.only(right: 120.0) :
+                      const EdgeInsets.only(right: 40.0),
                             child: Text(
                               '${lessons[index]['name']}',
                               style: TextStyle(
@@ -399,32 +404,32 @@ class CategoryList extends StatelessWidget {
                         ],
                       ),
                     ),
-                    if (!lessons[index]['isAvaliable'])
-                      Expanded(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(top: 20.0),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 4),
-                            child: Text(
-                              'Coming soon',
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 10.0),
-                            ),
-                            decoration: BoxDecoration(
-                              color: Color(0XFFF31601),
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(5),
-                                  bottomRight: Radius.circular(5),
-                                  topLeft: Radius.circular(5),
-                                  topRight: Radius.circular(5)),
-                            ),
-                          )
-                        ],
-                      )),
+                    // if (!lessons[index]['isAvaliable'])
+                    //   Expanded(
+                    //       child: Column(
+                    //     mainAxisAlignment: MainAxisAlignment.start,
+                    //     crossAxisAlignment: CrossAxisAlignment.end,
+                    //     children: <Widget>[
+                    //       Container(
+                    //         margin: EdgeInsets.only(top: 20.0),
+                    //         padding: EdgeInsets.symmetric(
+                    //             horizontal: 8, vertical: 4),
+                    //         child: Text(
+                    //           'Coming soon',
+                    //           style: TextStyle(
+                    //               color: Colors.white, fontSize: 10.0),
+                    //         ),
+                    //         decoration: BoxDecoration(
+                    //           color: Color(0XFFF31601),
+                    //           borderRadius: BorderRadius.only(
+                    //               bottomLeft: Radius.circular(5),
+                    //               bottomRight: Radius.circular(5),
+                    //               topLeft: Radius.circular(5),
+                    //               topRight: Radius.circular(5)),
+                    //         ),
+                    //       )
+                    //     ],
+                    //   )),
                   ],
                 ),
               ),

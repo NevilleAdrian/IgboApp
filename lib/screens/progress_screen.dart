@@ -16,12 +16,13 @@ class ProgressScreen extends StatefulWidget {
 }
 
 class _ProgressScreenState extends State<ProgressScreen> {
-  String textValue;
+  String textValue = 'Numbers';
   User user = User();
   NetworkHelper _helper = NetworkHelper();
   dynamic progress;
   dynamic catList;
   String catNumber;
+  String cath;
   int number;
 
   Progress pro = Progress();
@@ -43,7 +44,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
     List<DropdownMenuItem<String>> dropdownItems = [];
     for (int i = 0; i < catList.length; i++) {
 
-      String cath = catList[i]['name'];
+     cath = catList[i]['name'];
 
       var newItem = DropdownMenuItem(
         child: Text(cath),
@@ -348,7 +349,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                   ),
                   Center(
                       child: Text(
-                    'Fluent in Alphabets',
+                    'Fluent in $textValue',
                     style: TextStyle(color: Color(0XFF9D1000), fontSize: 17),
                   )),
                   SizedBox(
@@ -385,13 +386,13 @@ class _ProgressScreenState extends State<ProgressScreen> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
                               Text(
-                                progress['data']['totalLessons'].toString(),
+                                progress['data']['lessonsAttempted'].toString(),
                                 style: TextStyle(
                                     fontSize: 25, fontWeight: FontWeight.w500),
                               ),
                               Text(
-                                '/${progress['data']['totalTest'].toString()}',
-                                style: TextStyle(fontSize: 15),
+                                '/${progress['data']['totalLessons'].toString()}',
+                                style: TextStyle(fontSize: 20),
                               ),
                             ],
                           )
@@ -411,10 +412,10 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                 style: TextStyle(
                                     fontSize: 25, fontWeight: FontWeight.w500),
                               ),
-                              Text(
-                                '/${progress['data']['totalTest'].toString()}',
-                                style: TextStyle(fontSize: 15),
-                              ),
+                              // Text(
+                              //   '/${progress['data']['totalTest'].toString()}',
+                              //   style: TextStyle(fontSize: 15),
+                              // ),
                             ],
                           )
                         ],
@@ -429,14 +430,14 @@ class _ProgressScreenState extends State<ProgressScreen> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
                               Text(
-                                progress['data']['totalPoints'].toString(),
+                                progress['data']['totalTest'].toString(),
                                 style: TextStyle(
                                     fontSize: 25, fontWeight: FontWeight.w500),
                               ),
-                              Text(
-                                '/${progress['data']['totalTest'].toString()}',
-                                style: TextStyle(fontSize: 15),
-                              ),
+                              // Text(
+                              //   '/${progress['data']['totalTest'].toString()}',
+                              //   style: TextStyle(fontSize: 15),
+                              // ),
                             ],
                           )
                         ],

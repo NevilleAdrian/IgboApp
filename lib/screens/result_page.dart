@@ -5,7 +5,7 @@ import 'package:nkuzi_igbo/screens/home_page.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class ResultScreen extends StatefulWidget {
-  ResultScreen({this.lessons, this.percentage, this.score, this.courses, this.description, this.id, this.title});
+  ResultScreen({this.lessons, this.percentage, this.score, this.courses, this.description, this.id, this.title, this.thumbnail});
 
   final List<dynamic> lessons;
   final List<dynamic> courses;
@@ -14,6 +14,7 @@ class ResultScreen extends StatefulWidget {
   final String description;
   final String id;
   final String title;
+  final String thumbnail;
 
 
   @override
@@ -33,6 +34,7 @@ class _ResultScreenState extends State<ResultScreen> {
   String pass() {
     if(percent() < 50.0) {
       return 'Not Fluent in Alphabets';
+
     }
     else {
       return 'Fluent in Alphabets';
@@ -135,7 +137,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                 Navigator.pushAndRemoveUntil(context,
                                     MaterialPageRoute(builder: (BuildContext context) =>
                                         CategoriesScreen(lessons: data['sub_categories'],
-                                          description: widget.description, id: widget.id, title: widget.title,)),
+                                          description: widget.description, id: widget.id, title: widget.title, thumbnail: widget.thumbnail,)),
                                     ModalRoute.withName('/'));
                                 },
                                 child: Text('Continue')

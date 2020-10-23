@@ -4,6 +4,7 @@ class Category {
   int no;
   String name;
   bool isAvaliable;
+  String thumbnail;
   String description;
   String color;
   String image;
@@ -15,6 +16,7 @@ class Category {
         this.sId,
         this.name,
         this.isAvaliable,
+        this.thumbnail,
         this.no,
         this.description,
         this.color,
@@ -32,6 +34,7 @@ class Category {
     sId = json['_id'];
     no = json["no"];
     name = json["name"];
+    thumbnail = json["thumbnail"];
     isAvaliable = json["isAvaliable"];
     description = json['description'];
     color = json['color'];
@@ -49,6 +52,7 @@ class Category {
     data['_id'] = this.sId;
     data["no"] = this.no ;
     data["name"] = this.name;
+    data["thumbnail"] = this.thumbnail;
     data["isAvaliable"] = this.isAvaliable;
     data['description'] = this.description;
     data['color'] = this.color;
@@ -188,6 +192,7 @@ class Test {
     this.correctSentence,
     this.words,
     this.isSelected,
+    this.audioUrl,
     this.type,
     this.lesson,
     this.createdon,
@@ -225,6 +230,7 @@ class Test {
   String question;
   String mainQuestion;
   bool isSelected;
+  String audioUrl;
   List<String> correctSentence;
   List<String> words;
   Type type;
@@ -263,6 +269,7 @@ class Test {
     id: json["_id"],
     question: json["question"],
     isSelected: false,
+    audioUrl: json["audioUrl"],
     mainQuestion: json["mainQuestion"] == null ? null : json["mainQuestion"],
     matchQuestionImage: json["matchQuestionImage"] == null ? null : json["matchQuestionImage"],
     correctSentence: json["correctSentence"] == null ? null : List<String>.from(json["correctSentence"].map((x) => x)),
@@ -303,6 +310,7 @@ class Test {
     "_id": id,
     "question": question,
     'isSelected': isSelected,
+    'audioUrl': audioUrl,
     "mainQuestion": mainQuestion == null ? null : mainQuestion,
     "matchQuestionImage": matchQuestionImage == null ? null : matchQuestionImage,
     "correctSentence": correctSentence == null ? null : List<dynamic>.from(correctSentence.map((x) => x)),

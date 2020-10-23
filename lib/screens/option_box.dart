@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
 class OptionBox extends StatelessWidget {
   const OptionBox({
@@ -51,7 +52,7 @@ class OptionBox extends StatelessWidget {
         width: width,
         child: Padding(
           padding: const EdgeInsets.symmetric( vertical: 10, horizontal: 13.0),
-          child: Text(option,textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 15, color: fontColor),),
+          child: HtmlWidget(option,),
         )
     );
   }

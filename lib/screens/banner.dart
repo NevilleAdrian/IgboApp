@@ -10,7 +10,7 @@ class NotificationBanner extends StatelessWidget {
     return Column(
       children: <Widget>[
         Stack(
-          overflow: Overflow.visible,
+          // overflow: Overflow.visible,
           alignment: Alignment.bottomRight,
           children: <Widget>[
             Card(
@@ -29,18 +29,32 @@ class NotificationBanner extends StatelessWidget {
                             Column(
                               children: <Widget>[
                                 Padding(
-                                  padding: const EdgeInsets.only(right:80.0 ),
-                                  child: Text(
-                                    'Subcribe today and get 20% discount to access all of our contents',
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700
-                                    ),
-                                  ),
+                                  padding: const EdgeInsets.only(right:120.0 ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        'Subcribe today and get',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            fontSize: 11.5,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700
+                                        ),
+                                      ),
+                                      Text(
+                                            '20% discount to access all of our contents',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700
+                                        ),
+                                      ),
+                                    ],
+                                  )
                                 ),
                                 SizedBox(height: 10),
-                                Text('Subscribe now', style: TextStyle(color: Color(0XFFF5A001)),)
+                                Text('Subscribe now', style: TextStyle(color: Color(0XFFF5A001 ), fontSize: 12),)
                               ],
                               crossAxisAlignment: CrossAxisAlignment.start,
                             ),
@@ -55,7 +69,7 @@ class NotificationBanner extends StatelessWidget {
             ),
             Positioned(
               right: -9,
-              bottom: -10,
+              bottom: -12,
               child: Container(
                 child: Image.asset(
                   "assets/images/banner.png",

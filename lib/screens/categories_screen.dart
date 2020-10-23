@@ -6,11 +6,12 @@ import 'package:nkuzi_igbo/screens/continue_screen.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
 
 class CategoriesScreen extends StatefulWidget {
-  CategoriesScreen({this.lessons, this.description, this.id, this.title});
+  CategoriesScreen({this.lessons, this.description, this.id, this.title, this.thumbnail});
   final List<dynamic> lessons;
   final String description;
   final String id;
   final String title;
+  final String thumbnail;
 
   @override
   _CategoriesScreenState createState() => _CategoriesScreenState();
@@ -446,7 +447,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
+               Container(
                 padding: EdgeInsets.symmetric(horizontal: 25.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -504,6 +505,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                             category: widget
                                                                     .lessons[index]
                                                                 ['category'],
+                                                            thumbnail: widget.thumbnail,
                                                             title: widget.title,
                                                             id: widget.id)),
                                                   );
@@ -526,8 +528,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                   children: <Widget>[
                                                     CircleAvatar(
                                                       radius: 27,
-                                                      backgroundImage: NetworkImage(
-                                                          'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'),
+                                                      backgroundImage:
+                                                      NetworkImage(
+                                                        widget.thumbnail != '' ? widget.thumbnail :
+                                                        'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'
+                                                      ),
                                                       child: Stack(
                                                         overflow:
                                                             Overflow.visible,
@@ -689,6 +694,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                                     .lessons[index]
                                                                 ['category'],
                                                             title: widget.title,
+                                                            thumbnail: widget.thumbnail,
                                                             id: widget.id)),
                                                   );
                                         '';
@@ -710,8 +716,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                   children: <Widget>[
                                                     CircleAvatar(
                                                       radius: 27,
-                                                      backgroundImage: NetworkImage(
-                                                          'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'),
+                                                      backgroundImage:
+                                                      NetworkImage(
+                                                          widget.thumbnail != '' ? widget.thumbnail :
+                                                          'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'
+                                                      ),
                                                       child: Stack(
                                                         overflow:
                                                             Overflow.visible,
@@ -873,7 +882,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                                     .lessons[index]
                                                                 ['category'],
                                                             title: widget.title,
-
+                                                            thumbnail: widget.thumbnail,
                                                             id: widget.id)),
                                                   );
                                         '';
@@ -895,8 +904,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                   children: <Widget>[
                                                     CircleAvatar(
                                                       radius: 27,
-                                                      backgroundImage: NetworkImage(
-                                                          'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'),
+                                                      backgroundImage:
+                                                      NetworkImage(
+                                                          widget.thumbnail != '' ? widget.thumbnail :
+                                                          'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'
+                                                      ),
                                                       child: Stack(
                                                         overflow:
                                                             Overflow.visible,

@@ -22,7 +22,14 @@ enum TestType { ToEnglish, ToIgbo, Sentence, Match, None }
 
 class QuizScreen extends StatefulWidget {
   QuizScreen(
-      {this.lessons, this.courses, this.description, this.category, this.id, this.name, this.title});
+      {this.lessons,
+      this.courses,
+      this.description,
+      this.category,
+      this.id,
+      this.name,
+      this.thumbnail,
+      this.title});
   final List<dynamic> lessons;
   final List<dynamic> courses;
   final String description;
@@ -30,6 +37,7 @@ class QuizScreen extends StatefulWidget {
   final String category;
   final String name;
   final String title;
+  final String thumbnail;
 
   @override
   _QuizScreenState createState() => _QuizScreenState();
@@ -126,6 +134,7 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   void _onAnswerEnglishType() {
+    print('hye${widget.lessons[number]['test']}');
     setState(() {
       if (widget.lessons[number]['test'] != [] ||
           widget.lessons[number]['test'].length != 0) {
@@ -148,6 +157,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   void _onAnswerIgboType() {
     setState(() {
+      print('check');
       if (widget.lessons[number]['test'] != [] ||
           widget.lessons[number]['test'].length != 0) {
         _modalBottomSheetMenu();
@@ -187,7 +197,13 @@ class _QuizScreenState extends State<QuizScreen> {
 //   audioPlayer.play(_blankUrl);
 // }
 
+  void playAudio(int soundNumber) {
+    final player = AudioCache();
+    player.play('note$soundNumber.mp3');
+  }
+
   void playSound(String soundNumber) async {
+    await audioPlayer.setReleaseMode(ReleaseMode.LOOP);
     int result = await audioPlayer.play(soundNumber, isLocal: false);
     print('result: $result');
     print('sound $soundNumber');
@@ -275,24 +291,6 @@ class _QuizScreenState extends State<QuizScreen> {
 
   bool show = true;
 
-//  bool correct() {
-//    if ( widget.lessons[number]['test'][testNumber]['correctOption'] == text1) {
-//      return true;
-//    }
-//    if ( widget.lessons[number]['test'][testNumber]['correctOption'] == text2) {
-//      return true;
-//    }
-//    if ( widget.lessons[number]['test'][testNumber]['correctOption']== text3) {
-//      return true;
-//    }
-//    if ( widget.lessons[number]['test'][testNumber]['correctOption'] == text4) {
-//      return true;
-//    }
-//    else {
-//      return false;
-//    }
-//  }
-
   bool isFinished() {
     if (number >= widget.lessons.length - 1 &&
         testNumber >= widget.lessons[number]['test'].length - 1) {
@@ -317,14 +315,15 @@ class _QuizScreenState extends State<QuizScreen> {
       context,
       MaterialPageRoute(
           builder: (context) => ResultScreen(
-              lessons: widget.lessons,
-              courses: widget.courses,
-              percentage: result,
-              score: results,
-              id: widget.id,
-              description: widget.description,
-              title: widget.title,
-          )),
+                lessons: widget.lessons,
+                courses: widget.courses,
+                percentage: result,
+                score: results,
+                id: widget.id,
+                description: widget.description,
+                title: widget.title,
+                thumbnail: widget.thumbnail
+              )),
     );
   }
 
@@ -338,8 +337,8 @@ class _QuizScreenState extends State<QuizScreen> {
         context: context,
         isDismissible: false,
         builder: (builder) {
-          return StatefulBuilder(builder: (BuildContext context,
-              StateSetter setModalState /*Thank you Mmaghoub @SO*/) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setModalState) {
             return widget.lessons[number]['test'].length != 0
                 ? correctAnswer == true
                     ? Container(
@@ -379,6 +378,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                   isFinished()
                                       ? FlatButton(
                                           onPressed: () async {
+                                            setModalState(() {
+                                              isLoading = true;
+                                            });
                                             audioPlayer?.stop();
                                             NetworkHelper _helper =
                                                 NetworkHelper();
@@ -398,12 +400,10 @@ class _QuizScreenState extends State<QuizScreen> {
                                             var data = await _helper
                                                 .calculateResult(body);
                                             print('success: ${data['status']}');
-                                            setState(() {
-                                              _loading = true;
-                                            });
+
                                             if (data['status'] == 'success') {
-                                              setState(() {
-                                                _loading = false;
+                                              setModalState(() {
+                                                isLoading = false;
                                               });
                                               resultPage();
                                             } else {
@@ -419,13 +419,12 @@ class _QuizScreenState extends State<QuizScreen> {
                                             }
                                           },
                                           color: Color(0XFF66C109),
-                                          child: _loading
-                                              ? CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  backgroundColor: Colors.white,
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                          Color>(Colors.white),
+                                          child: isLoading
+                                              ? Image.asset(
+                                                  "assets/images/loader.gif",
+                                                  color: Colors.white,
+                                                  height: 35.0,
+                                                  width: 35.0,
                                                 )
                                               : Text(
                                                   'Continue',
@@ -436,29 +435,17 @@ class _QuizScreenState extends State<QuizScreen> {
                                       : FlatButton(
                                           onPressed: () {
                                             audioPlayer?.stop();
+                                              // playSound(widget.lessons[number + 1]['voicing']);
                                             setState(() {
-                                              if (widget.lessons[number]
-                                                          ['test'] !=
-                                                      [] ||
-                                                  widget.lessons[number]['test']
-                                                          .length !=
-                                                      0) {
-                                                if (testNumber <
-                                                    widget
-                                                            .lessons[number]
-                                                                ['test']
-                                                            .length -
-                                                        1) {
+                                              if (widget.lessons[number]['test'] != [] || widget.lessons[number]['test'].length != 0) {
+                                                if (testNumber < widget.lessons[number]['test'].length - 1) {
                                                   testNumber++;
-                                                } else if ((testNumber) >=
-                                                    widget
-                                                            .lessons[number]
-                                                                ['test']
-                                                            .length -
-                                                        1) {
-                                                  display =
-                                                      SectionDisplay.Learn;
+                                                  print('audio:${widget.lessons[number]['test'][testNumber]['audioUrl']}');
+                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
+                                                } else if ((testNumber) >= widget.lessons[number]['test'].length - 1) {
+                                                  display = SectionDisplay.Learn;
                                                   number++;
+                                                  playSound(widget.lessons[number]['voicing']);
                                                   next = false;
                                                   testNumber = 0;
                                                 }
@@ -525,6 +512,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                   isFinished()
                                       ? FlatButton(
                                           onPressed: () async {
+                                            setModalState(() {
+                                              isLoading = true;
+                                            });
                                             audioPlayer?.stop();
                                             NetworkHelper _helper =
                                                 NetworkHelper();
@@ -544,9 +534,6 @@ class _QuizScreenState extends State<QuizScreen> {
                                             var data = await _helper
                                                 .calculateResult(body);
                                             print('success: ${data['status']}');
-                                            setModalState(() {
-                                              isLoading = true;
-                                            });
                                             if (data['status'] == 'success') {
                                               setModalState(() {
                                                 isLoading = false;
@@ -566,12 +553,11 @@ class _QuizScreenState extends State<QuizScreen> {
                                           },
                                           color: Color(0XFF9D1000),
                                           child: isLoading
-                                              ? CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  backgroundColor: Colors.white,
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                          Color>(Colors.white),
+                                              ? Image.asset(
+                                                  "assets/images/loader.gif",
+                                                  color: Colors.white,
+                                                  height: 35.0,
+                                                  width: 35.0,
                                                 )
                                               : Text(
                                                   'Continue',
@@ -583,28 +569,15 @@ class _QuizScreenState extends State<QuizScreen> {
                                           onPressed: () {
                                             audioPlayer?.stop();
                                             setState(() {
-                                              if (widget.lessons[number]
-                                                          ['test'] !=
-                                                      [] ||
-                                                  widget.lessons[number]['test']
-                                                          .length !=
-                                                      0) {
-                                                if (testNumber <
-                                                    widget
-                                                            .lessons[number]
-                                                                ['test']
-                                                            .length -
-                                                        1) {
+                                              if (widget.lessons[number]['test'] != [] || widget.lessons[number]['test'].length != 0) {
+                                                if (testNumber < widget.lessons[number]['test'].length - 1) {
                                                   testNumber++;
-                                                } else if ((testNumber) >=
-                                                    widget
-                                                            .lessons[number]
-                                                                ['test']
-                                                            .length -
-                                                        1) {
-                                                  display =
-                                                      SectionDisplay.Learn;
+                                                  print('audio:${widget.lessons[number]['test'][testNumber]['audioUrl']}');
+                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
+                                                } else if ((testNumber) >= widget.lessons[number]['test'].length - 1) {
+                                                  display = SectionDisplay.Learn;
                                                   number++;
+                                                  playSound(widget.lessons[number]['voicing']);
                                                   next = false;
                                                   testNumber = 0;
                                                 }
@@ -689,6 +662,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                   isFinished()
                                       ? FlatButton(
                                           onPressed: () async {
+                                            setModalState(() {
+                                              isLoading = true;
+                                            });
                                             audioPlayer?.stop();
                                             NetworkHelper _helper =
                                                 NetworkHelper();
@@ -708,9 +684,6 @@ class _QuizScreenState extends State<QuizScreen> {
                                             var data = await _helper
                                                 .calculateResult(body);
                                             print('success: ${data['status']}');
-                                            setModalState(() {
-                                              isLoading = true;
-                                            });
                                             if (data['status'] == 'success') {
                                               setModalState(() {
                                                 isLoading = false;
@@ -730,12 +703,11 @@ class _QuizScreenState extends State<QuizScreen> {
                                           },
                                           color: Color(0XFF66C109),
                                           child: isLoading
-                                              ? CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  backgroundColor: Colors.white,
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                          Color>(Colors.white),
+                                              ? Image.asset(
+                                                  "assets/images/loader.gif",
+                                                  color: Colors.white,
+                                                  height: 35.0,
+                                                  width: 35.0,
                                                 )
                                               : Text(
                                                   'Continue',
@@ -746,29 +718,19 @@ class _QuizScreenState extends State<QuizScreen> {
                                       : FlatButton(
                                           onPressed: () {
                                             audioPlayer?.stop();
+                                            // playSound(widget.lessons[number + 1]['voicing']);
+
                                             setState(() {
-                                              if (widget.lessons[number]
-                                                          ['test'] !=
-                                                      [] ||
-                                                  widget.lessons[number]['test']
-                                                          .length !=
-                                                      0) {
-                                                if (testNumber <
-                                                    widget
-                                                            .lessons[number]
-                                                                ['test']
-                                                            .length -
-                                                        1) {
+                                              if (widget.lessons[number]['test'] != [] ||
+                                                  widget.lessons[number]['test'].length != 0) {
+                                                if (testNumber < widget.lessons[number]['test'].length - 1) {
                                                   testNumber++;
-                                                } else if ((testNumber) >=
-                                                    widget
-                                                            .lessons[number]
-                                                                ['test']
-                                                            .length -
-                                                        1) {
-                                                  display =
-                                                      SectionDisplay.Learn;
+                                                  print('audio:${widget.lessons[number]['test'][testNumber]['audioUrl']}');
+                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
+                                                } else if ((testNumber) >= widget.lessons[number]['test'].length - 1) {
+                                                  display = SectionDisplay.Learn;
                                                   number++;
+                                                  playSound(widget.lessons[number]['voicing']);
                                                   next = false;
                                                   testNumber = 0;
                                                 }
@@ -833,6 +795,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                   isFinished()
                                       ? FlatButton(
                                           onPressed: () async {
+                                            setModalState(() {
+                                              isLoading = true;
+                                            });
                                             audioPlayer?.stop();
                                             NetworkHelper _helper =
                                                 NetworkHelper();
@@ -852,12 +817,10 @@ class _QuizScreenState extends State<QuizScreen> {
                                             var data = await _helper
                                                 .calculateResult(body);
                                             print('success: ${data['status']}');
-                                            setState(() {
-                                              _loading = true;
-                                            });
+
                                             if (data['status'] == 'success') {
-                                              setState(() {
-                                                _loading = false;
+                                              setModalState(() {
+                                                isLoading = false;
                                               });
                                               resultPage();
                                             } else {
@@ -873,13 +836,12 @@ class _QuizScreenState extends State<QuizScreen> {
                                             }
                                           },
                                           color: Color(0XFF9D1000),
-                                          child: _loading
-                                              ? CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  backgroundColor: Colors.white,
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                          Color>(Colors.white),
+                                          child: isLoading
+                                              ? Image.asset(
+                                                  "assets/images/loader.gif",
+                                                  color: Colors.white,
+                                                  height: 35.0,
+                                                  width: 35.0,
                                                 )
                                               : Text(
                                                   'Continue',
@@ -890,24 +852,17 @@ class _QuizScreenState extends State<QuizScreen> {
                                       : FlatButton(
                                           onPressed: () {
                                             audioPlayer?.stop();
+                                            // playSound(widget.lessons[number + 1]['voicing']);
                                             setState(() {
-                                              if (widget.lessons[number]
-                                                      ['test'] !=
-                                                  []) {
-                                                if (testNumber <
-                                                    widget
-                                                            .lessons[number]
-                                                                ['test']
-                                                            .length -
-                                                        1) {
+                                              if (widget.lessons[number]['test'] != []) {
+                                                if (testNumber < widget.lessons[number]['test'].length - 1) {
                                                   testNumber++;
-                                                } else if ((testNumber) >=
-                                                    widget
-                                                            .lessons[number]
-                                                                ['test']
-                                                            .length -
-                                                        1) {
+                                                  print('audio:${widget.lessons[number]['test'][testNumber]['audioUrl']}');
+                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
+                                                } else if ((testNumber) >= widget.lessons[number]['test'].length - 1) {
+                                                  display = SectionDisplay.Learn;
                                                   number++;
+                                                  playSound(widget.lessons[number]['voicing']);
                                                   next = false;
                                                   testNumber = 0;
                                                 }
@@ -944,12 +899,12 @@ class _QuizScreenState extends State<QuizScreen> {
 
   void _matchBottomSheetMenu() {
     bool isLoading = false;
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
         context: context,
         isDismissible: false,
         builder: (builder) {
-          return StatefulBuilder(builder: (BuildContext context,
-              StateSetter setModalState /*Thank you Mmaghoub @SO*/) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setModalState) {
             return widget.lessons[number]['test'].length != 0
                 ? matchCorrect == true
                     ? Container(
@@ -990,6 +945,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                   isFinished()
                                       ? FlatButton(
                                           onPressed: () async {
+                                            setModalState(() {
+                                              isLoading = true;
+                                            });
                                             audioPlayer?.stop();
                                             NetworkHelper _helper =
                                                 NetworkHelper();
@@ -1009,9 +967,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                             var data = await _helper
                                                 .calculateResult(body);
                                             print('success: ${data['status']}');
-                                            setModalState(() {
-                                              isLoading = true;
-                                            });
+
+                                            print("isLoading: $isLoading");
                                             if (data['status'] == 'success') {
                                               setModalState(() {
                                                 isLoading = false;
@@ -1031,12 +988,11 @@ class _QuizScreenState extends State<QuizScreen> {
                                           },
                                           color: Color(0XFF66C109),
                                           child: isLoading
-                                              ? CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  backgroundColor: Colors.white,
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                          Color>(Colors.white),
+                                              ? Image.asset(
+                                                  "assets/images/loader.gif",
+                                                  color: Colors.white,
+                                                  height: 35.0,
+                                                  width: 35.0,
                                                 )
                                               : Text(
                                                   'Continue',
@@ -1047,29 +1003,18 @@ class _QuizScreenState extends State<QuizScreen> {
                                       : FlatButton(
                                           onPressed: () {
                                             audioPlayer?.stop();
+                                            // playSound(widget.lessons[number + 1]['voicing']);
+
                                             setState(() {
-                                              if (widget.lessons[number]
-                                                          ['test'] !=
-                                                      [] ||
-                                                  widget.lessons[number]['test']
-                                                          .length !=
-                                                      0) {
-                                                if (testNumber <
-                                                    widget
-                                                            .lessons[number]
-                                                                ['test']
-                                                            .length -
-                                                        1) {
+                                              if (widget.lessons[number]['test'] != [] || widget.lessons[number]['test'].length != 0) {
+                                                if (testNumber < widget.lessons[number]['test'].length - 1) {
                                                   testNumber++;
-                                                } else if ((testNumber) >=
-                                                    widget
-                                                            .lessons[number]
-                                                                ['test']
-                                                            .length -
-                                                        1) {
-                                                  display =
-                                                      SectionDisplay.Learn;
+                                                  print('audio:${widget.lessons[number]['test'][testNumber]['audioUrl']}');
+                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
+                                                } else if ((testNumber) >= widget.lessons[number]['test'].length - 1) {
+                                                  display = SectionDisplay.Learn;
                                                   number++;
+                                                  playSound(widget.lessons[number]['voicing']);
                                                   next = false;
                                                   testNumber = 0;
                                                 }
@@ -1134,6 +1079,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                   isFinished()
                                       ? FlatButton(
                                           onPressed: () async {
+                                            setModalState(() {
+                                              isLoading = true;
+                                            });
                                             audioPlayer?.stop();
                                             NetworkHelper _helper =
                                                 NetworkHelper();
@@ -1153,12 +1101,11 @@ class _QuizScreenState extends State<QuizScreen> {
                                             var data = await _helper
                                                 .calculateResult(body);
                                             print('success: ${data['status']}');
-                                            setState(() {
-                                              _loading = true;
-                                            });
+
+                                            print("isLoading: $isLoading");
                                             if (data['status'] == 'success') {
-                                              setState(() {
-                                                _loading = false;
+                                              setModalState(() {
+                                                isLoading = false;
                                               });
                                               resultPage();
                                             } else {
@@ -1174,13 +1121,12 @@ class _QuizScreenState extends State<QuizScreen> {
                                             }
                                           },
                                           color: Color(0XFF9D1000),
-                                          child: _loading
-                                              ? CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  backgroundColor: Colors.white,
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                          Color>(Colors.white),
+                                          child: isLoading
+                                              ? Image.asset(
+                                                  "assets/images/loader.gif",
+                                                  color: Colors.white,
+                                                  height: 35.0,
+                                                  width: 35.0,
                                                 )
                                               : Text(
                                                   'Continue',
@@ -1191,26 +1137,18 @@ class _QuizScreenState extends State<QuizScreen> {
                                       : FlatButton(
                                           onPressed: () {
                                             audioPlayer?.stop();
+                                            // playSound(widget.lessons[number + 1]['voicing']);
+
                                             setState(() {
-                                              if (widget.lessons[number]
-                                                      ['test'] !=
-                                                  []) {
-                                                if (testNumber <
-                                                    widget
-                                                            .lessons[number]
-                                                                ['test']
-                                                            .length -
-                                                        1) {
+                                              if (widget.lessons[number]['test'] != []) {
+                                                if (testNumber < widget.lessons[number]['test'].length - 1) {
                                                   testNumber++;
-                                                } else if ((testNumber) >=
-                                                    widget
-                                                            .lessons[number]
-                                                                ['test']
-                                                            .length -
-                                                        1) {
-                                                  display =
-                                                      SectionDisplay.Learn;
+                                                  print('audio:${widget.lessons[number]['test'][testNumber]['audioUrl']}');
+                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
+                                                } else if ((testNumber) >= widget.lessons[number]['test'].length - 1) {
+                                                  display = SectionDisplay.Learn;
                                                   number++;
+                                                  playSound(widget.lessons[number]['voicing']);
                                                   next = false;
                                                   testNumber = 0;
                                                 }
@@ -1293,6 +1231,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                   isFinished()
                                       ? FlatButton(
                                           onPressed: () async {
+                                            setModalState(() {
+                                              isLoading = true;
+                                            });
                                             audioPlayer?.stop();
                                             print('id: ${widget.id}');
 
@@ -1314,9 +1255,6 @@ class _QuizScreenState extends State<QuizScreen> {
                                             var data = await _helper
                                                 .calculateResult(body);
                                             print('success: ${data['status']}');
-                                            setModalState(() {
-                                              isLoading = true;
-                                            });
                                             if (data['status'] == 'success') {
                                               setModalState(() {
                                                 isLoading = false;
@@ -1336,12 +1274,11 @@ class _QuizScreenState extends State<QuizScreen> {
                                           },
                                           color: Color(0XFF66C109),
                                           child: isLoading
-                                              ? CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  backgroundColor: Colors.white,
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                          Color>(Colors.white),
+                                              ? Image.asset(
+                                                  "assets/images/loader.gif",
+                                                  color: Colors.white,
+                                                  height: 35.0,
+                                                  width: 35.0,
                                                 )
                                               : Text(
                                                   'Continue',
@@ -1352,29 +1289,19 @@ class _QuizScreenState extends State<QuizScreen> {
                                       : FlatButton(
                                           onPressed: () {
                                             audioPlayer?.stop();
+                                            // playSound(widget.lessons[number + 1]['voicing']);
+
                                             setState(() {
-                                              if (widget.lessons[number]
-                                                          ['test'] !=
-                                                      [] ||
-                                                  widget.lessons[number]['test']
-                                                          .length !=
-                                                      0) {
-                                                if (testNumber <
-                                                    widget
-                                                            .lessons[number]
-                                                                ['test']
-                                                            .length -
-                                                        1) {
+                                              if (widget.lessons[number]['test'] != [] || widget.lessons[number]['test'].length != 0) {
+                                                if (testNumber < widget.lessons[number]['test'].length - 1) {
                                                   testNumber++;
+                                                  print('audio:${widget.lessons[number]['test'][testNumber]['audioUrl']}');
+                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
                                                 } else if ((testNumber) >=
-                                                    widget
-                                                            .lessons[number]
-                                                                ['test']
-                                                            .length -
-                                                        1) {
-                                                  display =
-                                                      SectionDisplay.Learn;
+                                                    widget.lessons[number]['test'].length - 1) {
+                                                  display = SectionDisplay.Learn;
                                                   number++;
+                                                  playSound(widget.lessons[number]['voicing']);
                                                   next = false;
                                                   testNumber = 0;
                                                 }
@@ -1439,6 +1366,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                   isFinished()
                                       ? FlatButton(
                                           onPressed: () async {
+                                            setModalState(() {
+                                              isLoading = true;
+                                            });
                                             audioPlayer?.stop();
                                             print('id: ${widget.id}');
                                             NetworkHelper _helper =
@@ -1459,12 +1389,10 @@ class _QuizScreenState extends State<QuizScreen> {
                                             var data = await _helper
                                                 .calculateResult(body);
                                             print('success: ${data['status']}');
-                                            setState(() {
-                                              _loading = true;
-                                            });
+
                                             if (data['status'] == 'success') {
-                                              setState(() {
-                                                _loading = false;
+                                              setModalState(() {
+                                                isLoading = false;
                                               });
                                               resultPage();
                                             } else {
@@ -1480,13 +1408,12 @@ class _QuizScreenState extends State<QuizScreen> {
                                             }
                                           },
                                           color: Color(0XFF9D1000),
-                                          child: _loading
-                                              ? CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  backgroundColor: Colors.white,
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                          Color>(Colors.white),
+                                          child: isLoading
+                                              ? Image.asset(
+                                                  "assets/images/loader.gif",
+                                                  color: Colors.white,
+                                                  height: 35.0,
+                                                  width: 35.0,
                                                 )
                                               : Text(
                                                   'Continue',
@@ -1497,26 +1424,19 @@ class _QuizScreenState extends State<QuizScreen> {
                                       : FlatButton(
                                           onPressed: () {
                                             audioPlayer?.stop();
+                                            // playSound(widget.lessons[number + 1]['voicing']);
+
                                             setState(() {
-                                              if (widget.lessons[number]
-                                                      ['test'] !=
-                                                  []) {
-                                                if (testNumber <
-                                                    widget
-                                                            .lessons[number]
-                                                                ['test']
-                                                            .length -
-                                                        1) {
+                                              if (widget.lessons[number]['test'] != []) {
+                                                if (testNumber < widget.lessons[number]['test'].length - 1) {
                                                   testNumber++;
+                                                  print('audio:${widget.lessons[number]['test'][testNumber]['audioUrl']}');
+                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
                                                 } else if ((testNumber) >=
-                                                    widget
-                                                            .lessons[number]
-                                                                ['test']
-                                                            .length -
-                                                        1) {
-                                                  display =
-                                                      SectionDisplay.Learn;
+                                                    widget.lessons[number]['test'].length - 1) {
+                                                  display = SectionDisplay.Learn;
                                                   number++;
+                                                  playSound(widget.lessons[number]['voicing']);
                                                   next = false;
                                                   testNumber = 0;
                                                 }
@@ -1556,6 +1476,8 @@ class _QuizScreenState extends State<QuizScreen> {
     print('mylength: ${widget.lessons[number]['test'].length}');
     print('name: ${widget.title}');
     print('${progressBar()}');
+    playSound(widget.lessons[number]['voicing']);
+    pausePlayToggle();
     super.initState();
   }
 
@@ -1568,9 +1490,6 @@ class _QuizScreenState extends State<QuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // if(widget.lessons[number]['test'].length != 0){
-    //   list = [...widget.lessons[number]['test'][testNumber]['words']] ;
-    // }
 
     return Scaffold(
       body: SafeArea(
@@ -1589,10 +1508,11 @@ class _QuizScreenState extends State<QuizScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (BuildContext context) => CategoriesScreen(
-                                  lessons: widget.courses,
-                                  description: widget.description,
-                                  id: widget.id
-                                )),
+                                lessons: widget.courses,
+                                description: widget.description,
+                                id: widget.id,
+                                thumbnail: widget.thumbnail,
+                            )),
                         ModalRoute.withName('/'));
                   },
                   child: Container(
@@ -1665,8 +1585,16 @@ class _QuizScreenState extends State<QuizScreen> {
                           height: 40,
                         ),
                         onTap: () {
-                          playSound(widget.lessons[number]['voicing']);
-                          pausePlayToggle();
+                          if (next) {
+                            print('aadio${widget.lessons[number]['test'][testNumber]['audioUrl']}');
+                            playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
+                            pausePlayToggle();
+                          }
+                          else{
+                            playSound(widget.lessons[number]['voicing']);
+                            pausePlayToggle();
+                          }
+
                         },
                       )
                     : GestureDetector(
@@ -1681,7 +1609,7 @@ class _QuizScreenState extends State<QuizScreen> {
               ],
             ),
             SizedBox(
-              height: 8,
+              height: 10,
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -1814,21 +1742,18 @@ class _QuizScreenState extends State<QuizScreen> {
                                                                 children: <
                                                                     Widget>[
                                                                   Container(
-                                                                      height:
-                                                                          50.0,
+                                                                      height: widget.lessons[number]['test'][testNumber]['optionAImage'] == null
+                                                                          || widget.lessons[number]['test'][testNumber]['optionAImage'] == ''  ? 0 : 50.0,
                                                                       child: Image(
                                                                           image: NetworkImage(
                                                                         "${widget.lessons[number]['test'][testNumber]['optionAImage']}",
                                                                       ))),
                                                                   SizedBox(
-                                                                    height:
-                                                                        15.0,
+                                                                    height: 15.0,
                                                                   ),
-                                                                  Text(
+                                                                  HtmlWidget(
                                                                     "${widget.lessons[number]['test'][testNumber]['optionA']}",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18.0),
+
                                                                   )
                                                                 ],
                                                               ),
@@ -1906,8 +1831,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                                                 children: <
                                                                     Widget>[
                                                                   Container(
-                                                                    height:
-                                                                        50.0,
+                                                                    height: widget.lessons[number]['test'][testNumber]['optionBImage'] == null
+                                                                        || widget.lessons[number]['test'][testNumber]['optionBImage'] == ''  ? 0 : 50.0,
                                                                     child: Image(
                                                                         image: NetworkImage(
                                                                       "${widget.lessons[number]['test'][testNumber]['optionBImage']}",
@@ -1917,11 +1842,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                                                     height:
                                                                         15.0,
                                                                   ),
-                                                                  Text(
+                                                                  HtmlWidget(
                                                                       "${widget.lessons[number]['test'][testNumber]['optionB']}",
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              18.0))
+                                                                     )
                                                                 ],
                                                               ),
                                                             )),
@@ -2001,8 +1924,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                                               children: <
                                                                   Widget>[
                                                                 Container(
-                                                                    height:
-                                                                        50.0,
+                                                                    height: widget.lessons[number]['test'][testNumber]['optionCImage'] == null
+                                                                        || widget.lessons[number]['test'][testNumber]['optionCImage'] == ''  ? 0 : 50.0,
                                                                     child: Image(
                                                                         image: NetworkImage(
                                                                       "${widget.lessons[number]['test'][testNumber]['optionCImage']}",
@@ -2010,11 +1933,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                                                 SizedBox(
                                                                   height: 15.0,
                                                                 ),
-                                                                Text(
+                                                                HtmlWidget(
                                                                     "${widget.lessons[number]['test'][testNumber]['optionC']}",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18.0))
+                                                                    )
                                                               ],
                                                             )),
                                                       ),
@@ -2086,8 +2007,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                                               children: <
                                                                   Widget>[
                                                                 Container(
-                                                                    height:
-                                                                        50.0,
+                                                                    height: widget.lessons[number]['test'][testNumber]['optionDImage'] == null
+                                                                        || widget.lessons[number]['test'][testNumber]['optionDImage'] == ''  ? 0 : 50.0,
                                                                     child: Image(
                                                                         image: NetworkImage(
                                                                       "${widget.lessons[number]['test'][testNumber]['optionDImage']}",
@@ -2095,11 +2016,9 @@ class _QuizScreenState extends State<QuizScreen> {
                                                                 SizedBox(
                                                                   height: 15.0,
                                                                 ),
-                                                                Text(
+                                                                HtmlWidget(
                                                                     "${widget.lessons[number]['test'][testNumber]['optionD']}",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            18.0))
+                                                                   )
                                                               ],
                                                             )),
                                                       ),
@@ -2359,7 +2278,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                       ['type'] ==
                                   'match')
                                 Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: <Widget>[
                                     Column(
                                       children: <Widget>[
@@ -2381,26 +2301,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                             padding: EdgeInsets.symmetric(
                                                 vertical: 15.0,
                                                 horizontal: 30.0),
-                                            decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft: Radius.circular(5),
-                                                    topRight:
-                                                        Radius.circular(5),
-                                                    bottomLeft:
-                                                        Radius.circular(5),
-                                                    bottomRight:
-                                                        Radius.circular(5)),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.grey
-                                                        .withOpacity(0.2),
-                                                    spreadRadius: 1,
-                                                    blurRadius: 10,
-                                                    offset: Offset(-1,
-                                                        1), // changes position of shadow
-                                                  ),
-                                                ]),
+
                                             child: Column(
                                               children: <Widget>[
                                                 Image(
@@ -2427,7 +2328,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                             Wrap(
                                               spacing: 20.0,
                                               runSpacing: 20,
-                                              alignment: WrapAlignment.spaceEvenly,
+                                              alignment:
+                                                  WrapAlignment.spaceEvenly,
                                               children: <Widget>[
                                                 GestureDetector(
                                                     onTap: () {
@@ -2766,45 +2668,54 @@ class _QuizScreenState extends State<QuizScreen> {
                               HtmlWidget(
                                 '${widget.lessons[number]['description']}',
                               ),
-                              SizedBox(height: 10),
+                             SizedBox(height:20),
+                              Divider(color:Color(0XFFD8D8D8), thickness:1),
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                    vertical: 25.0, horizontal: 25.0),
+                                     horizontal: 25.0),
                                 child: Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(5),
-                                            topRight: Radius.circular(5),
-                                            bottomLeft: Radius.circular(5),
-                                            bottomRight: Radius.circular(5)),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.3),
-                                            spreadRadius: 1,
-                                            blurRadius: 10,
-                                            offset: Offset(-1,
-                                                1), // changes position of shadow
-                                          ),
-                                        ]),
                                     child: Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: Column(
-                                        children: <Widget>[
-                                         widget.title == 'Numbers' ? SvgPicture.network(widget.lessons[number]['picture']):
-                                        Image(
-                                          image: NetworkImage(
-                                          "${widget.lessons[number]['picture']}"),
-                                      ),
-                                          SizedBox(
-                                            height: 5,
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Column(
+                                    children: <Widget>[
+                                      widget.lessons[number]['picture'] != null && widget.lessons[number]['picture'].contains('svg')
+                                          ? SvgPicture.network(
+                                              widget.lessons[number]['picture'],
+                                              width: 150.0)
+                                          : Image.network(
+                                              "${widget.lessons[number]['picture']}",
+                                              width: widget.description ==
+                                                      'Learn to count in Igbo'
+                                                  ? 360
+                                                  : 200.0),
+                                             widget.name == 'Vowel Harmony'
+                                          || widget.name == 'Vowels'
+                                          || widget.name == 'Consonants'
+                                          || widget.name == 'Names of Igbo Food'
+                                          || widget.name == 'Names of Igbo Food II'
+                                          || widget.name == 'Names of Igbo Food III' ?
+                                      Container(
+                                          padding: EdgeInsets.all(25.0),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(color: Colors.grey.withOpacity(0.5),),
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(15),
+                                            topRight: Radius.circular(15),
+                                            bottomLeft: Radius.circular(15),
+                                            bottomRight: Radius.circular(15),
                                           ),
-                                          HtmlWidget(
-                                            '${widget.lessons[number]['igbo']}',
-                                          )
-                                        ],
+                                        ),
+                                        child: HtmlWidget(
+                                          '${widget.lessons[number]['igbo']}',
+                                        ),
+                                      ):
+                                      HtmlWidget(
+                                        '${widget.lessons[number]['igbo']}',
                                       ),
-                                    )),
+                                    ],
+                                  ),
+                                )),
                               ),
                             ],
                           ),
@@ -2827,9 +2738,21 @@ class _QuizScreenState extends State<QuizScreen> {
                             )
                           : GestureDetector(
                               onTap: () {
+                                audioPlayer?.stop();
+                                print('num:$number');
+                                print('test:$testNumber');
+                                print('length:${widget.lessons.length}');
+                                print('num:$number');
+
+
+                                if (widget.lessons[number]['test'] == [] ||
+                                    widget.lessons[number]['test'].length == 0) {
+                                  playSound(widget.lessons[number - 1]['voicing']);
+                                }
+                                // pausePlayToggle();
                                 setState(() {
-                                  audioPlayer?.stop();
-                                  _isVisible = true;
+                                  // audioPlayer?.stop();
+                                  _isVisible = false;
                                   number--;
                                 });
                               },
@@ -2839,9 +2762,18 @@ class _QuizScreenState extends State<QuizScreen> {
                             ),
                       GestureDetector(
                         onTap: () {
+                          audioPlayer?.stop();
+                          print('n:$number');
+                          print('tn:$testNumber');
+                          if (widget.lessons[number]['test'] == [] ||
+                              widget.lessons[number]['test'].length == 0) {
+                            if(!isFinished()){
+                                playSound(widget.lessons[number + 1]['voicing']);
+                            }
+                          }
+                          // pausePlayToggle();
                           setState(() {
-                            audioPlayer?.stop();
-                            _isVisible = true;
+                            _isVisible = false;
                             if (widget.lessons[number]['test'] == [] ||
                                 widget.lessons[number]['test'].length == 0) {
                               next = false;
@@ -2853,19 +2785,26 @@ class _QuizScreenState extends State<QuizScreen> {
                                           lessons: widget.lessons,
                                           courses: widget.courses,
                                           id: widget.id,
-                                          description: widget.description)),
+                                          description: widget.description,
+                                          thumbnail: widget.thumbnail
+
+                                      )),
                                 );
                               } else {
                                 number++;
                               }
 
                               print('num: $number');
+                              print('description: ${widget.description}');
+
                               print('next:${widget.lessons.length}');
                             } else {
                               next = true;
                               display = SectionDisplay.Quiz;
                               testType = _getTestType(widget.lessons[number]
                                   ['test'][testNumber]['type']);
+                              print('audio:${widget.lessons[number]['test'][testNumber]['audioUrl']}');
+                              playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
                             }
                           });
                         },
@@ -2882,23 +2821,6 @@ class _QuizScreenState extends State<QuizScreen> {
                           color: Color(0XFFF21600),
                           onPressed: () {
                             _checkAnswer(testType);
-                            // setState(() {
-                            //   if(widget.lessons[number]['test'] != [] || widget.lessons[number]['test'].length != 0) {
-                            //     _modalBottomSheetMenu();
-                            //   }
-                            //   result.add(correctAnswer);
-                            //   correctAnswer ? results++ : 0;
-                            //   print('result:$results');
-                            //   print('result:$result');
-                            //
-                            // });
-                            // print('CORRECT: ${ widget.lessons[number]['test'][testNumber]['correctOption']}');
-                            // print('A $checkAnswerA');
-                            // print('B $checkAnswerB');
-                            // print('C $checkAnswerC');
-                            // print('D $checkAnswerD');
-                            //
-                            // print('answer:$correctAnswer');
                           },
                           child: Text(
                             'Continue',

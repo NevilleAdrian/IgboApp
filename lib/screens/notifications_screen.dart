@@ -43,7 +43,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
         ),
         body: Padding(
           padding: const EdgeInsets.only(top: 40.0, left: 10.0, right: 10.0),
-          child: NotificationBanner(),
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 20.0,),
+              NotificationBanner(),
+            ],
+          )
         ),
       ),
     );
