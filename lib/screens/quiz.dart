@@ -197,9 +197,9 @@ class _QuizScreenState extends State<QuizScreen> {
 //   audioPlayer.play(_blankUrl);
 // }
 
-  void playAudio(int soundNumber) {
+  void playAudio(String soundNumber) {
     final player = AudioCache();
-    player.play('note$soundNumber.mp3');
+    player.play('$soundNumber.mp3');
   }
 
   void playSound(String soundNumber) async {
@@ -435,17 +435,16 @@ class _QuizScreenState extends State<QuizScreen> {
                                       : FlatButton(
                                           onPressed: () {
                                             audioPlayer?.stop();
-                                              // playSound(widget.lessons[number + 1]['voicing']);
                                             setState(() {
                                               if (widget.lessons[number]['test'] != [] || widget.lessons[number]['test'].length != 0) {
                                                 if (testNumber < widget.lessons[number]['test'].length - 1) {
                                                   testNumber++;
                                                   print('audio:${widget.lessons[number]['test'][testNumber]['audioUrl']}');
-                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
+                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl'].replaceAll('\\','/'));
                                                 } else if ((testNumber) >= widget.lessons[number]['test'].length - 1) {
                                                   display = SectionDisplay.Learn;
                                                   number++;
-                                                  playSound(widget.lessons[number]['voicing']);
+                                                  playSound(widget.lessons[number]['voicing'].replaceAll('\\','/'));
                                                   next = false;
                                                   testNumber = 0;
                                                 }
@@ -573,11 +572,11 @@ class _QuizScreenState extends State<QuizScreen> {
                                                 if (testNumber < widget.lessons[number]['test'].length - 1) {
                                                   testNumber++;
                                                   print('audio:${widget.lessons[number]['test'][testNumber]['audioUrl']}');
-                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
+                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl'].replaceAll('\\','/'));
                                                 } else if ((testNumber) >= widget.lessons[number]['test'].length - 1) {
                                                   display = SectionDisplay.Learn;
                                                   number++;
-                                                  playSound(widget.lessons[number]['voicing']);
+                                                  playSound(widget.lessons[number]['voicing'].replaceAll('\\','/'));
                                                   next = false;
                                                   testNumber = 0;
                                                 }
@@ -614,7 +613,7 @@ class _QuizScreenState extends State<QuizScreen> {
         });
   }
 
-  void _bottomSheetMenu() {
+  void _bottomSheetMenu(){
     bool isLoading = false;
     showModalBottomSheet(
         context: context,
@@ -726,11 +725,11 @@ class _QuizScreenState extends State<QuizScreen> {
                                                 if (testNumber < widget.lessons[number]['test'].length - 1) {
                                                   testNumber++;
                                                   print('audio:${widget.lessons[number]['test'][testNumber]['audioUrl']}');
-                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
+                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl'].replaceAll('\\','/'));
                                                 } else if ((testNumber) >= widget.lessons[number]['test'].length - 1) {
                                                   display = SectionDisplay.Learn;
                                                   number++;
-                                                  playSound(widget.lessons[number]['voicing']);
+                                                  playSound(widget.lessons[number]['voicing'].replaceAll('\\','/'));
                                                   next = false;
                                                   testNumber = 0;
                                                 }
@@ -858,11 +857,11 @@ class _QuizScreenState extends State<QuizScreen> {
                                                 if (testNumber < widget.lessons[number]['test'].length - 1) {
                                                   testNumber++;
                                                   print('audio:${widget.lessons[number]['test'][testNumber]['audioUrl']}');
-                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
+                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl'].replaceAll('\\','/'));
                                                 } else if ((testNumber) >= widget.lessons[number]['test'].length - 1) {
                                                   display = SectionDisplay.Learn;
                                                   number++;
-                                                  playSound(widget.lessons[number]['voicing']);
+                                                  playSound(widget.lessons[number]['voicing'].replaceAll('\\','/'));
                                                   next = false;
                                                   testNumber = 0;
                                                 }
@@ -1010,11 +1009,11 @@ class _QuizScreenState extends State<QuizScreen> {
                                                 if (testNumber < widget.lessons[number]['test'].length - 1) {
                                                   testNumber++;
                                                   print('audio:${widget.lessons[number]['test'][testNumber]['audioUrl']}');
-                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
+                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl'].replaceAll('\\','/'));
                                                 } else if ((testNumber) >= widget.lessons[number]['test'].length - 1) {
                                                   display = SectionDisplay.Learn;
                                                   number++;
-                                                  playSound(widget.lessons[number]['voicing']);
+                                                  playSound(widget.lessons[number]['voicing'].replaceAll('\\','/'));
                                                   next = false;
                                                   testNumber = 0;
                                                 }
@@ -1144,11 +1143,11 @@ class _QuizScreenState extends State<QuizScreen> {
                                                 if (testNumber < widget.lessons[number]['test'].length - 1) {
                                                   testNumber++;
                                                   print('audio:${widget.lessons[number]['test'][testNumber]['audioUrl']}');
-                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
+                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl'].replaceAll('\\','/'));
                                                 } else if ((testNumber) >= widget.lessons[number]['test'].length - 1) {
                                                   display = SectionDisplay.Learn;
                                                   number++;
-                                                  playSound(widget.lessons[number]['voicing']);
+                                                  playSound(widget.lessons[number]['voicing'].replaceAll('\\','/'));
                                                   next = false;
                                                   testNumber = 0;
                                                 }
@@ -1296,12 +1295,12 @@ class _QuizScreenState extends State<QuizScreen> {
                                                 if (testNumber < widget.lessons[number]['test'].length - 1) {
                                                   testNumber++;
                                                   print('audio:${widget.lessons[number]['test'][testNumber]['audioUrl']}');
-                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
+                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl'].replaceAll('\\','/'));
                                                 } else if ((testNumber) >=
                                                     widget.lessons[number]['test'].length - 1) {
                                                   display = SectionDisplay.Learn;
                                                   number++;
-                                                  playSound(widget.lessons[number]['voicing']);
+                                                  playSound(widget.lessons[number]['voicing'].replaceAll('\\','/'));
                                                   next = false;
                                                   testNumber = 0;
                                                 }
@@ -1431,12 +1430,12 @@ class _QuizScreenState extends State<QuizScreen> {
                                                 if (testNumber < widget.lessons[number]['test'].length - 1) {
                                                   testNumber++;
                                                   print('audio:${widget.lessons[number]['test'][testNumber]['audioUrl']}');
-                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
+                                                  playSound(widget.lessons[number]['test'][testNumber]['audioUrl'].replaceAll('\\','/'));
                                                 } else if ((testNumber) >=
                                                     widget.lessons[number]['test'].length - 1) {
                                                   display = SectionDisplay.Learn;
                                                   number++;
-                                                  playSound(widget.lessons[number]['voicing']);
+                                                  playSound(widget.lessons[number]['voicing'].replaceAll('\\','/'));
                                                   next = false;
                                                   testNumber = 0;
                                                 }
@@ -1476,7 +1475,7 @@ class _QuizScreenState extends State<QuizScreen> {
     print('mylength: ${widget.lessons[number]['test'].length}');
     print('name: ${widget.title}');
     print('${progressBar()}');
-    playSound(widget.lessons[number]['voicing']);
+    playSound(widget.lessons[number]['voicing'].replaceAll('\\','/'));
     pausePlayToggle();
     super.initState();
   }
@@ -1496,81 +1495,85 @@ class _QuizScreenState extends State<QuizScreen> {
         child: Padding(
           padding:
               EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0, bottom: 20.0),
-          child: Column(children: <Widget>[
-            Row(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                GestureDetector(
-                  onTap: () {
-                    // var data = Auth.authProvider(context).category.firstWhere((element) {
-                    //   return element['_id'] == widget.id;
-                    // });
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => CategoriesScreen(
-                                lessons: widget.courses,
-                                description: widget.description,
-                                id: widget.id,
-                                thumbnail: widget.thumbnail,
-                            )),
-                        ModalRoute.withName('/'));
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
-                          spreadRadius: 1,
-                          blurRadius: 10,
-                          offset: Offset(-1, 1), // changes position of shadow
+            Center(
+              child: Row(
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {
+                      // var data = Auth.authProvider(context).category.firstWhere((element) {
+                      //   return element['_id'] == widget.id;
+                      // });
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => CategoriesScreen(
+                                  lessons: widget.courses,
+                                  description: widget.description,
+                                  id: widget.id,
+                                  thumbnail: widget.thumbnail,
+                              )),
+                          ModalRoute.withName('/'));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 10,
+                            offset: Offset(-1, 1), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 15.0,
+                        child: SvgPicture.asset(
+                          "assets/images/cancel.svg",
+                          height: 20,
                         ),
-                      ],
-                    ),
-                    child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 15.0,
-                      child: SvgPicture.asset(
-                        "assets/images/cancel.svg",
-                        height: 20,
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 15.0,
-                ),
-                Expanded(
-                  flex: 5,
-                  child: LayoutBuilder(builder: (context, constraints) {
-                    return Container(
-                        height: 6,
-                        width: 100,
-                        color: Color(0XFFEDEDED),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: SizedBox(
-                            child: Container(
-                                height: 6,
-                                width: getWidth(
-                                    constraints.maxWidth, progressBar()),
-                                color: Colors.redAccent),
-                          ),
-                        ));
-                  }),
-                ),
-                SizedBox(
-                  width: 25.0,
-                ),
-                Text(
-                  '${number + 1}/${widget.lessons.length}',
-                  style: TextStyle(
-                      color: Colors.redAccent,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600),
-                )
-              ],
+                  SizedBox(
+                    width: 15.0,
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: LayoutBuilder(builder: (context, constraints) {
+                      return Container(
+                          height: 6,
+                          width: 100,
+                          color: Color(0XFFEDEDED),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: SizedBox(
+                              child: Container(
+                                  height: 6,
+                                  width: getWidth(
+                                      constraints.maxWidth, progressBar()),
+                                  color: Colors.redAccent),
+                            ),
+                          ));
+                    }),
+                  ),
+                  SizedBox(
+                    width: 25.0,
+                  ),
+                  Text(
+                    '${number + 1}/${widget.lessons.length}',
+                    style: TextStyle(
+                        color: Colors.redAccent,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600),
+                  )
+                ],
+              ),
             ),
             SizedBox(
               height: 40.0,
@@ -1587,11 +1590,12 @@ class _QuizScreenState extends State<QuizScreen> {
                         onTap: () {
                           if (next) {
                             print('aadio${widget.lessons[number]['test'][testNumber]['audioUrl']}');
-                            playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
+                            playSound(widget.lessons[number]['test'][testNumber]['audioUrl'].replaceAll('\\','/'));
                             pausePlayToggle();
                           }
                           else{
-                            playSound(widget.lessons[number]['voicing']);
+                            print('aadio ${widget.lessons[number]['voicing']}');
+                            playSound(widget.lessons[number]['voicing'].replaceAll('\\','/'));
                             pausePlayToggle();
                           }
 
@@ -1609,7 +1613,7 @@ class _QuizScreenState extends State<QuizScreen> {
               ],
             ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -2665,11 +2669,25 @@ class _QuizScreenState extends State<QuizScreen> {
                         else
                           Column(
                             children: <Widget>[
+                                     widget.name == 'Vowel Harmony'
+                                  || widget.name == 'Vowels'
+                                  || widget.name == 'Consonants'
+                                  || widget.name == 'African Rosewood Leave Soup' ?
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 55.0),
+                                child: HtmlWidget(
+                                  '${widget.lessons[number]['description']}',
+                                ),
+                              ):
                               HtmlWidget(
-                                '${widget.lessons[number]['description']}',
-                              ),
-                             SizedBox(height:20),
-                              Divider(color:Color(0XFFD8D8D8), thickness:1),
+                              '${widget.lessons[number]['description']}',
+                            ),
+                             SizedBox(height:60),
+                              widget.name == 'Vowel Harmony'
+                             || widget.name == 'Vowels'
+                             || widget.name == 'Consonants'
+                             || widget.name == 'African Rosewood Leave Soup'
+                          ? SizedBox(): Divider(color:Color(0XFFD8D8D8), thickness:1),
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                      horizontal: 25.0),
@@ -2684,16 +2702,17 @@ class _QuizScreenState extends State<QuizScreen> {
                                               width: 150.0)
                                           : Image.network(
                                               "${widget.lessons[number]['picture']}",
-                                              width: widget.description ==
+                                               width: widget.description ==
                                                       'Learn to count in Igbo'
                                                   ? 360
                                                   : 200.0),
-                                             widget.name == 'Vowel Harmony'
+                                          widget.name == 'Vowel Harmony'
                                           || widget.name == 'Vowels'
                                           || widget.name == 'Consonants'
-                                          || widget.name == 'Names of Igbo Food'
-                                          || widget.name == 'Names of Igbo Food II'
-                                          || widget.name == 'Names of Igbo Food III' ?
+                                          || widget.name == 'African Rosewood Leave Soup' 
+                                          &&  widget.lessons[number]['igbo'] != ''
+
+                                              ?
                                       Container(
                                           padding: EdgeInsets.all(25.0),
                                         decoration: BoxDecoration(
@@ -2738,6 +2757,7 @@ class _QuizScreenState extends State<QuizScreen> {
                             )
                           : GestureDetector(
                               onTap: () {
+                                playAudio('pop');
                                 audioPlayer?.stop();
                                 print('num:$number');
                                 print('test:$testNumber');
@@ -2747,7 +2767,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
                                 if (widget.lessons[number]['test'] == [] ||
                                     widget.lessons[number]['test'].length == 0) {
-                                  playSound(widget.lessons[number - 1]['voicing']);
+                                  playSound(widget.lessons[number - 1]['voicing'].replaceAll('\\','/'));
                                 }
                                 // pausePlayToggle();
                                 setState(() {
@@ -2762,13 +2782,14 @@ class _QuizScreenState extends State<QuizScreen> {
                             ),
                       GestureDetector(
                         onTap: () {
+                          playAudio('pop');
                           audioPlayer?.stop();
                           print('n:$number');
                           print('tn:$testNumber');
                           if (widget.lessons[number]['test'] == [] ||
                               widget.lessons[number]['test'].length == 0) {
                             if(!isFinished()){
-                                playSound(widget.lessons[number + 1]['voicing']);
+                                playSound(widget.lessons[number + 1]['voicing'].replaceAll('\\','/').replaceAll(' ','%20'));
                             }
                           }
                           // pausePlayToggle();
@@ -2804,7 +2825,7 @@ class _QuizScreenState extends State<QuizScreen> {
                               testType = _getTestType(widget.lessons[number]
                                   ['test'][testNumber]['type']);
                               print('audio:${widget.lessons[number]['test'][testNumber]['audioUrl']}');
-                              playSound(widget.lessons[number]['test'][testNumber]['audioUrl']);
+                              playSound(widget.lessons[number]['test'][testNumber]['audioUrl'].replaceAll('\\','/').replaceAll(' ','%20'));
                             }
                           });
                         },

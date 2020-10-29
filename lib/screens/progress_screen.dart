@@ -101,7 +101,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
   Widget build(BuildContext context) {
     myProgress(number);
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -165,182 +165,24 @@ class _ProgressScreenState extends State<ProgressScreen> {
                     height: 30.0,
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 23.0, right: 23),
+                    padding: EdgeInsets.only(left: 23.0, right: 0.0),
                     height: 170,
                     width: MediaQuery.of(context).size.width,
                     child: ListView(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       children: <Widget>[
-                        Container(
-                            padding: EdgeInsets.only(
-                                left: 20, right: 90, top: 10, bottom: 20),
-                            decoration: BoxDecoration(
-                                color: Color(0XFFF21600),
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(5),
-                                    topRight: Radius.circular(5),
-                                    bottomLeft: Radius.circular(5),
-                                    bottomRight: Radius.circular(5)),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.3),
-                                    spreadRadius: 1,
-                                    blurRadius: 10,
-                                    offset: Offset(
-                                        -1, 1), // changes position of shadow
-                                  ),
-                                ]),
-                            child: Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Text(
-                                    'Basic',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 15.0,
-                                  ),
-                                  Text(
-                                    'Words\nlearned',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  Text(
-                                    progress['data']['basic'].toString(),
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w600),
-                                  )
-                                ],
-                              ),
-                            )),
+                        SliderContainer(progress: progress, color: 0XFFF21600, text: 'basic', form: 'Basic', color1: 0XFFF21600, color2: 0XFFF21600,),
                         SizedBox(
                           width: 20.0,
                         ),
-                        Container(
-                            padding: EdgeInsets.only(
-                                left: 20, right: 60, top: 10, bottom: 20),
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                    begin: Alignment.topRight,
-                                    end: Alignment.bottomLeft,
-                                    colors: [
-                                      Color(0XFFF7B500),
-                                      Color(0XFFF48C02)
-                                    ]),
-                                color: Color(0XFFF21600),
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(5),
-                                    topRight: Radius.circular(5),
-                                    bottomLeft: Radius.circular(5),
-                                    bottomRight: Radius.circular(5)),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.3),
-                                    spreadRadius: 1,
-                                    blurRadius: 10,
-                                    offset: Offset(
-                                        -1, 1), // changes position of shadow
-                                  ),
-                                ]),
-                            child: Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Text(
-                                    'Intermediate',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 15.0,
-                                  ),
-                                  Text(
-                                    'Words\nlearned',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  Text(
-                                    progress['data']['intermediate'].toString(),
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w600),
-                                  )
-                                ],
-                              ),
-                            )),
+                        SliderContainer(progress: progress, color: 0XFFF21600, text: 'intermediate', form: 'Intermediate', color1:0XFFF7B500 , color2: 0XFFF48C02,),
                         SizedBox(
                           width: 20.0,
                         ),
-                        Container(
-                            padding: EdgeInsets.only(
-                                left: 20, right: 90, top: 10, bottom: 20),
-                            decoration: BoxDecoration(
-                                color: Color(0XFF9D1000),
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(5),
-                                    topRight: Radius.circular(5),
-                                    bottomLeft: Radius.circular(5),
-                                    bottomRight: Radius.circular(5)),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.3),
-                                    spreadRadius: 1,
-                                    blurRadius: 10,
-                                    offset: Offset(
-                                        -1, 1), // changes position of shadow
-                                  ),
-                                ]),
-                            child: Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Text(
-                                    'Advanced',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 15.0,
-                                  ),
-                                  Text(
-                                    'Words\nlearned',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  Text(
-                                    progress['data']['advanced'].toString(),
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w600),
-                                  )
-                                ],
-                              ),
-                            )),
+                        SliderContainer(progress: progress, color: 0XFF9D1000, text: 'advanced', form: 'Advanced', color1:0XFF9D1000 , color2: 0XFF9D1000,),
+
+
                       ],
                     ),
                   ),
@@ -462,5 +304,96 @@ class _ProgressScreenState extends State<ProgressScreen> {
         ),
       ),
     );
+  }
+}
+
+class SliderContainer extends StatelessWidget {
+  const SliderContainer({ @required this.progress, this.color, this.text, this.form, this.color1, this.color2});
+
+  final dynamic progress;
+  final int color;
+  final int color1;
+  final int color2;
+  final String text;
+  final String form;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width/2.2,
+        padding: EdgeInsets.only(
+          top: 20, bottom: 5),
+        decoration: BoxDecoration(
+            color: Color(color),
+             gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  Color(color1),
+                  Color(color2),
+                ]),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(5),
+                topRight: Radius.circular(5),
+                bottomLeft: Radius.circular(5),
+                bottomRight: Radius.circular(5)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 1,
+                blurRadius: 10,
+                offset: Offset(
+                    -1, 1), // changes position of shadow
+              ),
+            ]),
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment:
+                MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(
+                  left: 20, right: 20,
+                ),
+                child: Text(
+                  form,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 13
+                  ),
+                ),
+              ),
+
+              Divider(color:Color(0XFFD8D8D8), thickness:1),
+              Container(
+                padding: EdgeInsets.only(
+                  left: 20, right: 20,
+                ),
+                child: Text(
+                  'Words\nlearned',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(
+                  left: 20, right: 20,
+                ),
+
+                child: Text(
+                  progress['data'][text].toString(),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 35,
+                      fontWeight: FontWeight.w600),
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }

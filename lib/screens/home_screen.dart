@@ -335,18 +335,20 @@ class CategoryList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
         separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(
-            height: 20,
+          return lessons[index]['name'] != 'Verbs' ? SizedBox(
+            height: 15,
+          ) : SizedBox(
+            height: 0,
           );
         },
         physics: ScrollPhysics(),
         shrinkWrap: true,
         itemCount: lessons.length,
         itemBuilder: (BuildContext context, int index) {
-          return GestureDetector(
+          return  GestureDetector(
             onTap: () {
               // if (lessons[index]['isAvaliable'])
-                Navigator.push(
+              Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => CategoriesScreen(
@@ -358,7 +360,8 @@ class CategoryList extends StatelessWidget {
                       )),
                 );
             },
-            child: Container(
+            child: lessons[index]['name'] != 'Verbs' ?
+              Container(
               height: 126.0,
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -392,7 +395,7 @@ class CategoryList extends StatelessWidget {
                             padding:
                             // lessons[index]['isAvaliable'] ?
                             // const EdgeInsets.only(right: 120.0) :
-                      const EdgeInsets.only(right: 40.0),
+                      const EdgeInsets.only(right: 145.0),
                             child: Text(
                               '${lessons[index]['name']}',
                               style: TextStyle(
@@ -433,7 +436,7 @@ class CategoryList extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
+            ): SizedBox(height: 0, width: 0,)
           );
         });
   }
