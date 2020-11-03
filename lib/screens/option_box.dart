@@ -1,18 +1,15 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
 class OptionBox extends StatelessWidget {
-  const OptionBox({
-    @required this.option,
-    this.color,
-    this.gradient1,
-    this.gradient2,
-    this.height,
-    this.width,
-    this.fontColor
-
-  }) ;
+  const OptionBox(
+      {@required this.option,
+      this.color,
+      this.gradient1,
+      this.gradient2,
+      this.height,
+      this.width,
+      this.fontColor});
 
   final String option;
   final Color color;
@@ -21,8 +18,6 @@ class OptionBox extends StatelessWidget {
   final double height;
   final double width;
   final Color fontColor;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +28,11 @@ class OptionBox extends StatelessWidget {
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
                 colors: [gradient1, gradient2]),
-            borderRadius:  BorderRadius.only(
+            borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(5),
                 topRight: Radius.circular(5),
                 bottomLeft: Radius.circular(5),
-                bottomRight: Radius.circular(5)
-            ),
+                bottomRight: Radius.circular(5)),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.2),
@@ -46,14 +40,15 @@ class OptionBox extends StatelessWidget {
                 blurRadius: 10,
                 offset: Offset(-1, 1), // changes position of shadow
               ),
-            ]
-        ),
-        height: height ,
+            ]),
+        height: height,
         width: width,
         child: Padding(
-          padding: const EdgeInsets.symmetric( vertical: 10, horizontal: 13.0),
-          child: HtmlWidget(option,),
-        )
-    );
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 13.0),
+          child: HtmlWidget(
+            option,
+            textStyle: TextStyle(color: fontColor),
+          ),
+        ));
   }
 }
