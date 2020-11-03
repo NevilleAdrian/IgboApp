@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nkuzi_igbo/models/study.dart';
-import 'package:nkuzi_igbo/screens/quiz/itest_manager.dart';
 import 'package:nkuzi_igbo/screens/quiz/question_display.dart';
 import 'package:nkuzi_igbo/screens/quiz/quiz_layout.dart';
-import 'package:nkuzi_igbo/screens/quiz/test_manager.dart';
 import 'package:nkuzi_igbo/screens/quiz/test_scheduler.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
 import 'package:nkuzi_igbo/utils/functions.dart';
