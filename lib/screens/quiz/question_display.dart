@@ -47,7 +47,7 @@ class RegularQuestion extends StatelessWidget {
         SizedBox(
           height: 20,
         ),
-        Divider(color: Color(0XFFD8D8D8), thickness: 1),
+        kAppDivider,
         SizedBox(
           height: image == null ? 0 : 20,
         ),

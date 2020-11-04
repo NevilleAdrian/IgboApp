@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/models/category_model.dart';
@@ -364,82 +365,155 @@ class CategoryList extends StatelessWidget {
                 );
               },
               child: lessons[index].name != 'Verbs'
-                  ? Container(
-                      height: 126.0,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          // colorFilter: !lessons[index]['isAvaliable']
-                          //     ?
-                          // ColorFilter.mode(
-                          //         Colors.grey,
-                          //         BlendMode.saturation,
-                          //       )
-                          //     : null,
-                          image: NetworkImage(lessons[index].image),
-                          fit: BoxFit.cover,
+                  ? CachedNetworkImage(
+                      imageUrl: lessons[index].image,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(5),
+                              bottomRight: Radius.circular(5),
+                              topLeft: Radius.circular(5),
+                              topRight: Radius.circular(5)),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(5),
-                            bottomRight: Radius.circular(5),
-                            topLeft: Radius.circular(5),
-                            topRight: Radius.circular(5)),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Padding(
-                                    padding:
-                                        // lessons[index]['isAvaliable'] ?
-                                        // const EdgeInsets.only(right: 120.0) :
-                                        const EdgeInsets.only(right: 145.0),
-                                    child: Text(
-                                      '${lessons[index].name}',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w700),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 50),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 145.0),
+                                      child: Text(
+                                        '${lessons[index].name}',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w700),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            // if (!lessons[index]['isAvaliable'])
-                            //   Expanded(
-                            //       child: Column(
-                            //     mainAxisAlignment: MainAxisAlignment.start,
-                            //     crossAxisAlignment: CrossAxisAlignment.end,
-                            //     children: <Widget>[
-                            //       Container(
-                            //         margin: EdgeInsets.only(top: 20.0),
-                            //         padding: EdgeInsets.symmetric(
-                            //             horizontal: 8, vertical: 4),
-                            //         child: Text(
-                            //           'Coming soon',
-                            //           style: TextStyle(
-                            //               color: Colors.white, fontSize: 10.0),
-                            //         ),
-                            //         decoration: BoxDecoration(
-                            //           color: Color(0XFFF31601),
-                            //           borderRadius: BorderRadius.only(
-                            //               bottomLeft: Radius.circular(5),
-                            //               bottomRight: Radius.circular(5),
-                            //               topLeft: Radius.circular(5),
-                            //               topRight: Radius.circular(5)),
-                            //         ),
-                            //       )
-                            //     ],
-                            //   )),
-                          ],
+                              // if (!lessons[index]['isAvaliable'])
+                              //   Expanded(
+                              //       child: Column(
+                              //     mainAxisAlignment: MainAxisAlignment.start,
+                              //     crossAxisAlignment: CrossAxisAlignment.end,
+                              //     children: <Widget>[
+                              //       Container(
+                              //         margin: EdgeInsets.only(top: 20.0),
+                              //         padding: EdgeInsets.symmetric(
+                              //             horizontal: 8, vertical: 4),
+                              //         child: Text(
+                              //           'Coming soon',
+                              //           style: TextStyle(
+                              //               color: Colors.white, fontSize: 10.0),
+                              //         ),
+                              //         decoration: BoxDecoration(
+                              //           color: Color(0XFFF31601),
+                              //           borderRadius: BorderRadius.only(
+                              //               bottomLeft: Radius.circular(5),
+                              //               bottomRight: Radius.circular(5),
+                              //               topLeft: Radius.circular(5),
+                              //               topRight: Radius.circular(5)),
+                              //         ),
+                              //       )
+                              //     ],
+                              //   )),
+                            ],
+                          ),
                         ),
                       ),
+                      placeholder: (context, url) =>
+                          Image.asset('assets/images/shimmer.gif'),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
                     )
+                  // Container(
+                  //         height: 126.0,
+                  //         decoration: BoxDecoration(
+                  //           image: DecorationImage(
+                  //             // colorFilter: !lessons[index]['isAvaliable']
+                  //             //     ?
+                  //             // ColorFilter.mode(
+                  //             //         Colors.grey,
+                  //             //         BlendMode.saturation,
+                  //             //       )
+                  //             //     : null,
+                  //             image: NetworkImage(lessons[index].image),
+                  //             fit: BoxFit.cover,
+                  //           ),
+                  //           borderRadius: BorderRadius.only(
+                  //               bottomLeft: Radius.circular(5),
+                  //               bottomRight: Radius.circular(5),
+                  //               topLeft: Radius.circular(5),
+                  //               topRight: Radius.circular(5)),
+                  //         ),
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                  //           child: Row(
+                  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //             children: <Widget>[
+                  //               Expanded(
+                  //                 child: Column(
+                  //                   crossAxisAlignment: CrossAxisAlignment.start,
+                  //                   mainAxisAlignment: MainAxisAlignment.center,
+                  //                   children: <Widget>[
+                  //                     Padding(
+                  //                       padding:
+                  //                           // lessons[index]['isAvaliable'] ?
+                  //                           // const EdgeInsets.only(right: 120.0) :
+                  //                           const EdgeInsets.only(right: 145.0),
+                  //                       child: Text(
+                  //                         '${lessons[index].name}',
+                  //                         style: TextStyle(
+                  //                             color: Colors.white,
+                  //                             fontSize: 15,
+                  //                             fontWeight: FontWeight.w700),
+                  //                       ),
+                  //                     ),
+                  //                   ],
+                  //                 ),
+                  //               ),
+                  //               // if (!lessons[index]['isAvaliable'])
+                  //               //   Expanded(
+                  //               //       child: Column(
+                  //               //     mainAxisAlignment: MainAxisAlignment.start,
+                  //               //     crossAxisAlignment: CrossAxisAlignment.end,
+                  //               //     children: <Widget>[
+                  //               //       Container(
+                  //               //         margin: EdgeInsets.only(top: 20.0),
+                  //               //         padding: EdgeInsets.symmetric(
+                  //               //             horizontal: 8, vertical: 4),
+                  //               //         child: Text(
+                  //               //           'Coming soon',
+                  //               //           style: TextStyle(
+                  //               //               color: Colors.white, fontSize: 10.0),
+                  //               //         ),
+                  //               //         decoration: BoxDecoration(
+                  //               //           color: Color(0XFFF31601),
+                  //               //           borderRadius: BorderRadius.only(
+                  //               //               bottomLeft: Radius.circular(5),
+                  //               //               bottomRight: Radius.circular(5),
+                  //               //               topLeft: Radius.circular(5),
+                  //               //               topRight: Radius.circular(5)),
+                  //               //         ),
+                  //               //       )
+                  //               //     ],
+                  //               //   )),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       )
                   : SizedBox(
                       height: 0,
                       width: 0,

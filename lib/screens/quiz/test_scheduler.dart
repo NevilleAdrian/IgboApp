@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nkuzi_igbo/models/test.dart';
+import 'package:nkuzi_igbo/screens/quiz/match_test.dart';
+import 'package:nkuzi_igbo/screens/quiz/sentence_test.dart';
 import 'package:nkuzi_igbo/screens/quiz/test_manager.dart';
 import 'package:nkuzi_igbo/screens/quiz/to_english_test.dart';
 import 'package:nkuzi_igbo/screens/quiz/to_igbo_test.dart';
@@ -7,7 +9,7 @@ import 'package:nkuzi_igbo/screens/quiz/to_igbo_test.dart';
 class TestScheduler extends StatelessWidget {
   final Test test;
   final bool disable;
-  final int selectedIndex;
+  final dynamic selectedIndex;
   final Function onTestTypeDone;
 
   TestScheduler(
@@ -37,16 +39,20 @@ class TestScheduler extends StatelessWidget {
           onTap: onTestTypeDone,
         );
       case 'match':
-        return ToEnglishTest(
+        return MatchTest(
+          selectedIndex: selectedIndex,
           disable: disable ?? false,
           test: test,
           manager: TestManager(),
+          onTap: onTestTypeDone,
         );
       case 'sentence':
-        return ToEnglishTest(
+        return SentenceTest(
+          selectedOptions: selectedIndex,
           disable: disable ?? false,
           test: test,
           manager: TestManager(),
+          onTap: onTestTypeDone,
         );
       default:
         return Container();

@@ -24,9 +24,12 @@ const BorderRadius kAppInnerBorderPartialRadius = BorderRadius.only(
   topRight: Radius.circular(10.0),
   bottomRight: Radius.circular(10.0),
 );
+const Widget kAppDivider = Divider(color: Color(0XFFD8D8D8), thickness: 1);
 
 //app url
-const String kAppAPIUrl = 'https://nkuziigbo.herokuapp.com/igboapp/api';
+const String kBaseUrl = 'https://nkuziigbo.herokuapp.com/igboapp';
+const String kAppAPIUrl = '$kBaseUrl/api';
+const String kPayUrl = '$kBaseUrl/subscribe';
 
 Map<String, String> _headers(String token) {
   return {

@@ -1,5 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:nkuzi_igbo/models/sub_category.dart';
+import 'package:nkuzi_igbo/utils/functions.dart';
 
 part 'category_model.g.dart';
 
@@ -51,11 +52,11 @@ class Category {
     sId = json['_id'];
     no = json["no"];
     name = json["name"];
-    thumbnail = json["thumbnail"];
+    thumbnail = replaceBackSlash(json["thumbnail"]);
     isAvaliable = json["isAvaliable"];
     description = json['description'];
     color = json['color'];
-    image = json['image'];
+    image = replaceBackSlash(json['image']);
     createdon = json['createdon'];
     iV = json['__v'];
   }

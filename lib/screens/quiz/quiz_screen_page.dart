@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:nkuzi_igbo/models/study.dart';
 import 'package:nkuzi_igbo/screens/quiz/question_display.dart';
 import 'package:nkuzi_igbo/screens/quiz/quiz_layout.dart';
 import 'package:nkuzi_igbo/screens/quiz/test_scheduler.dart';
+import 'package:nkuzi_igbo/ui_widgets/cache_helper.dart';
+import 'package:nkuzi_igbo/ui_widgets/future_helper.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
 import 'package:nkuzi_igbo/utils/functions.dart';
 
@@ -32,12 +35,45 @@ class _QuizScreenPageState extends State<QuizScreenPage>
   //total user score for the quiz
   int userScore = 0;
   //the option for the test that was selected
-  int selectedTestOptionIndex;
+  dynamic selectedTestOptionIndex;
 
-  ///The [studyMode] is informs the application to
+  ///The [studyMode] informs the application to
   ///show the right widgets for either study or test
   StudyMode studyMode = StudyMode.Study;
   List<Study> studies = [];
+  AudioPlayer player = AudioPlayer();
+  CacheManager cacheManager = CacheManager();
+
+  Future<bool> futureAudios;
+  Future<bool> futureTask() async {
+    //download all audios
+    List<String> items = studies
+        .where((e) => !isNullOrEmpty(e.voicing))
+        .map((e) => e.voicing)
+        .toList();
+    await cacheManager.loadAllAssets(items);
+    return Future.value(true);
+    //int result = 0;
+    // List<String> items = studies
+    //     .where((e) => !isNullOrEmpty(e.voicing))
+    //     .map((e) => e.voicing)
+    //     .toList();
+    // int length = items.length;
+    // for (int i = 0; i < length; i++) {
+    //   String url = items[i];
+    //   try {
+    //     var data = await player.setUrl(url);
+    //     if (data != null) {
+    //       print('url $url data $data');
+    //       result += 1;
+    //     }
+    //   } catch (ex) {
+    //     print('error is $ex');
+    //     result += 1;
+    //   }
+    // }
+    // return Future.value(true);
+  }
 
   //Controller for the animated icon button
   AnimationController _animationController;
@@ -64,6 +100,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
 
     studies = widget.studies;
     totalStudiesCount = studies.length;
+    futureAudios = futureTask();
     super.initState();
   }
 
@@ -140,7 +177,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
   //end of this module, send user's progress to the server
   //then return to the home page
   void finalizeThisLesson() {
-    print('finalizing');
+    print('finalizing user score is $userScore');
   }
 
   //advance to the next study in line
@@ -181,7 +218,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
   //b) the next study or
   //c) finalize this module
   void _onQuizContinueTap() {
-    if (currentStateOfUserChoice) {
+    if (currentStateOfUserChoice && quizContinueSelected) {
       userScore += 1;
     }
     if (quizContinueSelected) {
@@ -196,10 +233,32 @@ class _QuizScreenPageState extends State<QuizScreenPage>
     }
   }
 
+  void playCurrentStudyAudio() async {
+    Study currentStudy = studies[currentStudyIndex];
+    print(currentStudy.voicing);
+    if (!isNullOrEmpty(currentStudy.voicing)) {
+      var currentFile = await cacheManager.loadAsset(currentStudy.voicing);
+      print('path is ${currentFile?.file?.path}');
+      if (currentFile != null) {
+        await player.setFilePath(currentFile.file.path);
+        player.setLoopMode(LoopMode.one);
+        player.play();
+      }
+    }
+  }
+
+  void stopCurrentAudio() {
+    if (player.playing) {
+      player.stop();
+    }
+  }
+
+  //T _cast<T>(dynamic data) => data is T ? data : null;
+
   ///change the user's correct state saved in [currentStateOfUserChoice]
   ///also set the index of the option selected to be that index identified by
   ///[selectedTestOptionIndex]
-  void setTestStatus(bool result, int index) {
+  void setTestStatus(bool result, dynamic index) {
     setState(() {
       currentStateOfUserChoice = result;
       selectedTestOptionIndex = index;
@@ -209,6 +268,8 @@ class _QuizScreenPageState extends State<QuizScreenPage>
   @override
   void dispose() {
     _animationController.dispose();
+    player?.stop();
+    player.dispose();
     super.dispose();
   }
 
@@ -218,82 +279,100 @@ class _QuizScreenPageState extends State<QuizScreenPage>
     print(widget.studies);
     Study currentStudy = studies[currentStudyIndex];
     print('picture is ${currentStudy.picture} made is $studyMode');
-    return QuizLayout(
-      progressWidth: progressBar(),
-      progress: '${currentStudyIndex + 1}/$totalStudiesCount',
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: AudioButton(
-              animationController: _animationController,
-              onPressed: _handleOnPressed,
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Flexible(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Flexible(
-                  child: AnimatedCrossFade(
-                    duration: Duration(milliseconds: 500),
-                    crossFadeState: studyMode == StudyMode.Study
-                        ? CrossFadeState.showFirst
-                        : CrossFadeState.showSecond,
-                    firstChild: studyMode != StudyMode.Study
-                        ? SizedBox()
-                        : QuestionDisplay(
-                            isRegular: _isRegular(widget.categoryName),
-                            image: currentStudy.picture,
-                            top: currentStudy.description,
-                            bottom: currentStudy.igbo,
-                          ),
-                    secondChild: studyMode == StudyMode.Study
-                        ? SizedBox()
-                        : TestScheduler(
-                            selectedIndex: selectedTestOptionIndex,
-                            disable: quizContinueSelected,
-                            onTestTypeDone: setTestStatus,
-                            test: studies[currentStudyIndex]
-                                .test[currentTestIndex],
-                          ),
-                  ),
+    return Scaffold(
+      body: FutureHelper<bool>(
+        task: futureAudios,
+        actionWhenData: () {
+          try {
+            playCurrentStudyAudio();
+          } catch (ex) {
+            print('another error is $ex');
+          }
+        },
+        builder: (context, _) => QuizLayout(
+          progressWidth: progressBar(),
+          progress: '${currentStudyIndex + 1}/$totalStudiesCount',
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: AudioButton(
+                  animationController: _animationController,
+                  onPressed: _handleOnPressed,
                 ),
-              ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      child: AnimatedCrossFade(
+                        duration: Duration(milliseconds: 500),
+                        crossFadeState: studyMode == StudyMode.Study
+                            ? CrossFadeState.showFirst
+                            : CrossFadeState.showSecond,
+                        firstChild: studyMode != StudyMode.Study
+                            ? SizedBox()
+                            : QuestionDisplay(
+                                isRegular: _isRegular(widget.categoryName),
+                                image: currentStudy.picture,
+                                top: currentStudy.description,
+                                bottom: currentStudy.igbo,
+                              ),
+                        secondChild: studyMode == StudyMode.Study
+                            ? SizedBox()
+                            : TestScheduler(
+                                selectedIndex: selectedTestOptionIndex,
+                                disable: quizContinueSelected,
+                                onTestTypeDone: setTestStatus,
+                                test: studies[currentStudyIndex]
+                                    .test[currentTestIndex],
+                              ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          footer: AnimatedCrossFade(
+            duration: Duration(milliseconds: 500),
+            crossFadeState: studyMode == StudyMode.Study
+                ? CrossFadeState.showFirst
+                : CrossFadeState.showSecond,
+            firstChild: Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+              child: LearnFooter(
+                onMoveBack: () async {
+                  await stopCurrentAudio();
+                  decreaseStudyIndex(callback: () async {
+                    await playCurrentStudyAudio();
+                  });
+                },
+                onMoveNext: () async {
+                  await stopCurrentAudio();
+                  if (hasTests()) {
+                    resetTestValuesToDefault(callback: () {
+                      alternateMode(StudyMode.Test);
+                    });
+                  } else {
+                    incrementStudyIndex(callback: () async {
+                      await playCurrentStudyAudio();
+                    });
+                  }
+                },
+              ),
+            ),
+            secondChild: StudyFooter(
+              isCorrect: currentStateOfUserChoice,
+              isSelected: quizContinueSelected,
+              onPressed: _onQuizContinueTap,
             ),
           ),
-        ],
-      ),
-      footer: AnimatedCrossFade(
-        duration: Duration(milliseconds: 500),
-        crossFadeState: studyMode == StudyMode.Study
-            ? CrossFadeState.showFirst
-            : CrossFadeState.showSecond,
-        firstChild: Padding(
-          padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
-          child: LearnFooter(
-            onMoveBack: () {
-              decreaseStudyIndex();
-            },
-            onMoveNext: () {
-              if (hasTests()) {
-                resetTestValuesToDefault(callback: () {
-                  alternateMode(StudyMode.Test);
-                });
-              } else {
-                incrementStudyIndex();
-              }
-            },
-          ),
-        ),
-        secondChild: StudyFooter(
-          isCorrect: currentStateOfUserChoice,
-          isSelected: quizContinueSelected,
-          onPressed: _onQuizContinueTap,
         ),
       ),
     );

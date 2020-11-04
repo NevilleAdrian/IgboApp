@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:nkuzi_igbo/utils/functions.dart';
 
 part 'test.g.dart';
 
@@ -126,12 +127,12 @@ class Test {
         id: json["_id"],
         question: json["question"],
         isSelected: false,
-        audioUrl: json["audioUrl"],
+        audioUrl: replaceBackSlash(json["audioUrl"]),
         mainQuestion:
             json["mainQuestion"] == null ? null : json["mainQuestion"],
         matchQuestionImage: json["matchQuestionImage"] == null
             ? null
-            : json["matchQuestionImage"],
+            : replaceBackSlash(json["matchQuestionImage"]),
         correctSentence: json["correctSentence"] == null
             ? null
             : List<String>.from(json["correctSentence"].map((x) => x)),
@@ -146,42 +147,54 @@ class Test {
             json["matchQuestion"] == null ? null : json["matchQuestion"],
         correctOption:
             json["correctOption"] == null ? null : json["correctOption"],
-        optionIaudio:
-            json["optionIaudio"] == null ? null : json["optionIaudio"],
+        optionIaudio: json["optionIaudio"] == null
+            ? null
+            : replaceBackSlash(json["optionIaudio"]),
         optionI: json["optionI"] == null ? null : json["optionI"],
-        optionIIaudio:
-            json["optionIIaudio"] == null ? null : json["optionIIaudio"],
+        optionIIaudio: json["optionIIaudio"] == null
+            ? null
+            : replaceBackSlash(json["optionIIaudio"]),
         optionIi: json["optionII"] == null ? null : json["optionII"],
-        optionIiIaudio:
-            json["optionIIIaudio"] == null ? null : json["optionIIIaudio"],
+        optionIiIaudio: json["optionIIIaudio"] == null
+            ? null
+            : replaceBackSlash(json["optionIIIaudio"]),
         optionIii: json["optionIII"] == null ? null : json["optionIII"],
-        optionIVaudio:
-            json["optionIVaudio"] == null ? null : json["optionIVaudio"],
+        optionIVaudio: json["optionIVaudio"] == null
+            ? null
+            : replaceBackSlash(json["optionIVaudio"]),
         optionIv: json["optionIV"] == null ? null : json["optionIV"],
-        option1Audio:
-            json["option1audio"] == null ? null : json["option1audio"],
+        option1Audio: json["option1audio"] == null
+            ? null
+            : replaceBackSlash(json["option1audio"]),
         option1: json["option1"] == null ? null : json["option1"],
-        option2Audio:
-            json["option2audio"] == null ? null : json["option2audio"],
+        option2Audio: json["option2audio"] == null
+            ? null
+            : replaceBackSlash(json["option2audio"]),
         option2: json["option2"] == null ? null : json["option2"],
-        option3Audio:
-            json["option3audio"] == null ? null : json["option3audio"],
+        option3Audio: json["option3audio"] == null
+            ? null
+            : replaceBackSlash(json["option3audio"]),
         option3: json["option3"] == null ? null : json["option3"],
-        option4Audio:
-            json["option4audio"] == null ? null : json["option4audio"],
+        option4Audio: json["option4audio"] == null
+            ? null
+            : replaceBackSlash(json["option4audio"]),
         option4: json["option4"] == null ? null : json["option4"],
         optionA: json["optionA"] == null ? null : json["optionA"],
         optionB: json["optionB"] == null ? null : json["optionB"],
         optionC: json["optionC"] == null ? null : json["optionC"],
         optionD: json["optionD"] == null ? null : json["optionD"],
-        optionAImage:
-            json["optionAImage"] == null ? null : json["optionAImage"],
-        optionBImage:
-            json["optionBImage"] == null ? null : json["optionBImage"],
-        optionCImage:
-            json["optionCImage"] == null ? null : json["optionCImage"],
-        optionDImage:
-            json["optionDImage"] == null ? null : json["optionDImage"],
+        optionAImage: json["optionAImage"] == null
+            ? null
+            : replaceBackSlash(json["optionAImage"]),
+        optionBImage: json["optionBImage"] == null
+            ? null
+            : replaceBackSlash(json["optionBImage"]),
+        optionCImage: json["optionCImage"] == null
+            ? null
+            : replaceBackSlash(json["optionCImage"]),
+        optionDImage: json["optionDImage"] == null
+            ? null
+            : replaceBackSlash(json["optionDImage"]),
       );
 
   Map<String, dynamic> toJson() => {

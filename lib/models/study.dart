@@ -1,5 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:nkuzi_igbo/models/test.dart';
+import 'package:nkuzi_igbo/utils/functions.dart';
 
 part 'study.g.dart';
 
@@ -49,8 +50,8 @@ class Study {
     studyNo = json['study_no'];
     description = json['description'];
     igbo = json['igbo'];
-    picture = json['picture'];
-    voicing = json['voicing'];
+    picture = replaceBackSlash(json['picture']);
+    voicing = replaceBackSlash(json['voicing']);
     lesson = json['lesson'];
     createdon = json['createdon'];
     iV = json['__v'];
