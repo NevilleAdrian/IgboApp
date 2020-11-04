@@ -48,7 +48,14 @@ class _QuizScreenPageState extends State<QuizScreenPage>
   Future<bool> futureAudios;
   Future<bool> futureTask(List<String> items) async {
     //download all audios
-    await cacheManager.loadAllAssets(items);
+    var result = await cacheManager.loadAllAssets(items);
+    if (result != null) {
+      try {
+        playCurrentStudyAudio();
+      } catch (ex) {
+        print('another error is $ex');
+      }
+    }
     return Future.value(true);
   }
 
@@ -88,10 +95,32 @@ class _QuizScreenPageState extends State<QuizScreenPage>
   void _handleOnPressed() {
     setState(() {
       isPlaying = !isPlaying;
-      isPlaying
-          ? _animationController.forward()
-          : _animationController.reverse();
+      if (isPlaying) {
+        _animationController.forward();
+        if (player.playing) {
+          print('I am playing');
+          pausePlayer();
+        }
+      } else {
+        _animationController.reverse();
+        print('I am paused');
+        playPlayer();
+      }
     });
+  }
+
+  void pausePlayer() {
+    player.pause();
+  }
+
+  void playPlayer() {
+    player.play();
+  }
+
+  void resetPlayingButton() {
+    print('resetting value');
+    isPlaying = false;
+    _animationController.reverse();
   }
 
   //check if there are tests to be shown
@@ -215,6 +244,8 @@ class _QuizScreenPageState extends State<QuizScreenPage>
     }
     if (quizContinueSelected) {
       incrementTestIndex(callback: () {
+        resetPlayingButton();
+        playCurrentStudyAudio();
         quizContinueSelected = !quizContinueSelected;
         currentStateOfUserChoice = null;
       });
@@ -287,13 +318,6 @@ class _QuizScreenPageState extends State<QuizScreenPage>
     return Scaffold(
       body: FutureHelper<bool>(
         task: futureAudios,
-        actionWhenData: () {
-          try {
-            playCurrentStudyAudio();
-          } catch (ex) {
-            print('another error is $ex');
-          }
-        },
         builder: (context, _) => QuizLayout(
           progressWidth: progressBar(),
           progress: '${currentStudyIndex + 1}/$totalStudiesCount',
@@ -352,21 +376,24 @@ class _QuizScreenPageState extends State<QuizScreenPage>
             firstChild: Padding(
               padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
               child: LearnFooter(
-                onMoveBack: () async {
-                  await stopCurrentAudio();
-                  decreaseStudyIndex(callback: () async {
-                    await playCurrentStudyAudio();
+                onMoveBack: () {
+                  stopCurrentAudio();
+                  decreaseStudyIndex(callback: () {
+                    resetPlayingButton();
+                    playCurrentStudyAudio();
                   });
                 },
-                onMoveNext: () async {
-                  await stopCurrentAudio();
+                onMoveNext: () {
+                  stopCurrentAudio();
                   if (hasTests()) {
                     resetTestValuesToDefault(callback: () {
+                      resetPlayingButton();
                       alternateMode(StudyMode.Test);
                     });
                   } else {
-                    incrementStudyIndex(callback: () async {
-                      await playCurrentStudyAudio();
+                    incrementStudyIndex(callback: () {
+                      resetPlayingButton();
+                      playCurrentStudyAudio();
                     });
                   }
                 },
