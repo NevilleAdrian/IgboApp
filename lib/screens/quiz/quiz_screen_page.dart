@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:nkuzi_igbo/models/study.dart';
+import 'package:nkuzi_igbo/models/test.dart';
 import 'package:nkuzi_igbo/screens/quiz/question_display.dart';
 import 'package:nkuzi_igbo/screens/quiz/quiz_layout.dart';
 import 'package:nkuzi_igbo/screens/quiz/test_scheduler.dart';
@@ -45,34 +46,10 @@ class _QuizScreenPageState extends State<QuizScreenPage>
   CacheManager cacheManager = CacheManager();
 
   Future<bool> futureAudios;
-  Future<bool> futureTask() async {
+  Future<bool> futureTask(List<String> items) async {
     //download all audios
-    List<String> items = studies
-        .where((e) => !isNullOrEmpty(e.voicing))
-        .map((e) => e.voicing)
-        .toList();
     await cacheManager.loadAllAssets(items);
     return Future.value(true);
-    //int result = 0;
-    // List<String> items = studies
-    //     .where((e) => !isNullOrEmpty(e.voicing))
-    //     .map((e) => e.voicing)
-    //     .toList();
-    // int length = items.length;
-    // for (int i = 0; i < length; i++) {
-    //   String url = items[i];
-    //   try {
-    //     var data = await player.setUrl(url);
-    //     if (data != null) {
-    //       print('url $url data $data');
-    //       result += 1;
-    //     }
-    //   } catch (ex) {
-    //     print('error is $ex');
-    //     result += 1;
-    //   }
-    // }
-    // return Future.value(true);
   }
 
   //Controller for the animated icon button
@@ -100,7 +77,10 @@ class _QuizScreenPageState extends State<QuizScreenPage>
 
     studies = widget.studies;
     totalStudiesCount = studies.length;
-    futureAudios = futureTask();
+    futureAudios = futureTask(studies
+        .where((e) => !isNullOrEmpty(e.voicing))
+        .map((e) => e.voicing)
+        .toList());
     super.initState();
   }
 
@@ -136,6 +116,16 @@ class _QuizScreenPageState extends State<QuizScreenPage>
   ///change the [studyMode] to the right mode
   void alternateMode(StudyMode mode) {
     studyMode = mode;
+    if (mode == StudyMode.Test) {
+      Study currentStudy = studies[currentStudyIndex];
+      if (currentStudy != null) {
+        List<String> items = currentStudy.test
+            .where((e) => !isNullOrEmpty(e.audioUrl))
+            .map((e) => e.audioUrl)
+            .toList();
+        futureAudios = futureTask(items);
+      }
+    }
   }
 
   //before alternating to study, check if an alternation can happen
@@ -166,8 +156,10 @@ class _QuizScreenPageState extends State<QuizScreenPage>
       });
     } else {
       if (canAlternateToStudy()) {
-        alternateMode(StudyMode.Study);
-        incrementStudyIndex(callback: resetTestValuesToDefault);
+        incrementStudyIndex(callback: () {
+          alternateMode(StudyMode.Study);
+          resetTestValuesToDefault();
+        });
       } else {
         finalizeThisLesson();
       }
@@ -234,17 +226,30 @@ class _QuizScreenPageState extends State<QuizScreenPage>
   }
 
   void playCurrentStudyAudio() async {
-    Study currentStudy = studies[currentStudyIndex];
-    print(currentStudy.voicing);
-    if (!isNullOrEmpty(currentStudy.voicing)) {
-      var currentFile = await cacheManager.loadAsset(currentStudy.voicing);
+    String audioUrl = getAppropriateAudio;
+    if (!isNullOrEmpty(audioUrl)) {
+      var currentFile = await cacheManager.loadAsset(audioUrl);
       print('path is ${currentFile?.file?.path}');
       if (currentFile != null) {
-        await player.setFilePath(currentFile.file.path);
-        player.setLoopMode(LoopMode.one);
-        player.play();
+        await playAudio(currentFile.file.path);
       }
     }
+  }
+
+  String get getAppropriateAudio {
+    if (studyMode == StudyMode.Study) {
+      Study currentStudy = studies[currentStudyIndex];
+      return currentStudy?.voicing;
+    } else {
+      Test test = studies[currentStudyIndex]?.test[currentTestIndex];
+      return test?.audioUrl;
+    }
+  }
+
+  Future<void> playAudio(String url) async {
+    await player.setFilePath(url);
+    player.setLoopMode(LoopMode.one);
+    player.play();
   }
 
   void stopCurrentAudio() {
