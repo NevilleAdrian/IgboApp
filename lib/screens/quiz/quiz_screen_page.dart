@@ -324,13 +324,14 @@ class _QuizScreenPageState extends State<QuizScreenPage>
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: AudioButton(
-                  animationController: _animationController,
-                  onPressed: _handleOnPressed,
+              if (!isNullOrEmpty(getAppropriateAudio))
+                Align(
+                  alignment: Alignment.topRight,
+                  child: AudioButton(
+                    animationController: _animationController,
+                    onPressed: _handleOnPressed,
+                  ),
                 ),
-              ),
               SizedBox(
                 height: 10,
               ),
