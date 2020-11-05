@@ -1,14 +1,22 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:nkuzi_igbo/models/study.dart';
+import 'package:nkuzi_igbo/models/sub_category.dart';
 import 'package:nkuzi_igbo/models/test.dart';
+import 'package:nkuzi_igbo/models/user_result_model.dart';
+import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/quiz/question_display.dart';
 import 'package:nkuzi_igbo/screens/quiz/quiz_layout.dart';
 import 'package:nkuzi_igbo/screens/quiz/test_scheduler.dart';
+import 'package:nkuzi_igbo/services/network_helper.dart';
 import 'package:nkuzi_igbo/ui_widgets/cache_helper.dart';
 import 'package:nkuzi_igbo/ui_widgets/future_helper.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
 import 'package:nkuzi_igbo/utils/functions.dart';
+
+import '../result_page.dart';
+import '../thankyou.dart';
 
 enum StudyMode { Study, Test }
 
@@ -16,7 +24,23 @@ class QuizScreenPage extends StatefulWidget {
   static const String id = 'quiz_screen_page';
   final List<Study> studies;
   final String categoryName;
-  QuizScreenPage({this.studies, this.categoryName});
+  final String description;
+  final String lessonId;
+  final String category;
+  final List<SubCategory> courses;
+  final String name;
+  final String title;
+  final String thumbnail;
+  QuizScreenPage(
+      {this.studies,
+      this.categoryName,
+      this.description,
+      this.lessonId,
+      this.category,
+      this.courses,
+      this.name,
+      this.title,
+      this.thumbnail});
 
   @override
   _QuizScreenPageState createState() => _QuizScreenPageState();
@@ -37,10 +61,15 @@ class _QuizScreenPageState extends State<QuizScreenPage>
   int userScore = 0;
   //the option for the test that was selected
   dynamic selectedTestOptionIndex;
+  //check if there was any quiz taken;
+  bool quizWasTaken = false;
+  //keep track of total number of quiz taken;
+  int totalQuizTaken = 0;
 
   ///The [studyMode] informs the application to
   ///show the right widgets for either study or test
   StudyMode studyMode = StudyMode.Study;
+  bool isBusy = false;
   List<Study> studies = [];
   AudioPlayer player = AudioPlayer();
   CacheManager cacheManager = CacheManager();
@@ -88,6 +117,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
         .where((e) => !isNullOrEmpty(e.voicing))
         .map((e) => e.voicing)
         .toList());
+    quizWasTaken = studies.any((element) => (element.test?.length ?? 0) > 0);
     super.initState();
   }
 
@@ -99,22 +129,14 @@ class _QuizScreenPageState extends State<QuizScreenPage>
         _animationController.forward();
         if (player.playing) {
           print('I am playing');
-          pausePlayer();
+          player.pause();
         }
       } else {
         _animationController.reverse();
         print('I am paused');
-        playPlayer();
+        player.play();
       }
     });
-  }
-
-  void pausePlayer() {
-    player.pause();
-  }
-
-  void playPlayer() {
-    player.play();
   }
 
   void resetPlayingButton() {
@@ -148,6 +170,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
     if (mode == StudyMode.Test) {
       Study currentStudy = studies[currentStudyIndex];
       if (currentStudy != null) {
+        totalQuizTaken += currentStudy.test?.length ?? 0;
         List<String> items = currentStudy.test
             .where((e) => !isNullOrEmpty(e.audioUrl))
             .map((e) => e.audioUrl)
@@ -197,8 +220,56 @@ class _QuizScreenPageState extends State<QuizScreenPage>
 
   //end of this module, send user's progress to the server
   //then return to the home page
-  void finalizeThisLesson() {
-    print('finalizing user score is $userScore');
+  void finalizeThisLesson() async {
+    player?.stop();
+    if (quizWasTaken) {
+      UserResultModel resultModel = UserResultModel(
+        category: widget.category,
+        lesson: widget.lessonId,
+        alphabetsFluency: userFluency,
+        totalPoints: userScore,
+        wordsLearned: userScore,
+        learningType: widget.description,
+        totalTest: totalQuizTaken,
+        user: Auth.authProvider(context).user.sId,
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ResultScreen(
+            lessons: widget.studies,
+            courses: widget.courses,
+            data: resultModel,
+            id: widget.lessonId,
+            description: widget.description,
+            title: widget.title,
+            thumbnail: widget.thumbnail,
+          ),
+        ),
+      );
+      print('I took quiz. user score is $userScore');
+    } else {
+      print('No quiz taken');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ThankYou(
+            lessons: widget.studies,
+            courses: widget.courses,
+            id: widget.lessonId,
+            description: widget.description,
+            thumbnail: widget.thumbnail,
+          ),
+        ),
+      );
+    }
+  }
+
+  double get userFluency {
+    if (totalQuizTaken > 0) {
+      return (userScore / totalQuizTaken) * 100;
+    }
+    return 0;
   }
 
   //advance to the next study in line
@@ -305,7 +376,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
   void dispose() {
     _animationController.dispose();
     player?.stop();
-    player.dispose();
+    player?.dispose();
     super.dispose();
   }
 
@@ -319,6 +390,10 @@ class _QuizScreenPageState extends State<QuizScreenPage>
       body: FutureHelper<bool>(
         task: futureAudios,
         builder: (context, _) => QuizLayout(
+          lessons: widget.courses,
+          description: widget.description,
+          id: widget.lessonId,
+          thumbnail: widget.thumbnail,
           progressWidth: progressBar(),
           progress: '${currentStudyIndex + 1}/$totalStudiesCount',
           body: Column(

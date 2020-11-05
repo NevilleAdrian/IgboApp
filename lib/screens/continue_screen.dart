@@ -109,6 +109,13 @@ class _ContinueListState extends State<ContinueList> {
                                 builder: (context) => QuizScreenPage(
                                       studies: widget.lessons,
                                       categoryName: widget.name,
+                                      description: widget.description,
+                                      lessonId: widget.id,
+                                      category: widget.category,
+                                      courses: widget.courses,
+                                      name: widget.name,
+                                      title: widget.title,
+                                      thumbnail: widget.thumbnail,
                                     )),
                           );
                         },

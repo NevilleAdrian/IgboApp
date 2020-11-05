@@ -205,9 +205,10 @@ class IgboOption extends StatelessWidget {
               SizedBox(
                 height: 8.0,
               ),
-              HtmlWidget(
-                option ?? '',
-              )
+              if (!shouldShow(option))
+                HtmlWidget(
+                  option ?? '',
+                )
             ],
           )),
     );

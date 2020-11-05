@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nkuzi_igbo/models/study.dart';
+import 'package:nkuzi_igbo/models/sub_category.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/categories_screen.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
@@ -8,8 +10,8 @@ class ThankYou extends StatefulWidget {
   ThankYou(
       {this.lessons, this.courses, this.description, this.id, this.thumbnail});
 
-  final List<dynamic> lessons;
-  final List<dynamic> courses;
+  final List<Study> lessons;
+  final List<SubCategory> courses;
   final String description;
   final String id;
   final String thumbnail;

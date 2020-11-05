@@ -4,6 +4,7 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:nkuzi_igbo/models/test.dart';
 import 'package:nkuzi_igbo/ui_widgets/network_image_cache.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
+import 'package:nkuzi_igbo/utils/functions.dart';
 
 import '../option_box.dart';
 import 'itest_manager.dart';
@@ -226,10 +227,11 @@ class DividerForMatch extends StatelessWidget {
                 height: 100,
                 image: image,
               ),
-              Text(
-                question ?? '',
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
-              )
+              if (!shouldShow(question))
+                Text(
+                  question ?? '',
+                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
+                )
             ],
           ),
         ),

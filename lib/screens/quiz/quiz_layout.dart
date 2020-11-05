@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nkuzi_igbo/models/sub_category.dart';
 import 'package:nkuzi_igbo/ui_widgets/progress_bar.dart';
 
 import '../categories_screen.dart';
@@ -9,21 +10,20 @@ class QuizLayout extends StatelessWidget {
   final Widget footer;
   final double progressWidth;
   final String progress;
-  final bool hasAudio;
-  final dynamic lessons;
-  final dynamic description;
-  final dynamic id;
-  final dynamic thumbnail;
-  QuizLayout(
-      {this.body,
-      this.footer,
-      this.lessons,
-      this.description,
-      this.id,
-      this.thumbnail,
-      this.progressWidth,
-      this.progress,
-      this.hasAudio});
+  final List<SubCategory> lessons;
+  final String description;
+  final String id;
+  final String thumbnail;
+  QuizLayout({
+    this.body,
+    this.footer,
+    this.lessons,
+    this.description,
+    this.id,
+    this.thumbnail,
+    this.progressWidth,
+    this.progress,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +40,7 @@ class QuizLayout extends StatelessWidget {
                     children: <Widget>[
                       CircleClose(
                         onTap: () {
-                          // var data = Auth.authProvider(context).category.firstWhere((element) {
-                          //   return element['_id'] == widget.id;
-                          // });
+                          print('lessons are $lessons');
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
