@@ -4,6 +4,7 @@ import 'package:nkuzi_igbo/models/sub_category.dart';
 import 'package:nkuzi_igbo/ui_widgets/progress_bar.dart';
 
 import '../categories_screen.dart';
+import '../home_page.dart';
 
 class QuizLayout extends StatelessWidget {
   final Widget body;
@@ -51,7 +52,7 @@ class QuizLayout extends StatelessWidget {
                                         id: id,
                                         thumbnail: thumbnail,
                                       )),
-                              ModalRoute.withName('/'));
+                              ModalRoute.withName(HomePage.id));
                         },
                       ),
                       SizedBox(

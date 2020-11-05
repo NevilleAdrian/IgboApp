@@ -4,4 +4,4 @@ String replaceBackSlash(String url) =>
 bool isNullOrEmpty(String text) => text == null || text.trim() == '';
 
 bool shouldShow(String question) =>
-    !isNullOrEmpty(question) && !question.startsWith('#');
+    !isNullOrEmpty(question) && !question.contains('#');

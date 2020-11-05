@@ -227,7 +227,7 @@ class DividerForMatch extends StatelessWidget {
                 height: 100,
                 image: image,
               ),
-              if (!shouldShow(question))
+              if (shouldShow(question))
                 Text(
                   question ?? '',
                   style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),

@@ -7,6 +7,8 @@ import 'package:nkuzi_igbo/services/network_helper.dart';
 import 'package:nkuzi_igbo/ui_widgets/future_helper.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import 'home_page.dart';
+
 class ResultScreen extends StatefulWidget {
   ResultScreen(
       {this.lessons,
@@ -81,7 +83,7 @@ class _ResultScreenState extends State<ResultScreen> {
               thumbnail: widget.thumbnail,
             ),
           ),
-          ModalRoute.withName('/'),
+          ModalRoute.withName(HomePage.id),
         );
         return Future.value(false);
       },
@@ -227,7 +229,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                   thumbnail: widget.thumbnail,
                                 ),
                               ),
-                              ModalRoute.withName('/'),
+                              ModalRoute.withName(HomePage.id),
                             );
                           },
                           child: Text('Continue'))
