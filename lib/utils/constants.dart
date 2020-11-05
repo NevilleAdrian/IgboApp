@@ -11,8 +11,25 @@ const String kImageUrl = 'assets/images';
 const TextStyle kAuthTextBig = TextStyle(color: kTextColor, fontSize: 25.0);
 const TextStyle kAuthTextSmall = TextStyle(color: kTextColor, fontSize: 18.0);
 
+const BorderRadius kAppBorderRadius = BorderRadius.all(Radius.circular(10.0));
+
+const BorderRadius kAppCircle = BorderRadius.all(Radius.circular(50.0));
+const BorderRadius kAppBorderRadiusMini =
+    BorderRadius.all(Radius.circular(5.0));
+const BorderRadius kAppBorderRadiusSemi =
+    BorderRadius.all(Radius.circular(8.0));
+const BorderRadius kAppInnerBorderRadius =
+    BorderRadius.all(Radius.circular(25.0));
+const BorderRadius kAppInnerBorderPartialRadius = BorderRadius.only(
+  topRight: Radius.circular(10.0),
+  bottomRight: Radius.circular(10.0),
+);
+const Widget kAppDivider = Divider(color: Color(0XFFD8D8D8), thickness: 1);
+
 //app url
-const String kAppAPIUrl = 'https://nkuziigbo.herokuapp.com/igboapp/api';
+const String kBaseUrl = 'https://nkuziigbo.herokuapp.com/igboapp';
+const String kAppAPIUrl = '$kBaseUrl/api';
+const String kPayUrl = '$kBaseUrl/subscribe';
 
 Map<String, String> _headers(String token) {
   return {
@@ -27,3 +44,10 @@ const kHeaders = _headers;
 const String kUserName = 'user';
 const String kAppDataName = 'appData';
 const String kCategory = 'category';
+
+const List<String> kIrregularStudies = [
+  'vowel harmony',
+  'vowels',
+  'consonants',
+  'african rosewood leave soup'
+];

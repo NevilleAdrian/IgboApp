@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nkuzi_igbo/Exceptions/api_failure_exception.dart';
 import 'package:nkuzi_igbo/models/app_model.dart';
+import 'package:nkuzi_igbo/models/category_model.dart';
 import 'package:nkuzi_igbo/models/user_model.dart';
 import 'package:nkuzi_igbo/repository/hive_repository.dart';
 import 'package:nkuzi_igbo/services/network_helper.dart';
@@ -13,11 +13,11 @@ class Auth extends ChangeNotifier {
   HiveRepository _hiveRepository = HiveRepository();
   User _user;
   String _token;
-  List<dynamic> _categories;
+  List<Category> _categories;
 
   User get user => _user;
   String get token => _token;
-  List<dynamic> get category => _categories;
+  List<Category> get category => _categories;
 
   setUser(User user) => _user = user;
   setToken(String token) => _token = token;
@@ -31,7 +31,7 @@ class Auth extends ChangeNotifier {
       var data = await _helper.loginUser(email, password);
       var category = await _helper.getCategory();
       _setInitialData(data);
-      _categories = category['data'];
+      _categories = category;
     } catch (ex) {
       throw ApiFailureException(ex);
     }

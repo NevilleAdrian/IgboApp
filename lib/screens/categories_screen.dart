@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nkuzi_igbo/models/sub_category.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
 import 'package:nkuzi_igbo/screens/settings.dart';
 import 'package:nkuzi_igbo/screens/continue_screen.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
 
 class CategoriesScreen extends StatefulWidget {
-  CategoriesScreen({this.lessons, this.description, this.id, this.title, this.thumbnail});
-  final List<dynamic> lessons;
+  CategoriesScreen(
+      {this.lessons, this.description, this.id, this.title, this.thumbnail});
+  final List<SubCategory> lessons;
   final String description;
   final String id;
   final String title;
@@ -447,7 +449,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-               Container(
+              Container(
                 padding: EdgeInsets.symmetric(horizontal: 25.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -470,44 +472,53 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                         shrinkWrap: true,
                         itemCount: widget.lessons.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return widget.lessons[index]['form'] == 'Beginner'
+                          return widget.lessons[index].form == 'Beginner'
                               ? Column(
                                   children: <Widget>[
                                     GestureDetector(
                                       onTap: () {
                                         print(
-                                            'study: ${widget.lessons[index]['study'].length}');
-                                        widget.lessons[index]['study'].length ==
-                                                0
+                                            'study: ${widget.lessons[index].study.length}');
+                                        widget.lessons[index].study.length == 0
                                             ? SizedBox()
-                                            : widget.lessons[index]['premium_content'] == true
+                                            : widget.lessons[index]
+                                                        .premiumContent ==
+                                                    true
                                                 ? _modalBottomSheetMenu()
                                                 : Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
-                                                        builder: (context) => ContinueList(
-                                                            lessons: widget
-                                                                    .lessons[index]
-                                                                ['study'],
-                                                            courses:
-                                                                widget.lessons,
-                                                            description: widget
-                                                                .description,
-                                                            form: widget
-                                                                    .lessons[index]
-                                                                ['form'],
-                                                            name: widget
-                                                                    .lessons[index]
-                                                                ['name'],
-                                                            time: widget
-                                                                    .lessons[index]
-                                                                ['time'],
-                                                            category: widget
-                                                                    .lessons[index]
-                                                                ['category'],
-                                                            thumbnail: widget.thumbnail,
-                                                            title: widget.title,
-                                                            id: widget.id)),
+                                                        builder: (context) =>
+                                                            ContinueList(
+                                                                lessons: widget
+                                                                    .lessons[
+                                                                        index]
+                                                                    .study,
+                                                                courses: widget
+                                                                    .lessons,
+                                                                description: widget
+                                                                    .description,
+                                                                form: widget
+                                                                    .lessons[
+                                                                        index]
+                                                                    .form,
+                                                                name: widget
+                                                                    .lessons[
+                                                                        index]
+                                                                    .name,
+                                                                time: widget
+                                                                    .lessons[
+                                                                        index]
+                                                                    .time,
+                                                                category: widget
+                                                                    .lessons[
+                                                                        index]
+                                                                    .category,
+                                                                thumbnail: widget
+                                                                    .thumbnail,
+                                                                title: widget
+                                                                    .title,
+                                                                id: widget.id)),
                                                   );
                                         '';
                                       },
@@ -529,18 +540,19 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                     CircleAvatar(
                                                       radius: 27,
                                                       backgroundImage:
-                                                      NetworkImage(
-                                                        widget.thumbnail != '' ? widget.thumbnail :
-                                                        'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'
-                                                      ),
+                                                          NetworkImage(widget
+                                                                      .thumbnail !=
+                                                                  ''
+                                                              ? widget.thumbnail
+                                                              : 'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'),
                                                       child: Stack(
                                                         overflow:
                                                             Overflow.visible,
                                                         alignment:
                                                             Alignment.topRight,
                                                         children: <Widget>[
-                                                          widget.lessons[index][
-                                                                      'premium_content'] ==
+                                                          widget.lessons[index]
+                                                                      .premiumContent ==
                                                                   true
                                                               ? Positioned(
                                                                   right: -2,
@@ -565,7 +577,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                               .start,
                                                       children: <Widget>[
                                                         Text(
-                                                          '${widget.lessons[index]['type']}',
+                                                          '${widget.lessons[index].type}',
                                                           style: TextStyle(
                                                               color:
                                                                   Colors.black,
@@ -587,7 +599,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                             shrinkWrap: true,
                                                             children: <Widget>[
                                                               Text(
-                                                                  '${widget.lessons[index]['name']}',
+                                                                  '${widget.lessons[index].name}',
                                                                   style: TextStyle(
                                                                       fontSize:
                                                                           17.0,
@@ -603,8 +615,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                     ),
                                                   ],
                                                 ),
-                                                widget.lessons[index][
-                                                            'premium_content'] ==
+                                                widget.lessons[index]
+                                                            .premiumContent ==
                                                         true
                                                     ? Container(
                                                         child: SvgPicture.asset(
@@ -656,46 +668,53 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                         shrinkWrap: true,
                         itemCount: widget.lessons.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return widget.lessons[index]['form'] == 'Intermediate'
+                          return widget.lessons[index].form == 'Intermediate'
                               ? Column(
                                   children: <Widget>[
                                     GestureDetector(
                                       onTap: () {
                                         print(
-                                            'study: ${widget.lessons[index]['study'].length}');
-                                        widget.lessons[index]['study'].length ==
-                                                0
+                                            'study: ${widget.lessons[index].study.length}');
+                                        widget.lessons[index].study.length == 0
                                             ? SizedBox()
                                             : widget.lessons[index]
-                                                        ['premium_content'] ==
+                                                        .premiumContent ==
                                                     false
                                                 ? _modalBottomSheetMenu()
                                                 : Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
-                                                        builder: (context) => ContinueList(
-                                                            lessons: widget
-                                                                    .lessons[index]
-                                                                ['study'],
-                                                            courses:
-                                                                widget.lessons,
-                                                            description: widget
-                                                                .description,
-                                                            form: widget
-                                                                    .lessons[index]
-                                                                ['form'],
-                                                            name: widget
-                                                                    .lessons[index]
-                                                                ['name'],
-                                                            time: widget
-                                                                    .lessons[index]
-                                                                ['time'],
-                                                            category: widget
-                                                                    .lessons[index]
-                                                                ['category'],
-                                                            title: widget.title,
-                                                            thumbnail: widget.thumbnail,
-                                                            id: widget.id)),
+                                                        builder: (context) =>
+                                                            ContinueList(
+                                                                lessons: widget
+                                                                    .lessons[
+                                                                        index]
+                                                                    .study,
+                                                                courses: widget
+                                                                    .lessons,
+                                                                description: widget
+                                                                    .description,
+                                                                form: widget
+                                                                    .lessons[
+                                                                        index]
+                                                                    .form,
+                                                                name: widget
+                                                                    .lessons[
+                                                                        index]
+                                                                    .name,
+                                                                time: widget
+                                                                    .lessons[
+                                                                        index]
+                                                                    .time,
+                                                                category: widget
+                                                                    .lessons[
+                                                                        index]
+                                                                    .category,
+                                                                title: widget
+                                                                    .title,
+                                                                thumbnail: widget
+                                                                    .thumbnail,
+                                                                id: widget.id)),
                                                   );
                                         '';
                                       },
@@ -717,18 +736,19 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                     CircleAvatar(
                                                       radius: 27,
                                                       backgroundImage:
-                                                      NetworkImage(
-                                                          widget.thumbnail != '' ? widget.thumbnail :
-                                                          'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'
-                                                      ),
+                                                          NetworkImage(widget
+                                                                      .thumbnail !=
+                                                                  ''
+                                                              ? widget.thumbnail
+                                                              : 'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'),
                                                       child: Stack(
                                                         overflow:
                                                             Overflow.visible,
                                                         alignment:
                                                             Alignment.topRight,
                                                         children: <Widget>[
-                                                          widget.lessons[index][
-                                                                      'premium_content'] ==
+                                                          widget.lessons[index]
+                                                                      .premiumContent ==
                                                                   false
                                                               ? Positioned(
                                                                   right: -2,
@@ -753,7 +773,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                               .start,
                                                       children: <Widget>[
                                                         Text(
-                                                          '${widget.lessons[index]['type']}',
+                                                          '${widget.lessons[index].type}',
                                                           style: TextStyle(
                                                               color:
                                                                   Colors.black,
@@ -775,7 +795,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                             shrinkWrap: true,
                                                             children: <Widget>[
                                                               Text(
-                                                                  '${widget.lessons[index]['name']}',
+                                                                  '${widget.lessons[index].name}',
                                                                   style: TextStyle(
                                                                       fontSize:
                                                                           17.0,
@@ -791,8 +811,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                     ),
                                                   ],
                                                 ),
-                                                widget.lessons[index][
-                                                            'premium_content'] ==
+                                                widget.lessons[index]
+                                                            .premiumContent ==
                                                         false
                                                     ? Container(
                                                         child: SvgPicture.asset(
@@ -844,46 +864,53 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                         shrinkWrap: true,
                         itemCount: widget.lessons.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return widget.lessons[index]['form'] == 'Advanced'
+                          return widget.lessons[index].form == 'Advanced'
                               ? Column(
                                   children: <Widget>[
                                     GestureDetector(
                                       onTap: () {
                                         print(
-                                            'study: ${widget.lessons[index]['study'].length}');
-                                        widget.lessons[index]['study'].length ==
-                                                0
+                                            'study: ${widget.lessons[index].study.length}');
+                                        widget.lessons[index].study.length == 0
                                             ? SizedBox()
                                             : widget.lessons[index]
-                                                        ['premium_content'] ==
+                                                        .premiumContent ==
                                                     false
                                                 ? _modalBottomSheetMenu()
                                                 : Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
-                                                        builder: (context) => ContinueList(
-                                                            lessons: widget
-                                                                    .lessons[index]
-                                                                ['study'],
-                                                            courses:
-                                                                widget.lessons,
-                                                            description: widget
-                                                                .description,
-                                                            form: widget
-                                                                    .lessons[index]
-                                                                ['form'],
-                                                            name: widget
-                                                                    .lessons[index]
-                                                                ['name'],
-                                                            time: widget
-                                                                    .lessons[index]
-                                                                ['time'],
-                                                            category: widget
-                                                                    .lessons[index]
-                                                                ['category'],
-                                                            title: widget.title,
-                                                            thumbnail: widget.thumbnail,
-                                                            id: widget.id)),
+                                                        builder: (context) =>
+                                                            ContinueList(
+                                                                lessons: widget
+                                                                    .lessons[
+                                                                        index]
+                                                                    .study,
+                                                                courses: widget
+                                                                    .lessons,
+                                                                description: widget
+                                                                    .description,
+                                                                form: widget
+                                                                    .lessons[
+                                                                        index]
+                                                                    .form,
+                                                                name: widget
+                                                                    .lessons[
+                                                                        index]
+                                                                    .name,
+                                                                time: widget
+                                                                    .lessons[
+                                                                        index]
+                                                                    .time,
+                                                                category: widget
+                                                                    .lessons[
+                                                                        index]
+                                                                    .category,
+                                                                title: widget
+                                                                    .title,
+                                                                thumbnail: widget
+                                                                    .thumbnail,
+                                                                id: widget.id)),
                                                   );
                                         '';
                                       },
@@ -905,18 +932,19 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                     CircleAvatar(
                                                       radius: 27,
                                                       backgroundImage:
-                                                      NetworkImage(
-                                                          widget.thumbnail != '' ? widget.thumbnail :
-                                                          'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'
-                                                      ),
+                                                          NetworkImage(widget
+                                                                      .thumbnail !=
+                                                                  ''
+                                                              ? widget.thumbnail
+                                                              : 'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'),
                                                       child: Stack(
                                                         overflow:
                                                             Overflow.visible,
                                                         alignment:
                                                             Alignment.topRight,
                                                         children: <Widget>[
-                                                          widget.lessons[index][
-                                                                      'premium_content'] ==
+                                                          widget.lessons[index]
+                                                                      .premiumContent ==
                                                                   false
                                                               ? Positioned(
                                                                   right: -2,
@@ -941,7 +969,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                               .start,
                                                       children: <Widget>[
                                                         Text(
-                                                          '${widget.lessons[index]['type']}',
+                                                          '${widget.lessons[index].type}',
                                                           style: TextStyle(
                                                               color:
                                                                   Colors.black,
@@ -963,7 +991,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                             shrinkWrap: true,
                                                             children: <Widget>[
                                                               Text(
-                                                                  '${widget.lessons[index]['name']}',
+                                                                  '${widget.lessons[index].name}',
                                                                   style: TextStyle(
                                                                       fontSize:
                                                                           17.0,
@@ -979,8 +1007,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                     ),
                                                   ],
                                                 ),
-                                                widget.lessons[index][
-                                                            'premium_content'] ==
+                                                widget.lessons[index]
+                                                            .premiumContent ==
                                                         false
                                                     ? Container(
                                                         child: SvgPicture.asset(

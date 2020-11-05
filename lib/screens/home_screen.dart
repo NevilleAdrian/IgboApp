@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nkuzi_igbo/models/category_model.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/categories_screen.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
@@ -17,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen>
     with AutomaticKeepAliveClientMixin {
   final _nameController = TextEditingController();
   String searchText;
-  List<dynamic> lesson;
+  List<Category> lesson;
   ScrollController _controller;
   List filteredCategory = [];
   bool showNav = false;
@@ -35,8 +37,8 @@ class _HomeScreenState extends State<HomeScreen>
     lesson = Provider.of<Auth>(context, listen: false).category;
     filteredCategory = Provider.of<Auth>(context, listen: false).category;
     print('filter:$filteredCategory');
-    print('mylesson: ${lesson[0]['color']}');
-    print('image: ${lesson[0]['image']}');
+    print('mylesson: ${lesson[0].color}');
+    print('image: ${lesson[0].image}');
 
     _nameController.addListener(onSearch);
 
@@ -82,8 +84,8 @@ class _HomeScreenState extends State<HomeScreen>
   List onFilter(String term) {
     return lesson
         .where((element) =>
-            element['name'].toLowerCase().contains(term.toLowerCase()) ||
-            element['description'].toLowerCase().contains(term.toLowerCase()))
+            element.name.toLowerCase().contains(term.toLowerCase()) ||
+            element.description.toLowerCase().contains(term.toLowerCase()))
         .toList();
   }
 
@@ -329,115 +331,193 @@ class CategoryList extends StatelessWidget {
     @required this.lessons,
   }) : super(key: key);
 
-  final List<dynamic> lessons;
+  final List<Category> lessons;
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
         separatorBuilder: (BuildContext context, int index) {
-          return lessons[index]['name'] != 'Verbs' ? SizedBox(
-            height: 15,
-          ) : SizedBox(
-            height: 0,
-          );
+          return lessons[index].name != 'Verbs'
+              ? SizedBox(
+                  height: 15,
+                )
+              : SizedBox(
+                  height: 0,
+                );
         },
         physics: ScrollPhysics(),
         shrinkWrap: true,
         itemCount: lessons.length,
         itemBuilder: (BuildContext context, int index) {
-          return  GestureDetector(
-            onTap: () {
-              // if (lessons[index]['isAvaliable'])
-              Navigator.push(
+          return GestureDetector(
+              onTap: () {
+                // if (lessons[index]['isAvaliable'])
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => CategoriesScreen(
-                          lessons: lessons[index]['sub_categories'],
-                          description: lessons[index]['description'],
-                          id: lessons[index]['_id'],
-                          thumbnail:lessons[index]['thumbnail'],
-                          title: lessons[index]['name'],
-                      )),
+                            lessons: lessons[index].subCategories,
+                            description: lessons[index].description,
+                            id: lessons[index].sId,
+                            thumbnail: lessons[index].thumbnail,
+                            title: lessons[index].name,
+                          )),
                 );
-            },
-            child: lessons[index]['name'] != 'Verbs' ?
-              Container(
-              height: 126.0,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  // colorFilter: !lessons[index]['isAvaliable']
-                  //     ?
-                  // ColorFilter.mode(
-                  //         Colors.grey,
-                  //         BlendMode.saturation,
-                  //       )
-                  //     : null,
-                  image: NetworkImage(lessons[index]['image']),
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(5),
-                    bottomRight: Radius.circular(5),
-                    topLeft: Radius.circular(5),
-                    topRight: Radius.circular(5)),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Padding(
-                            padding:
-                            // lessons[index]['isAvaliable'] ?
-                            // const EdgeInsets.only(right: 120.0) :
-                      const EdgeInsets.only(right: 145.0),
-                            child: Text(
-                              '${lessons[index]['name']}',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w700),
-                            ),
+              },
+              child: lessons[index].name != 'Verbs'
+                  ? CachedNetworkImage(
+                      imageUrl: lessons[index].image,
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(5),
+                              bottomRight: Radius.circular(5),
+                              topLeft: Radius.circular(5),
+                              topRight: Radius.circular(5)),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
                           ),
-                        ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 50),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 145.0),
+                                      child: Text(
+                                        '${lessons[index].name}',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              // if (!lessons[index]['isAvaliable'])
+                              //   Expanded(
+                              //       child: Column(
+                              //     mainAxisAlignment: MainAxisAlignment.start,
+                              //     crossAxisAlignment: CrossAxisAlignment.end,
+                              //     children: <Widget>[
+                              //       Container(
+                              //         margin: EdgeInsets.only(top: 20.0),
+                              //         padding: EdgeInsets.symmetric(
+                              //             horizontal: 8, vertical: 4),
+                              //         child: Text(
+                              //           'Coming soon',
+                              //           style: TextStyle(
+                              //               color: Colors.white, fontSize: 10.0),
+                              //         ),
+                              //         decoration: BoxDecoration(
+                              //           color: Color(0XFFF31601),
+                              //           borderRadius: BorderRadius.only(
+                              //               bottomLeft: Radius.circular(5),
+                              //               bottomRight: Radius.circular(5),
+                              //               topLeft: Radius.circular(5),
+                              //               topRight: Radius.circular(5)),
+                              //         ),
+                              //       )
+                              //     ],
+                              //   )),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                    // if (!lessons[index]['isAvaliable'])
-                    //   Expanded(
-                    //       child: Column(
-                    //     mainAxisAlignment: MainAxisAlignment.start,
-                    //     crossAxisAlignment: CrossAxisAlignment.end,
-                    //     children: <Widget>[
-                    //       Container(
-                    //         margin: EdgeInsets.only(top: 20.0),
-                    //         padding: EdgeInsets.symmetric(
-                    //             horizontal: 8, vertical: 4),
-                    //         child: Text(
-                    //           'Coming soon',
-                    //           style: TextStyle(
-                    //               color: Colors.white, fontSize: 10.0),
-                    //         ),
-                    //         decoration: BoxDecoration(
-                    //           color: Color(0XFFF31601),
-                    //           borderRadius: BorderRadius.only(
-                    //               bottomLeft: Radius.circular(5),
-                    //               bottomRight: Radius.circular(5),
-                    //               topLeft: Radius.circular(5),
-                    //               topRight: Radius.circular(5)),
-                    //         ),
-                    //       )
-                    //     ],
-                    //   )),
-                  ],
-                ),
-              ),
-            ): SizedBox(height: 0, width: 0,)
-          );
+                      placeholder: (context, url) =>
+                          Image.asset('assets/images/shimmer.gif'),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    )
+                  // Container(
+                  //         height: 126.0,
+                  //         decoration: BoxDecoration(
+                  //           image: DecorationImage(
+                  //             // colorFilter: !lessons[index]['isAvaliable']
+                  //             //     ?
+                  //             // ColorFilter.mode(
+                  //             //         Colors.grey,
+                  //             //         BlendMode.saturation,
+                  //             //       )
+                  //             //     : null,
+                  //             image: NetworkImage(lessons[index].image),
+                  //             fit: BoxFit.cover,
+                  //           ),
+                  //           borderRadius: BorderRadius.only(
+                  //               bottomLeft: Radius.circular(5),
+                  //               bottomRight: Radius.circular(5),
+                  //               topLeft: Radius.circular(5),
+                  //               topRight: Radius.circular(5)),
+                  //         ),
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                  //           child: Row(
+                  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //             children: <Widget>[
+                  //               Expanded(
+                  //                 child: Column(
+                  //                   crossAxisAlignment: CrossAxisAlignment.start,
+                  //                   mainAxisAlignment: MainAxisAlignment.center,
+                  //                   children: <Widget>[
+                  //                     Padding(
+                  //                       padding:
+                  //                           // lessons[index]['isAvaliable'] ?
+                  //                           // const EdgeInsets.only(right: 120.0) :
+                  //                           const EdgeInsets.only(right: 145.0),
+                  //                       child: Text(
+                  //                         '${lessons[index].name}',
+                  //                         style: TextStyle(
+                  //                             color: Colors.white,
+                  //                             fontSize: 15,
+                  //                             fontWeight: FontWeight.w700),
+                  //                       ),
+                  //                     ),
+                  //                   ],
+                  //                 ),
+                  //               ),
+                  //               // if (!lessons[index]['isAvaliable'])
+                  //               //   Expanded(
+                  //               //       child: Column(
+                  //               //     mainAxisAlignment: MainAxisAlignment.start,
+                  //               //     crossAxisAlignment: CrossAxisAlignment.end,
+                  //               //     children: <Widget>[
+                  //               //       Container(
+                  //               //         margin: EdgeInsets.only(top: 20.0),
+                  //               //         padding: EdgeInsets.symmetric(
+                  //               //             horizontal: 8, vertical: 4),
+                  //               //         child: Text(
+                  //               //           'Coming soon',
+                  //               //           style: TextStyle(
+                  //               //               color: Colors.white, fontSize: 10.0),
+                  //               //         ),
+                  //               //         decoration: BoxDecoration(
+                  //               //           color: Color(0XFFF31601),
+                  //               //           borderRadius: BorderRadius.only(
+                  //               //               bottomLeft: Radius.circular(5),
+                  //               //               bottomRight: Radius.circular(5),
+                  //               //               topLeft: Radius.circular(5),
+                  //               //               topRight: Radius.circular(5)),
+                  //               //         ),
+                  //               //       )
+                  //               //     ],
+                  //               //   )),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       )
+                  : SizedBox(
+                      height: 0,
+                      width: 0,
+                    ));
         });
   }
 }

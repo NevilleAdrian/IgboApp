@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/helpers/background_image_container.dart';
 import 'package:nkuzi_igbo/models/app_model.dart';
+import 'package:nkuzi_igbo/models/category_model.dart';
 import 'package:nkuzi_igbo/models/user_model.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/repository/hive_repository.dart';
@@ -42,7 +43,6 @@ class _SplashScreenState extends State<SplashScreen>
       } else if (status == AnimationStatus.dismissed) {
         controller.forward();
         _prepareAppState();
-
       }
     });
     controller.addListener(() {
@@ -54,11 +54,16 @@ class _SplashScreenState extends State<SplashScreen>
     await HiveRepository.openHives([kUserName, kAppDataName, kCategory]);
     User user;
     AppModel appModel;
-    List<dynamic> lesson;
+    List<Category> lesson;
     try {
       user = _hiveRepository.get<User>(key: 'user', name: kUserName);
-      appModel = _hiveRepository.get<AppModel>(key: 'appModel', name: kAppDataName);
-      lesson = jsonDecode(_hiveRepository.get(key: 'category', name: kCategory));
+      appModel =
+          _hiveRepository.get<AppModel>(key: 'appModel', name: kAppDataName);
+      lesson = _hiveRepository
+          .get(key: 'category', name: kCategory)
+          ?.cast<Category>()
+          ?.toList();
+      print(lesson);
     } catch (ex) {
       print(ex);
     }

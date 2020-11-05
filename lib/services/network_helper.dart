@@ -33,13 +33,15 @@ class NetworkHelper {
     return cat;
   }
 
-  Future<dynamic> getCategory() async {
+  Future<List<Category>> getCategory() async {
     var cat = await getRequest('$kAppAPIUrl/category/appflow');
+    print(cat);
     HiveRepository _hiveRepository = HiveRepository();
-    var category = cat['data'].map((e) => Category.fromJson(e)).toList();
-    _hiveRepository.add(
-        name: kCategory, key: 'category', item: jsonEncode(category));
-    return cat;
+    var categories =
+        (cat['data'] as List).map((e) => Category.fromJson(e)).toList();
+    print(categories);
+    _hiveRepository.add(name: kCategory, key: 'category', item: categories);
+    return categories;
   }
 
   Future<dynamic> getProgress(id, dropDownId) async {
