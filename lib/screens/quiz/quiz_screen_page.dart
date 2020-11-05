@@ -209,7 +209,9 @@ class _QuizScreenPageState extends State<QuizScreenPage>
     } else {
       if (canAlternateToStudy()) {
         incrementStudyIndex(callback: () {
+          resetPlayingButton();
           alternateMode(StudyMode.Study);
+          playCurrentStudyAudio();
           resetTestValuesToDefault();
         });
       } else {

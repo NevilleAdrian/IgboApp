@@ -45,13 +45,13 @@ class MatchAndToEnglishLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String optionA =
-        isMatch ?? false ? test?.optionI ?? '' : test?.optionA ?? '';
+        isMatch ?? false ? test?.optionI ?? '' : test?.option1 ?? '';
     final String optionB =
-        isMatch ?? false ? test?.optionIi ?? '' : test?.optionB ?? '';
+        isMatch ?? false ? test?.optionIi ?? '' : test?.option2 ?? '';
     final String optionC =
-        isMatch ?? false ? test?.optionIii ?? '' : test?.optionC ?? '';
+        isMatch ?? false ? test?.optionIii ?? '' : test?.option3 ?? '';
     final String optionD =
-        isMatch ?? false ? test?.optionIv ?? '' : test?.optionD ?? '';
+        isMatch ?? false ? test?.optionIv ?? '' : test?.option4 ?? '';
     return Column(
       children: <Widget>[
         Expanded(

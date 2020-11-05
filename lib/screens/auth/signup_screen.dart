@@ -58,6 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             isLoading: _loading,
             action: () async {
+              FocusManager.instance.primaryFocus.unfocus();
               if (_formKey.currentState.validate()) {
                 setState(() {
                   _loading = true;
