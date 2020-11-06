@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/models/category_model.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
+import 'package:nkuzi_igbo/utils/constants.dart';
 
 import 'categories_screen.dart';
 import 'home_screen_custom_header.dart';
@@ -143,25 +144,39 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: CustomScrollView(
-            slivers: [
-              SliverPersistentHeader(
-                pinned: true,
-                floating: false,
-                // floating: true,
-                delegate: HomeScreenPageHeader(
-                  minExtent: 70,
-                  maxExtent: 200,
-                  onTap: _showDialog,
+          child: RefreshIndicator(
+            backgroundColor: Colors.white,
+            color: kAccent,
+            onRefresh: () async {
+              var data = await Auth.authProvider(context).refreshCategories();
+              if (data != null) {
+                setState(() {
+                  categories = data;
+                  filteredCategories = data;
+                });
+              }
+            },
+            child: CustomScrollView(
+              slivers: [
+                SliverPersistentHeader(
+                  pinned: true,
+                  floating: false,
+                  // floating: true,
+                  delegate: HomeScreenPageHeader(
+                    minExtent: 70,
+                    maxExtent: 200,
+                    onTap: _showDialog,
+                    onStretchTrigger: () {},
+                  ),
                 ),
-              ),
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  _sliverChildren(),
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    _sliverChildren(),
+                  ),
                 ),
-              ),
-              //..._sliverChildren(),
-            ],
+                //..._sliverChildren(),
+              ],
+            ),
           ),
         ),
       ),
