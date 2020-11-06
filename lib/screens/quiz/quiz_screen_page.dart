@@ -80,7 +80,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
     var result = await cacheManager.loadAllAssets(items);
     if (result != null) {
       try {
-        playCurrentStudyAudio();
+        playCurrentAudio();
       } catch (ex) {
         print('another error is $ex');
       }
@@ -211,7 +211,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
         incrementStudyIndex(callback: () {
           resetPlayingButton();
           alternateMode(StudyMode.Study);
-          playCurrentStudyAudio();
+          playCurrentAudio();
           resetTestValuesToDefault();
         });
       } else {
@@ -318,7 +318,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
     if (quizContinueSelected) {
       incrementTestIndex(callback: () {
         resetPlayingButton();
-        playCurrentStudyAudio();
+        playCurrentAudio();
         quizContinueSelected = !quizContinueSelected;
         currentStateOfUserChoice = null;
       });
@@ -329,7 +329,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
     }
   }
 
-  void playCurrentStudyAudio() async {
+  void playCurrentAudio() async {
     String audioUrl = getAppropriateAudio;
     if (!isNullOrEmpty(audioUrl)) {
       var currentFile = await cacheManager.loadAsset(audioUrl);
@@ -352,7 +352,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
 
   Future<void> playAudio(String url) async {
     await player.setFilePath(url);
-    player.setLoopMode(LoopMode.one);
+    await player.setLoopMode(LoopMode.one);
     player.play();
   }
 
@@ -458,7 +458,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
                   stopCurrentAudio();
                   decreaseStudyIndex(callback: () {
                     resetPlayingButton();
-                    playCurrentStudyAudio();
+                    playCurrentAudio();
                   });
                 },
                 onMoveNext: () {
@@ -471,7 +471,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
                   } else {
                     incrementStudyIndex(callback: () {
                       resetPlayingButton();
-                      playCurrentStudyAudio();
+                      playCurrentAudio();
                     });
                   }
                 },

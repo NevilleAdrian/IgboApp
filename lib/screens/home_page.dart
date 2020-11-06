@@ -1,8 +1,7 @@
-
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:nkuzi_igbo/screens/home_screen.dart';
+//import 'package:nkuzi_igbo/screens/home_screen.dart';
 import 'package:nkuzi_igbo/screens/notifications_screen.dart';
 import 'package:nkuzi_igbo/screens/profile_screen.dart';
 import 'package:nkuzi_igbo/screens/progress_screen.dart';
@@ -10,10 +9,9 @@ import 'package:flutter/services.dart';
 import 'package:pushy_flutter/pushy_flutter.dart';
 import 'dart:io' show Platform;
 
-
+import 'home_screen_slivers.dart';
 
 class HomePage extends StatefulWidget {
-
   static String id = 'home_page';
 
   @override
@@ -27,19 +25,18 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   List<Widget> _screens = [
-   HomeScreen(),
+    HomeScreen(),
     ProgressScreen(),
     NotificationScreen(),
     ProfileScreen()
-  ] ;
+  ];
   void _onPageChanged(int index) {
     setState(() {
       _selectedIndex = index;
     });
-
   }
 
-  void _onTapped(int selectedIndex){
+  void _onTapped(int selectedIndex) {
     _pageController.jumpToPage(selectedIndex);
   }
 
@@ -73,7 +70,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _deviceToken = deviceToken;
         _instruction =
-        Platform.isAndroid ? '(copy from logcat)' : '(copy from console)';
+            Platform.isAndroid ? '(copy from logcat)' : '(copy from console)';
       });
     } on PlatformException catch (error) {
       // Print to console/logcat
@@ -101,21 +98,43 @@ class _HomePageState extends State<HomePage> {
       Flushbar(
         titleText: Row(
           children: <Widget>[
-            SvgPicture.asset("assets/images/logo.svg", width: 15.0,),
-            SizedBox(width: 8.0,),
-            Text('Welcome', style: TextStyle(color: Colors.white),),
+            SvgPicture.asset(
+              "assets/images/logo.svg",
+              width: 15.0,
+            ),
+            SizedBox(
+              width: 8.0,
+            ),
+            Text(
+              'Welcome',
+              style: TextStyle(color: Colors.white),
+            ),
           ],
         ),
         messageText: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Nkuzi Igbo',textAlign: TextAlign.left, style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w700),),
-            Text(message,  textAlign: TextAlign.left, style: TextStyle(color: Colors.white ,fontSize: 12, fontWeight: FontWeight.w700),)
+            Text(
+              'Nkuzi Igbo',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700),
+            ),
+            Text(
+              message,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700),
+            )
           ],
         ),
         duration: Duration(seconds: 6),
         flushbarPosition: FlushbarPosition.TOP,
-        backgroundColor:  Color(0XFF9D1000),
+        backgroundColor: Color(0XFF9D1000),
         flushbarStyle: FlushbarStyle.GROUNDED,
         // margin: EdgeInsets.all(8),
         borderRadius: 8,
@@ -151,18 +170,37 @@ class _HomePageState extends State<HomePage> {
 
       // Display an alert with the "message" payload value
       Flushbar(
-        titleText:  Row(
+        titleText: Row(
           children: <Widget>[
-            SvgPicture.asset("assets/images/logo.svg", width: 15.0,),
-            SizedBox(width: 8.0,),
-            Text('Welcome', style: TextStyle(color: Colors.black),),
+            SvgPicture.asset(
+              "assets/images/logo.svg",
+              width: 15.0,
+            ),
+            SizedBox(
+              width: 8.0,
+            ),
+            Text(
+              'Welcome',
+              style: TextStyle(color: Colors.black),
+            ),
           ],
         ),
         messageText: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Nkuzi Igbo',textAlign: TextAlign.left, style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w700),),
-            Text(message,  textAlign: TextAlign.left, style: TextStyle(color: Colors.grey ,fontSize: 13),)
+            Text(
+              'Nkuzi Igbo',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700),
+            ),
+            Text(
+              message,
+              textAlign: TextAlign.left,
+              style: TextStyle(color: Colors.grey, fontSize: 13),
+            )
           ],
         ),
         duration: Duration(seconds: 6),
@@ -179,8 +217,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -192,7 +228,7 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onTapped,
-        backgroundColor: Colors.white ,
+        backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
         iconSize: 20,
 //        showSelectedLabels: false,
@@ -200,29 +236,52 @@ class _HomePageState extends State<HomePage> {
         items: [
           BottomNavigationBarItem(
             icon: SvgPicture.asset("assets/images/learn.svg",
-              color: _selectedIndex == 0 ? Color(0XFFF48C02): Color(0XFF9A9A9A)
-            ),
-            title: Text('Learn',  style: TextStyle( fontSize: 13.0, color: _selectedIndex == 0 ? Color(0XFF9D1000): Color(0XFF9A9A9A))),
+                color: _selectedIndex == 0
+                    ? Color(0XFFF48C02)
+                    : Color(0XFF9A9A9A)),
+            title: Text('Learn',
+                style: TextStyle(
+                    fontSize: 13.0,
+                    color: _selectedIndex == 0
+                        ? Color(0XFF9D1000)
+                        : Color(0XFF9A9A9A))),
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset("assets/images/progress.svg",
-              color: _selectedIndex == 1 ? Color(0XFFF48C02): Color(0XFF9A9A9A)
-            ),
-            title: Text('Progress', style: TextStyle(fontSize: 13.0, color: _selectedIndex == 1 ? Color(0XFF9D1000): Color(0XFF9A9A9A))),
+                color: _selectedIndex == 1
+                    ? Color(0XFFF48C02)
+                    : Color(0XFF9A9A9A)),
+            title: Text('Progress',
+                style: TextStyle(
+                    fontSize: 13.0,
+                    color: _selectedIndex == 1
+                        ? Color(0XFF9D1000)
+                        : Color(0XFF9A9A9A))),
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset("assets/images/notification.svg",
-              color: _selectedIndex == 2 ? Color(0XFFF48C02): Color(0XFF9A9A9A)
-            ),
-            title: Text('Notifications', style: TextStyle(fontSize: 13.0, color: _selectedIndex == 2 ? Color(0XFF9D1000) : Color(0XFF9A9A9A))),
+                color: _selectedIndex == 2
+                    ? Color(0XFFF48C02)
+                    : Color(0XFF9A9A9A)),
+            title: Text('Notifications',
+                style: TextStyle(
+                    fontSize: 13.0,
+                    color: _selectedIndex == 2
+                        ? Color(0XFF9D1000)
+                        : Color(0XFF9A9A9A))),
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset("assets/images/profile.svg",
-              color: _selectedIndex == 3 ? Color(0XFFF48C02): Color(0XFF9A9A9A)
-            ),
-            title: Text('Profile', style: TextStyle(fontSize: 13.0, color: _selectedIndex == 3 ? Color(0XFF9D1000): Color(0XFF9A9A9A))),
+                color: _selectedIndex == 3
+                    ? Color(0XFFF48C02)
+                    : Color(0XFF9A9A9A)),
+            title: Text('Profile',
+                style: TextStyle(
+                    fontSize: 13.0,
+                    color: _selectedIndex == 3
+                        ? Color(0XFF9D1000)
+                        : Color(0XFF9A9A9A))),
           ),
-
         ],
       ),
     );
