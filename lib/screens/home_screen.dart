@@ -349,6 +349,7 @@ class CategoryList extends StatelessWidget {
         shrinkWrap: true,
         itemCount: lessons.length,
         itemBuilder: (BuildContext context, int index) {
+          print(int.tryParse(lessons[index].color));
           return GestureDetector(
               onTap: () {
                 // if (lessons[index]['isAvaliable'])
@@ -435,7 +436,72 @@ class CategoryList extends StatelessWidget {
                         ),
                       ),
                       placeholder: (context, url) =>
-                          Image.asset('assets/images/shimmer.gif'),
+                          //Image.asset('assets/images/shimmer.gif'),
+                          Container(
+                        decoration: BoxDecoration(
+                          color: Color(int.tryParse(lessons[index]?.color) ??
+                              0xFFCCCCCC),
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(5),
+                              bottomRight: Radius.circular(5),
+                              topLeft: Radius.circular(5),
+                              topRight: Radius.circular(5)),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 50),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 145.0),
+                                      child: Text(
+                                        '${lessons[index].name}',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              // if (!lessons[index]['isAvaliable'])
+                              //   Expanded(
+                              //       child: Column(
+                              //     mainAxisAlignment: MainAxisAlignment.start,
+                              //     crossAxisAlignment: CrossAxisAlignment.end,
+                              //     children: <Widget>[
+                              //       Container(
+                              //         margin: EdgeInsets.only(top: 20.0),
+                              //         padding: EdgeInsets.symmetric(
+                              //             horizontal: 8, vertical: 4),
+                              //         child: Text(
+                              //           'Coming soon',
+                              //           style: TextStyle(
+                              //               color: Colors.white, fontSize: 10.0),
+                              //         ),
+                              //         decoration: BoxDecoration(
+                              //           color: Color(0XFFF31601),
+                              //           borderRadius: BorderRadius.only(
+                              //               bottomLeft: Radius.circular(5),
+                              //               bottomRight: Radius.circular(5),
+                              //               topLeft: Radius.circular(5),
+                              //               topRight: Radius.circular(5)),
+                              //         ),
+                              //       )
+                              //     ],
+                              //   )),
+                            ],
+                          ),
+                        ),
+                      ),
                       errorWidget: (context, url, error) => Icon(Icons.error),
                     )
                   // Container(
