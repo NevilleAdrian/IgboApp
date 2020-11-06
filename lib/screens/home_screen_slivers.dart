@@ -166,9 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     minExtent: 70,
                     maxExtent: 200,
                     onTap: _showDialog,
-                    onStretchTrigger: () {
-                      print('stretched ....');
-                    },
+                    onStretchTrigger: () {},
                   ),
                 ),
                 SliverList(
