@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/models/category_model.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
-import 'package:intl/intl.dart';
-import 'package:nkuzi_igbo/utils/constants.dart';
 
 import 'categories_screen.dart';
 import 'home_screen_custom_header.dart';
@@ -15,7 +13,7 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> {
   final _nameController = TextEditingController();
   String searchText;
   List<Category> categories;
@@ -156,40 +154,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   maxExtent: 200,
                   onTap: _showDialog,
                 ),
-                // title: SliverTitle(onTap: _showDialog),
-                // expandedHeight: 200,
-                // flexibleSpace: Padding(
-                //   padding: const EdgeInsets.all(8.0),
-                //   child: Column(
-                //     mainAxisAlignment: MainAxisAlignment.end,
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: <Widget>[
-                //       Text(
-                //         'Hello ${(toBeginningOfSentenceCase(Auth.authProvider(context).user?.name ?? ''))}',
-                //         textAlign: TextAlign.left,
-                //         style: kAuthTextBig.copyWith(
-                //             fontFamily: 'Baloo',
-                //             fontWeight: FontWeight.w900,
-                //             color: Colors.black,
-                //             fontSize: 22.0),
-                //       ),
-                //       SizedBox(
-                //         height: 5.0,
-                //       ),
-                //       Text(
-                //         learnText,
-                //         style: TextStyle(fontSize: 14.0, color: Colors.black),
-                //       ),
-                //       SizedBox(
-                //         height: 25.0,
-                //       ),
-                //       Container(color: Colors.grey, height: 0.3),
-                //       SizedBox(
-                //         height: 25.0,
-                //       ),
-                //     ],
-                //   ),
-                // ),
               ),
               SliverList(
                 delegate: SliverChildListDelegate(
