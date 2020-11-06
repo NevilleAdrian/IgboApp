@@ -37,6 +37,16 @@ class Auth extends ChangeNotifier {
     }
   }
 
+  Future<List<Category>> refreshCategories() async {
+    try {
+      _categories = await _helper.getCategory();
+      return _categories;
+    } catch (ex) {
+      print(ex);
+    }
+    return null;
+  }
+
   Future<void> registerUser(String name, String email, String password) async {
     try {
       var data = await _helper.registerUser(name, email, password);
