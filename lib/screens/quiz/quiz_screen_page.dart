@@ -482,14 +482,13 @@ class _QuizScreenPageState extends State<QuizScreenPage>
                 },
                 onMoveNext: () {
                   stopCurrentAudio();
+                  resetPlayingButton();
                   if (hasTests()) {
                     resetTestValuesToDefault(callback: () {
-                      resetPlayingButton();
                       alternateMode(StudyMode.Test);
                     });
                   } else {
                     incrementStudyIndex(callback: () {
-                      resetPlayingButton();
                       playCurrentAudio();
                     });
                   }
