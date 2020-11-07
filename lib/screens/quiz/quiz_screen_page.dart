@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
@@ -100,6 +102,11 @@ class _QuizScreenPageState extends State<QuizScreenPage>
   //was correct
   bool currentStateOfUserChoice;
 
+  //Get the timer instance to cancel;
+  Timer timer;
+  //delay before looping
+  static const int DELAY = 3;
+
   //calculate the user's progress in term
   progressBar() {
     double figure = (currentStudyIndex + 1) / (widget.studies?.length ?? 10);
@@ -127,14 +134,10 @@ class _QuizScreenPageState extends State<QuizScreenPage>
       isPlaying = !isPlaying;
       if (isPlaying) {
         _animationController.forward();
-        if (player.playing) {
-          print('I am playing');
-          player.pause();
-        }
+        stopCurrentAudio();
       } else {
         _animationController.reverse();
-        print('I am paused');
-        player.play();
+        loopAudio();
       }
     });
   }
@@ -210,6 +213,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
       if (canAlternateToStudy()) {
         incrementStudyIndex(callback: () {
           resetPlayingButton();
+          stopCurrentAudio();
           alternateMode(StudyMode.Study);
           playCurrentAudio();
           resetTestValuesToDefault();
@@ -223,7 +227,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
   //end of this module, send user's progress to the server
   //then return to the home page
   void finalizeThisLesson() async {
-    player?.stop();
+    stopCurrentAudio();
     if (quizWasTaken) {
       UserResultModel resultModel = UserResultModel(
         category: widget.category,
@@ -318,6 +322,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
     if (quizContinueSelected) {
       incrementTestIndex(callback: () {
         resetPlayingButton();
+        stopCurrentAudio();
         playCurrentAudio();
         quizContinueSelected = !quizContinueSelected;
         currentStateOfUserChoice = null;
@@ -352,12 +357,25 @@ class _QuizScreenPageState extends State<QuizScreenPage>
 
   Future<void> playAudio(String url) async {
     await player.setFilePath(url);
-    await player.setLoopMode(LoopMode.one);
-    player.play();
+    //await player.setLoopMode(LoopMode.one);
+    loopAudio();
+  }
+
+  void loopAudio() {
+    if (player != null) {
+      player.play();
+      int loopPeriod = (player.duration?.inSeconds ?? 0) + DELAY;
+      timer = Timer.periodic(Duration(seconds: loopPeriod), (timer) {
+        print('timer is $timer tick is ${timer.tick}');
+        player.seek(Duration(seconds: 0));
+        player.play();
+      });
+    }
   }
 
   void stopCurrentAudio() {
     if (player.playing) {
+      timer?.cancel();
       player.stop();
     }
   }
@@ -377,6 +395,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
   @override
   void dispose() {
     _animationController.dispose();
+    timer?.cancel();
     player?.stop();
     player?.dispose();
     super.dispose();
@@ -463,14 +482,13 @@ class _QuizScreenPageState extends State<QuizScreenPage>
                 },
                 onMoveNext: () {
                   stopCurrentAudio();
+                  resetPlayingButton();
                   if (hasTests()) {
                     resetTestValuesToDefault(callback: () {
-                      resetPlayingButton();
                       alternateMode(StudyMode.Test);
                     });
                   } else {
                     incrementStudyIndex(callback: () {
-                      resetPlayingButton();
                       playCurrentAudio();
                     });
                   }
