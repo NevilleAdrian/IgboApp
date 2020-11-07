@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:nkuzi_igbo/screens/quiz/to_igbo_test.dart';
 import 'package:nkuzi_igbo/ui_widgets/network_image_cache.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
 import 'package:nkuzi_igbo/utils/functions.dart';
@@ -43,7 +44,12 @@ class RegularQuestion extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Align(alignment: Alignment.topCenter, child: HtmlWidget(top ?? '')),
+        Align(
+          alignment: Alignment.topCenter,
+          child: Padded(
+            child: HtmlWidget(top ?? ''),
+          ),
+        ),
         SizedBox(
           height: 20,
         ),
@@ -99,8 +105,10 @@ class IrregularQuestion extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        HtmlWidget(
-          top ?? '',
+        Padded(
+          child: HtmlWidget(
+            top ?? '',
+          ),
         ),
         SizedBox(
           height: 30,

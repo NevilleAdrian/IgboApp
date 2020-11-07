@@ -100,7 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<Widget> _sliverChildren() {
-    return filteredCategories?.map((category) {
+    return filteredCategories
+            ?.where((category) => category.name.toLowerCase() != 'verbs')
+            ?.map((category) {
           return InkWell(
             onTap: () {
               Navigator.push(
@@ -217,6 +219,7 @@ class CategoryBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 130,
       margin: lastItem ?? false ? null : EdgeInsets.only(bottom: 15),
       decoration: BoxDecoration(
         color: color != null ? Color(int.tryParse(color) ?? 0xFFCCCCCC) : null,
@@ -233,7 +236,7 @@ class CategoryBox extends StatelessWidget {
             : null,
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
