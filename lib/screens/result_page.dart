@@ -56,9 +56,9 @@ class _ResultScreenState extends State<ResultScreen> {
 
   String pass() {
     if ((widget.data?.alphabetsFluency ?? 0) < 50.0) {
-      return 'Not Fluent in ${widget.title}';
+      return 'Not Fluent in ${widget.title ?? 'this lesson'}';
     } else {
-      return 'Fluent in ${widget.title}';
+      return 'Fluent in ${widget.title ?? 'this lesson'}';
     }
   }
 
