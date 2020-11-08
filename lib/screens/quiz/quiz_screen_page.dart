@@ -134,7 +134,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
       isPlaying = !isPlaying;
       if (isPlaying) {
         _animationController.forward();
-        stopCurrentAudio();
+        pauseCurrentAudio();
       } else {
         _animationController.reverse();
         loopAudio();
@@ -380,6 +380,13 @@ class _QuizScreenPageState extends State<QuizScreenPage>
     }
   }
 
+  void pauseCurrentAudio() {
+    if (player.playing) {
+      timer?.cancel();
+      player.pause();
+    }
+  }
+
   //T _cast<T>(dynamic data) => data is T ? data : null;
 
   ///change the user's correct state saved in [currentStateOfUserChoice]
@@ -578,7 +585,11 @@ class StudyFooter extends StatelessWidget {
       duration: Duration(milliseconds: 500),
       padding: EdgeInsets.only(
           left: 20.0, right: 20.0, bottom: 20.0, top: selected ? 20.0 : 0),
-      color: selected ? color : Colors.transparent,
+      color: isCorrect == null
+          ? Colors.transparent
+          : selected
+              ? color
+              : Colors.transparent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -588,9 +599,10 @@ class StudyFooter extends StatelessWidget {
                 selected ? CrossFadeState.showFirst : CrossFadeState.showSecond,
             firstChild: Column(
               children: [
-                AnswerStatus(
-                  isCorrect: correct,
-                ),
+                if (isCorrect != null)
+                  AnswerStatus(
+                    isCorrect: correct,
+                  ),
                 SizedBox(
                   height: 10,
                 ),
