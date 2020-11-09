@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:nkuzi_igbo/models/study.dart';
@@ -11,7 +10,6 @@ import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/quiz/question_display.dart';
 import 'package:nkuzi_igbo/screens/quiz/quiz_layout.dart';
 import 'package:nkuzi_igbo/screens/quiz/test_scheduler.dart';
-import 'package:nkuzi_igbo/services/network_helper.dart';
 import 'package:nkuzi_igbo/ui_widgets/cache_helper.dart';
 import 'package:nkuzi_igbo/ui_widgets/future_helper.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
@@ -120,12 +118,30 @@ class _QuizScreenPageState extends State<QuizScreenPage>
 
     studies = widget.studies;
     totalStudiesCount = studies.length;
-    futureAudios = futureTask(studies
-        .where((e) => !isNullOrEmpty(e.voicing))
-        .map((e) => e.voicing)
-        .toList());
+
+    futureAudios = futureTask(allAudiosForThisLesson);
     quizWasTaken = studies.any((element) => (element.test?.length ?? 0) > 0);
     super.initState();
+  }
+
+  List<String> get allAudiosForThisLesson {
+    List<String> allAudios = [];
+    studies.forEach((element) {
+      //add study audios;
+      if (!isNullOrEmpty(element.voicing)) {
+        allAudios.add(element.voicing);
+      }
+      //add test audios
+      if (element.test.length > 0) {
+        allAudios = [
+          ...allAudios,
+          ...element.test
+              .where((test) => !isNullOrEmpty(test.audioUrl))
+              .map((e) => e.audioUrl)
+        ];
+      }
+    });
+    return allAudios;
   }
 
   ///handle audio button clicked
@@ -162,8 +178,6 @@ class _QuizScreenPageState extends State<QuizScreenPage>
   bool testIsDone() {
     Study currentStudy = studies[currentStudyIndex];
     bool result = currentTestIndex == (currentStudy?.test?.length ?? 0) - 1;
-    print(
-        'test done is $result, test index $currentTestIndex total tests ${currentStudy?.test?.length}');
     return result;
   }
 
@@ -174,18 +188,13 @@ class _QuizScreenPageState extends State<QuizScreenPage>
       Study currentStudy = studies[currentStudyIndex];
       if (currentStudy != null) {
         totalQuizTaken += currentStudy.test?.length ?? 0;
-        List<String> items = currentStudy.test
-            .where((e) => !isNullOrEmpty(e.audioUrl))
-            .map((e) => e.audioUrl)
-            .toList();
-        futureAudios = futureTask(items);
+        futureAudios = futureTask([]);
       }
     }
   }
 
   //before alternating to study, check if an alternation can happen
   bool canAlternateToStudy() {
-    print(totalStudiesCount);
     return currentStudyIndex + 1 <= totalStudiesCount - 1;
   }
 
@@ -253,9 +262,7 @@ class _QuizScreenPageState extends State<QuizScreenPage>
           ),
         ),
       );
-      print('I took quiz. user score is $userScore');
     } else {
-      print('No quiz taken');
       Navigator.push(
         context,
         MaterialPageRoute(
