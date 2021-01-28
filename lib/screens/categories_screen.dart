@@ -540,11 +540,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                     CircleAvatar(
                                                       radius: 27,
                                                       backgroundImage:
-                                                          NetworkImage(widget
-                                                                      .thumbnail !=
-                                                                  ''
-                                                              ? widget.thumbnail
-                                                              : 'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'),
+                                                          AssetImage(
+                                                              widget.thumbnail),
                                                       child: Stack(
                                                         overflow:
                                                             Overflow.visible,
@@ -736,11 +733,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                     CircleAvatar(
                                                       radius: 27,
                                                       backgroundImage:
-                                                          NetworkImage(widget
-                                                                      .thumbnail !=
-                                                                  ''
-                                                              ? widget.thumbnail
-                                                              : 'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'),
+                                                          AssetImage(
+                                                              widget.thumbnail),
                                                       child: Stack(
                                                         overflow:
                                                             Overflow.visible,
@@ -932,11 +926,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                     CircleAvatar(
                                                       radius: 27,
                                                       backgroundImage:
-                                                          NetworkImage(widget
-                                                                      .thumbnail !=
-                                                                  ''
-                                                              ? widget.thumbnail
-                                                              : 'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'),
+                                                          AssetImage(
+                                                              widget.thumbnail),
                                                       child: Stack(
                                                         overflow:
                                                             Overflow.visible,

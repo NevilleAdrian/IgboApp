@@ -59,8 +59,8 @@ class RegularQuestion extends StatelessWidget {
         ),
         if (!isNullOrEmpty(image))
           Expanded(
-            child: AppNetworkImage(
-              image: image,
+            child: Image.asset(
+              image,
             ),
           ),
         SizedBox(
@@ -85,11 +85,9 @@ class IrregularQuestion extends StatelessWidget {
 
   Widget get _child {
     if (_imageOnly) {
-      return CachedNetworkImage(
+      return Image.asset(
+        image,
         key: GlobalKey(),
-        imageUrl: image,
-        placeholder: (context, url) => Image.asset('assets/images/shimmer.gif'),
-        errorWidget: (context, url, error) => Icon(Icons.error),
       );
     }
     return IrregularContainer(
@@ -184,12 +182,7 @@ class _IrregularContainerState extends State<IrregularContainer> {
           if (!isNullOrEmpty(widget.image))
             Expanded(
               key: _imgKey,
-              child: CachedNetworkImage(
-                imageUrl: widget.image,
-                placeholder: (context, url) =>
-                    Image.asset('assets/images/shimmer.gif'),
-                errorWidget: (context, url, error) => SizedBox(),
-              ),
+              child: Image.asset(widget.image),
             ),
           if (!isNullOrEmpty(widget.text))
             Flexible(

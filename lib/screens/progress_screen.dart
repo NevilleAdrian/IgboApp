@@ -168,7 +168,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                                 progress: progress,
                                 color: 0XFFF21600,
                                 text: 'basic',
-                                form: 'Basic',
+                                form: 'Beginner',
                                 color1: 0XFFF21600,
                                 color2: 0XFFF21600,
                               ),
@@ -404,13 +404,14 @@ class SliderContainer extends StatelessWidget {
                   left: 20,
                   right: 20,
                 ),
-                child: Text(
-                  progress['data'][text].toString(),
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 35,
-                      fontWeight: FontWeight.w600),
-                ),
+                //child:
+                // Text(
+                //   progress['data'][text].toString(),
+                //   style: TextStyle(
+                //       color: Colors.white,
+                //       fontSize: 35,
+                //       fontWeight: FontWeight.w600),
+                // ),
               )
             ],
           ),

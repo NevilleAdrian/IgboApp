@@ -350,159 +350,90 @@ class CategoryList extends StatelessWidget {
         itemCount: lessons.length,
         itemBuilder: (BuildContext context, int index) {
           print(int.tryParse(lessons[index].color));
+          print(lessons[index].image);
           return GestureDetector(
               onTap: () {
                 // if (lessons[index]['isAvaliable'])
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => CategoriesScreen(
-                            lessons: lessons[index].subCategories,
-                            description: lessons[index].description,
-                            id: lessons[index].sId,
-                            thumbnail: lessons[index].thumbnail,
-                            title: lessons[index].name,
-                          )),
+                    builder: (context) => CategoriesScreen(
+                      lessons: lessons[index].subCategories,
+                      description: lessons[index].description,
+                      id: lessons[index].sId,
+                      thumbnail: lessons[index].thumbnail,
+                      title: lessons[index].name,
+                    ),
+                  ),
                 );
               },
               child: lessons[index].name != 'Verbs'
-                  ? CachedNetworkImage(
-                      imageUrl: lessons[index].image,
-                      imageBuilder: (context, imageProvider) => Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(5),
-                              bottomRight: Radius.circular(5),
-                              topLeft: Radius.circular(5),
-                              topRight: Radius.circular(5)),
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 50),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 145.0),
-                                      child: Text(
-                                        '${lessons[index].name}',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              // if (!lessons[index]['isAvaliable'])
-                              //   Expanded(
-                              //       child: Column(
-                              //     mainAxisAlignment: MainAxisAlignment.start,
-                              //     crossAxisAlignment: CrossAxisAlignment.end,
-                              //     children: <Widget>[
-                              //       Container(
-                              //         margin: EdgeInsets.only(top: 20.0),
-                              //         padding: EdgeInsets.symmetric(
-                              //             horizontal: 8, vertical: 4),
-                              //         child: Text(
-                              //           'Coming soon',
-                              //           style: TextStyle(
-                              //               color: Colors.white, fontSize: 10.0),
-                              //         ),
-                              //         decoration: BoxDecoration(
-                              //           color: Color(0XFFF31601),
-                              //           borderRadius: BorderRadius.only(
-                              //               bottomLeft: Radius.circular(5),
-                              //               bottomRight: Radius.circular(5),
-                              //               topLeft: Radius.circular(5),
-                              //               topRight: Radius.circular(5)),
-                              //         ),
-                              //       )
-                              //     ],
-                              //   )),
-                            ],
-                          ),
+                  ? Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(5),
+                            bottomRight: Radius.circular(5),
+                            topLeft: Radius.circular(5),
+                            topRight: Radius.circular(5)),
+                        image: DecorationImage(
+                          image: AssetImage(lessons[index].image),
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      placeholder: (context, url) =>
-                          //Image.asset('assets/images/shimmer.gif'),
-                          Container(
-                        decoration: BoxDecoration(
-                          color: Color(int.tryParse(lessons[index]?.color) ??
-                              0xFFCCCCCC),
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(5),
-                              bottomRight: Radius.circular(5),
-                              topLeft: Radius.circular(5),
-                              topRight: Radius.circular(5)),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 50),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 145.0),
-                                      child: Text(
-                                        '${lessons[index].name}',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w700),
-                                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 50),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.only(right: 145.0),
+                                    child: Text(
+                                      '${lessons[index].name}',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w700),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                              // if (!lessons[index]['isAvaliable'])
-                              //   Expanded(
-                              //       child: Column(
-                              //     mainAxisAlignment: MainAxisAlignment.start,
-                              //     crossAxisAlignment: CrossAxisAlignment.end,
-                              //     children: <Widget>[
-                              //       Container(
-                              //         margin: EdgeInsets.only(top: 20.0),
-                              //         padding: EdgeInsets.symmetric(
-                              //             horizontal: 8, vertical: 4),
-                              //         child: Text(
-                              //           'Coming soon',
-                              //           style: TextStyle(
-                              //               color: Colors.white, fontSize: 10.0),
-                              //         ),
-                              //         decoration: BoxDecoration(
-                              //           color: Color(0XFFF31601),
-                              //           borderRadius: BorderRadius.only(
-                              //               bottomLeft: Radius.circular(5),
-                              //               bottomRight: Radius.circular(5),
-                              //               topLeft: Radius.circular(5),
-                              //               topRight: Radius.circular(5)),
-                              //         ),
-                              //       )
-                              //     ],
-                              //   )),
-                            ],
-                          ),
+                            ),
+                            // if (!lessons[index]['isAvaliable'])
+                            //   Expanded(
+                            //       child: Column(
+                            //     mainAxisAlignment: MainAxisAlignment.start,
+                            //     crossAxisAlignment: CrossAxisAlignment.end,
+                            //     children: <Widget>[
+                            //       Container(
+                            //         margin: EdgeInsets.only(top: 20.0),
+                            //         padding: EdgeInsets.symmetric(
+                            //             horizontal: 8, vertical: 4),
+                            //         child: Text(
+                            //           'Coming soon',
+                            //           style: TextStyle(
+                            //               color: Colors.white, fontSize: 10.0),
+                            //         ),
+                            //         decoration: BoxDecoration(
+                            //           color: Color(0XFFF31601),
+                            //           borderRadius: BorderRadius.only(
+                            //               bottomLeft: Radius.circular(5),
+                            //               bottomRight: Radius.circular(5),
+                            //               topLeft: Radius.circular(5),
+                            //               topRight: Radius.circular(5)),
+                            //         ),
+                            //       )
+                            //     ],
+                            //   )),
+                          ],
                         ),
                       ),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
                     )
                   // Container(
                   //         height: 126.0,

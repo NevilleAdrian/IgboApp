@@ -45,6 +45,9 @@ const String kUserName = 'user';
 const String kAppDataName = 'appData';
 const String kCategory = 'category';
 
+const kImageRemoteUrl = 'assets/images/remote/';
+const kAudioRemoteUrl = 'assets/audios/';
+
 const List<String> kIrregularStudies = [
   'vowel harmony',
   'vowels',

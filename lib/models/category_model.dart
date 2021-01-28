@@ -52,11 +52,12 @@ class Category {
     sId = json['_id'];
     no = json["no"];
     name = json["name"];
-    thumbnail = replaceBackSlash(json["thumbnail"]);
+    thumbnail = replaceRemoteImageWithLocal(json["thumbnail"]);
+    print(thumbnail);
     isAvaliable = json["isAvaliable"];
     description = json['description'];
     color = json['color'];
-    image = replaceBackSlash(json['image']);
+    image = replaceRemoteImageWithLocal(json['image']);
     createdon = json['createdon'];
     iV = json['__v'];
   }

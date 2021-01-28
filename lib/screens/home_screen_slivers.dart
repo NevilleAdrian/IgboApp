@@ -117,23 +117,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         )),
               );
             },
-            child: CachedNetworkImage(
-              imageUrl: category.image,
-              imageBuilder: (context, imageProvider) => CategoryBox(
-                imageProvider: imageProvider,
-                name: category.name,
-                lastItem: filteredCategories.indexOf(category) ==
-                    filteredCategories.length - 1,
-              ),
-              placeholder: (context, url) =>
-                  //Image.asset('assets/images/shimmer.gif'),
-                  CategoryBox(
-                color: category.color,
-                name: category.name,
-                lastItem: filteredCategories.indexOf(category) ==
-                    filteredCategories.length - 1,
-              ),
-              errorWidget: (context, url, error) => Icon(Icons.error),
+            child: CategoryBox(
+              image: category.image,
+              color: category.color,
+              name: category.name,
+              lastItem: filteredCategories.indexOf(category) ==
+                  filteredCategories.length - 1,
             ),
           );
         })?.toList() ??
@@ -212,10 +201,9 @@ class CategoryBox extends StatelessWidget {
   final String color;
   final String name;
   final bool lastItem;
-  final ImageProvider<Object> imageProvider;
+  final String image;
 
-  CategoryBox(
-      {Key key, this.imageProvider, this.color, this.name, this.lastItem});
+  CategoryBox({Key key, this.image, this.color, this.name, this.lastItem});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -228,9 +216,9 @@ class CategoryBox extends StatelessWidget {
             bottomRight: Radius.circular(5),
             topLeft: Radius.circular(5),
             topRight: Radius.circular(5)),
-        image: imageProvider != null
+        image: image != null
             ? DecorationImage(
-                image: imageProvider,
+                image: AssetImage(image),
                 fit: BoxFit.cover,
               )
             : null,

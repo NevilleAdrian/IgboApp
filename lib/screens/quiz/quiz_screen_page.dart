@@ -118,8 +118,12 @@ class _QuizScreenPageState extends State<QuizScreenPage>
 
     studies = widget.studies;
     totalStudiesCount = studies.length;
-
-    futureAudios = futureTask(allAudiosForThisLesson);
+    try {
+      playCurrentAudio();
+    } catch (ex) {
+      print('another error is $ex');
+    }
+    //futureAudios = futureTask(allAudiosForThisLesson);
     quizWasTaken = studies.any((element) => (element.test?.length ?? 0) > 0);
     super.initState();
   }
@@ -343,12 +347,14 @@ class _QuizScreenPageState extends State<QuizScreenPage>
 
   void playCurrentAudio() async {
     String audioUrl = getAppropriateAudio;
+    print('audio is $audioUrl');
     if (!isNullOrEmpty(audioUrl)) {
-      var currentFile = await cacheManager.loadAsset(audioUrl);
-      print('path is ${currentFile?.file?.path}');
-      if (currentFile != null) {
-        await playAudio(currentFile.file.path);
-      }
+      //var currentFile = await cacheManager.loadAsset(audioUrl);
+      //print('path is ${currentFile?.file?.path}');
+      await playAudio(audioUrl);
+      // if (currentFile != null) {
+      //   await playAudio(currentFile.file.path);
+      // }
     }
   }
 
@@ -363,7 +369,8 @@ class _QuizScreenPageState extends State<QuizScreenPage>
   }
 
   Future<void> playAudio(String url) async {
-    await player.setFilePath(url);
+    print(url);
+    await player.setAsset(url);
     //await player.setLoopMode(LoopMode.one);
     loopAudio();
   }
@@ -422,98 +429,95 @@ class _QuizScreenPageState extends State<QuizScreenPage>
     Study currentStudy = studies[currentStudyIndex];
     print('picture is ${currentStudy.picture} made is $studyMode');
     return Scaffold(
-      body: FutureHelper<bool>(
-        task: futureAudios,
-        builder: (context, _) => QuizLayout(
-          lessons: widget.courses,
-          description: widget.description,
-          id: widget.lessonId,
-          thumbnail: widget.thumbnail,
-          progressWidth: progressBar(),
-          progress: '${currentStudyIndex + 1}/$totalStudiesCount',
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              if (!isNullOrEmpty(getAppropriateAudio))
-                Align(
-                  alignment: Alignment.topRight,
-                  child: AudioButton(
-                    animationController: _animationController,
-                    onPressed: _handleOnPressed,
-                  ),
+      body: QuizLayout(
+        lessons: widget.courses,
+        description: widget.description,
+        id: widget.lessonId,
+        thumbnail: widget.thumbnail,
+        progressWidth: progressBar(),
+        progress: '${currentStudyIndex + 1}/$totalStudiesCount',
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (!isNullOrEmpty(getAppropriateAudio))
+              Align(
+                alignment: Alignment.topRight,
+                child: AudioButton(
+                  animationController: _animationController,
+                  onPressed: _handleOnPressed,
                 ),
-              SizedBox(
-                height: 10,
               ),
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      child: AnimatedCrossFade(
-                        duration: Duration(milliseconds: 500),
-                        crossFadeState: studyMode == StudyMode.Study
-                            ? CrossFadeState.showFirst
-                            : CrossFadeState.showSecond,
-                        firstChild: studyMode != StudyMode.Study
-                            ? SizedBox()
-                            : QuestionDisplay(
-                                isRegular: _isRegular(widget.categoryName),
-                                image: currentStudy.picture,
-                                top: currentStudy.description,
-                                bottom: currentStudy.igbo,
-                              ),
-                        secondChild: studyMode == StudyMode.Study
-                            ? SizedBox()
-                            : TestScheduler(
-                                selectedIndex: selectedTestOptionIndex,
-                                disable: quizContinueSelected,
-                                onTestTypeDone: setTestStatus,
-                                test: studies[currentStudyIndex]
-                                    .test[currentTestIndex],
-                              ),
-                      ),
+            SizedBox(
+              height: 10,
+            ),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: AnimatedCrossFade(
+                      duration: Duration(milliseconds: 500),
+                      crossFadeState: studyMode == StudyMode.Study
+                          ? CrossFadeState.showFirst
+                          : CrossFadeState.showSecond,
+                      firstChild: studyMode != StudyMode.Study
+                          ? SizedBox()
+                          : QuestionDisplay(
+                              isRegular: _isRegular(widget.categoryName),
+                              image: currentStudy.picture,
+                              top: currentStudy.description,
+                              bottom: currentStudy.igbo,
+                            ),
+                      secondChild: studyMode == StudyMode.Study
+                          ? SizedBox()
+                          : TestScheduler(
+                              selectedIndex: selectedTestOptionIndex,
+                              disable: quizContinueSelected,
+                              onTestTypeDone: setTestStatus,
+                              test: studies[currentStudyIndex]
+                                  .test[currentTestIndex],
+                            ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
-          footer: AnimatedCrossFade(
-            duration: Duration(milliseconds: 500),
-            crossFadeState: studyMode == StudyMode.Study
-                ? CrossFadeState.showFirst
-                : CrossFadeState.showSecond,
-            firstChild: Padding(
-              padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
-              child: LearnFooter(
-                onMoveBack: () {
-                  stopCurrentAudio();
-                  decreaseStudyIndex(callback: () {
-                    resetPlayingButton();
+            ),
+          ],
+        ),
+        footer: AnimatedCrossFade(
+          duration: Duration(milliseconds: 500),
+          crossFadeState: studyMode == StudyMode.Study
+              ? CrossFadeState.showFirst
+              : CrossFadeState.showSecond,
+          firstChild: Padding(
+            padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+            child: LearnFooter(
+              onMoveBack: () {
+                stopCurrentAudio();
+                decreaseStudyIndex(callback: () {
+                  resetPlayingButton();
+                  playCurrentAudio();
+                });
+              },
+              onMoveNext: () {
+                stopCurrentAudio();
+                resetPlayingButton();
+                if (hasTests()) {
+                  resetTestValuesToDefault(callback: () {
+                    alternateMode(StudyMode.Test);
+                  });
+                } else {
+                  incrementStudyIndex(callback: () {
                     playCurrentAudio();
                   });
-                },
-                onMoveNext: () {
-                  stopCurrentAudio();
-                  resetPlayingButton();
-                  if (hasTests()) {
-                    resetTestValuesToDefault(callback: () {
-                      alternateMode(StudyMode.Test);
-                    });
-                  } else {
-                    incrementStudyIndex(callback: () {
-                      playCurrentAudio();
-                    });
-                  }
-                },
-              ),
+                }
+              },
             ),
-            secondChild: StudyFooter(
-              isCorrect: currentStateOfUserChoice,
-              isSelected: quizContinueSelected,
-              onPressed: _onQuizContinueTap,
-            ),
+          ),
+          secondChild: StudyFooter(
+            isCorrect: currentStateOfUserChoice,
+            isSelected: quizContinueSelected,
+            onPressed: _onQuizContinueTap,
           ),
         ),
       ),
@@ -637,7 +641,7 @@ class StudyFooter extends StatelessWidget {
               color: Color(0xFFF21600),
               onPressed: isCorrect == null ? null : onPressed,
               child: Text(
-                'Continue',
+                isCorrect == null ? 'Select Answer' : 'Submit',
                 style: TextStyle(color: Colors.white),
               ),
             ),

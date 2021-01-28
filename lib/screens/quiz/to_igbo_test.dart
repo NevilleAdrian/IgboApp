@@ -198,9 +198,7 @@ class IgboOption extends StatelessWidget {
             children: <Widget>[
               if (!isNullOrEmpty(image))
                 Expanded(
-                  child: AppNetworkImage(
-                    image: image,
-                  ),
+                  child: Image.asset(image),
                 ),
               SizedBox(
                 height: 8.0,

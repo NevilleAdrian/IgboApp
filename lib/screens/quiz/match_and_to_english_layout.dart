@@ -223,9 +223,9 @@ class DividerForMatch extends StatelessWidget {
               ]),
           child: Column(
             children: <Widget>[
-              AppNetworkImage(
+              Image.asset(
+                image,
                 height: 100,
-                image: image,
               ),
               if (shouldShow(question))
                 Text(

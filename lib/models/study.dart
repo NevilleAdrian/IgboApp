@@ -50,8 +50,8 @@ class Study {
     studyNo = json['study_no'];
     description = json['description'];
     igbo = json['igbo'];
-    picture = replaceBackSlash(json['picture']);
-    voicing = replaceBackSlash(json['voicing']);
+    picture = replaceRemoteImageWithLocal(json['picture']);
+    voicing = replaceRemoteAudioWithLocal(json['voicing']);
     lesson = json['lesson'];
     createdon = json['createdon'];
     iV = json['__v'];
