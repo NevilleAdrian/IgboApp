@@ -74,6 +74,7 @@ class _MyAppState extends State<MyApp> {
           ResetSuccess.id: (context) => ResetSuccess(),
           RegistrationScreen.id: (context) => RegistrationScreen(),
           HomePage.id: (context) => HomePage(),
+          PaymentPage.id: (context) => PaymentPage(),
           SplashScreen.id: (context) => SplashScreen(),
           AboutPage.id: (context) => AboutPage(),
           TermsPage.id: (context) => TermsPage(),

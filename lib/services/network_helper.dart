@@ -23,6 +23,13 @@ class NetworkHelper {
     return await authRequest(body, '$kAppAPIUrl/auth/register');
   }
 
+  Future<bool> checkActiveState(String id) async {
+    print('id is $id');
+    var data = await getRequest('$kAppAPIUrl/user/$id');
+    print(data);
+    return data['subscription_active'];
+  }
+
   Future<dynamic> getCategoryList() async {
     var cat = await getRequest('$kAppAPIUrl/category/');
     return cat['data'];

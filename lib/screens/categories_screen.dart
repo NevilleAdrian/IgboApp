@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nkuzi_igbo/models/pay_model.dart';
 import 'package:nkuzi_igbo/models/sub_category.dart';
+import 'package:nkuzi_igbo/models/user_model.dart';
+import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
+import 'package:nkuzi_igbo/screens/payment/payment_page.dart';
 import 'package:nkuzi_igbo/screens/settings.dart';
 import 'package:nkuzi_igbo/screens/continue_screen.dart';
+import 'package:nkuzi_igbo/ui_widgets/future_helper.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
 
 class CategoriesScreen extends StatefulWidget {
@@ -156,187 +161,207 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                               ),
                               Row(
                                 children: <Widget>[
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        border: Border.all(
-                                            color: Color(0XFFB5B5B5),
-                                            width: 0.4),
-                                        color: Colors.white),
-                                    child: Column(
+                                  GestureDetector(
+                                    onTap: () => _onPayTap(5000, '1'),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border: Border.all(
+                                              color: Color(0XFFB5B5B5),
+                                              width: 0.4),
+                                          color: Colors.white),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              border: Border(
+                                                bottom: BorderSide(
+                                                    color: Colors.grey,
+                                                    width: 0.4),
+                                              ),
+                                            ),
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 30.0,
+                                                vertical: 15.0),
+                                            child: Column(
+                                              children: <Widget>[
+                                                Text(
+                                                  '4',
+                                                  style:
+                                                      TextStyle(fontSize: 36.0),
+                                                ),
+                                                Text(
+                                                  'Months',
+                                                  style: TextStyle(
+                                                      fontSize: 10.0,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 20.0,
+                                                vertical: 5.0),
+                                            child: Text(
+                                              'N5, 000.00/mo',
+                                              style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 10.0),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () => _onPayTap(3000, '3'),
+                                    child: Stack(
+                                      overflow: Overflow.visible,
+                                      alignment: Alignment.topCenter,
                                       children: <Widget>[
                                         Container(
                                           decoration: BoxDecoration(
-                                            border: Border(
-                                              bottom: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: 0.4),
-                                            ),
-                                          ),
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 30.0, vertical: 15.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              border: Border.all(
+                                                  color: Color(0XFFF21600),
+                                                  width: 0.7),
+                                              color: Colors.white),
                                           child: Column(
                                             children: <Widget>[
-                                              Text(
-                                                '1',
-                                                style:
-                                                    TextStyle(fontSize: 36.0),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    bottom: BorderSide(
+                                                        color:
+                                                            Color(0XFFF21600),
+                                                        width: 0.4),
+                                                  ),
+                                                ),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 30.0,
+                                                    vertical: 15.0),
+                                                child: Column(
+                                                  children: <Widget>[
+                                                    Text(
+                                                      '1',
+                                                      style: TextStyle(
+                                                          fontSize: 36.0),
+                                                    ),
+                                                    Text(
+                                                      'Year',
+                                                      style: TextStyle(
+                                                          fontSize: 10.0,
+                                                          fontWeight:
+                                                              FontWeight.w700),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5.0,
+                                                    ),
+                                                    Text(
+                                                      'N15,000,00',
+                                                      style: TextStyle(
+                                                        fontSize: 12.0,
+                                                        decoration:
+                                                            TextDecoration
+                                                                .lineThrough,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                              Text(
-                                                'Months',
-                                                style: TextStyle(
-                                                    fontSize: 10.0,
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                              ),
+                                              Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 20.0,
+                                                    vertical: 5.0),
+                                                child: Text(
+                                                  'N33, 000.00/mo',
+                                                  style: TextStyle(
+                                                      color: Colors.grey,
+                                                      fontSize: 10.0),
+                                                ),
+                                              )
                                             ],
                                           ),
                                         ),
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 20.0, vertical: 5.0),
-                                          child: Text(
-                                            'N3,999.00/mo',
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 10.0),
-                                          ),
-                                        )
+                                        Positioned(
+                                            top: -15,
+                                            child: SizedBox(
+                                              height: 30.0,
+                                              child: FlatButton(
+                                                  color: Color(0XFFF21600),
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 5.0),
+                                                  onPressed: () {},
+                                                  child: Text(
+                                                    'SAVE 20%',
+                                                    style: TextStyle(
+                                                      fontSize: 10.0,
+                                                    ),
+                                                  )),
+                                            )),
                                       ],
                                     ),
                                   ),
-                                  Stack(
-                                    overflow: Overflow.visible,
-                                    alignment: Alignment.topCenter,
-                                    children: <Widget>[
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            border: Border.all(
-                                                color: Color(0XFFF21600),
-                                                width: 0.7),
-                                            color: Colors.white),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                border: Border(
-                                                  bottom: BorderSide(
-                                                      color: Color(0XFFF21600),
-                                                      width: 0.4),
-                                                ),
-                                              ),
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 30.0,
-                                                  vertical: 15.0),
-                                              child: Column(
-                                                children: <Widget>[
-                                                  Text(
-                                                    '1',
-                                                    style: TextStyle(
-                                                        fontSize: 36.0),
-                                                  ),
-                                                  Text(
-                                                    'Months',
-                                                    style: TextStyle(
-                                                        fontSize: 10.0,
-                                                        fontWeight:
-                                                            FontWeight.w700),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 5.0,
-                                                  ),
-                                                  Text(
-                                                    '23,000,00',
-                                                    style: TextStyle(
-                                                        fontSize: 12.0),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 20.0,
-                                                  vertical: 5.0),
-                                              child: Text(
-                                                'N3,999.00/mo',
-                                                style: TextStyle(
+                                  GestureDetector(
+                                    onTap: () => _onPayTap(4000, '2'),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border: Border.all(
+                                              color: Color(0XFFB5B5B5),
+                                              width: 0.4),
+                                          color: Colors.white),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              border: Border(
+                                                bottom: BorderSide(
                                                     color: Colors.grey,
-                                                    fontSize: 10.0),
+                                                    width: 0.4),
                                               ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Positioned(
-                                          top: -15,
-                                          child: SizedBox(
-                                            height: 30.0,
-                                            child: FlatButton(
-                                                color: Color(0XFFF21600),
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 5.0),
-                                                onPressed: () {},
-                                                child: Text(
-                                                  'SAVE 40%',
+                                            ),
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 30.0,
+                                                vertical: 15.0),
+                                            child: Column(
+                                              children: <Widget>[
+                                                Text(
+                                                  '6',
+                                                  style:
+                                                      TextStyle(fontSize: 36.0),
+                                                ),
+                                                Text(
+                                                  'Months',
                                                   style: TextStyle(
-                                                    fontSize: 10.0,
-                                                  ),
-                                                )),
-                                          )),
-                                    ],
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        border: Border.all(
-                                            color: Color(0XFFB5B5B5),
-                                            width: 0.4),
-                                        color: Colors.white),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              bottom: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: 0.4),
+                                                      fontSize: 10.0,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                ),
+                                                SizedBox(
+                                                  height: 5.0,
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 30.0, vertical: 15.0),
-                                          child: Column(
-                                            children: <Widget>[
-                                              Text(
-                                                '6',
-                                                style:
-                                                    TextStyle(fontSize: 36.0),
-                                              ),
-                                              Text(
-                                                'Months',
-                                                style: TextStyle(
-                                                    fontSize: 10.0,
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                              ),
-                                              SizedBox(
-                                                height: 5.0,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 20.0, vertical: 5.0),
-                                          child: Text(
-                                            'N3,159.00/mo',
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 10.0),
-                                          ),
-                                        )
-                                      ],
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 20.0,
+                                                vertical: 5.0),
+                                            child: Text(
+                                              'N4, 000.00/mo',
+                                              style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 10.0),
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -388,10 +413,54 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         });
   }
 
+  bool _loading = false;
+  Future<bool> futureActiveState;
+  Future<bool> currentTask() {
+    //check user state
+    return Future.value(true);
+  }
+
+  Future<bool> futureTask() async {
+    //check user state
+    return await Auth.authProvider(context).checkUserActiveState();
+  }
+
   @override
   void initState() {
+    futureActiveState = Auth.authProvider(context).user.activeSubscription
+        ? currentTask()
+        : futureTask();
     print('cat${widget.lessons}');
     super.initState();
+  }
+
+  _onPayTap(double amount, String subId) async {
+    User user = Auth.authProvider(context).user;
+    PayModel model = PayModel(
+        name: user.name,
+        phone: '08043567891',
+        email: user.email,
+        amount: amount,
+        subId: subId);
+    Navigator.of(context).pop();
+    Navigator.of(context)
+        .pushNamed(
+      PaymentPage.id,
+      arguments: model,
+    )
+        .then((value) async {
+      setState(() {
+        _loading = true;
+      });
+      await futureTask();
+      setState(() {
+        _loading = false;
+      });
+    }).catchError(() {
+      setState(() {
+        _loading = false;
+      });
+    });
   }
 
   @override
@@ -444,593 +513,660 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         ],
         elevation: 0,
       ),
-      body: ListView(
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 25.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 15.0,
-                    ),
-                    Text(
-                      'Beginner',
-                      style: TextStyle(
-                          color: Color(0XFFF21600),
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    ListView.builder(
-                        physics: ScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: widget.lessons.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return widget.lessons[index].form == 'Beginner'
-                              ? Column(
-                                  children: <Widget>[
-                                    GestureDetector(
-                                      onTap: () {
-                                        print(
-                                            'study: ${widget.lessons[index].study.length}');
-                                        widget.lessons[index].study.length == 0
-                                            ? SizedBox()
-                                            : widget.lessons[index]
-                                                        .premiumContent ==
-                                                    true
-                                                ? _modalBottomSheetMenu()
-                                                : Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ContinueList(
-                                                                lessons: widget
-                                                                    .lessons[
-                                                                        index]
-                                                                    .study,
-                                                                courses: widget
-                                                                    .lessons,
-                                                                description: widget
-                                                                    .description,
-                                                                form: widget
-                                                                    .lessons[
-                                                                        index]
-                                                                    .form,
-                                                                name: widget
-                                                                    .lessons[
-                                                                        index]
-                                                                    .name,
-                                                                time: widget
-                                                                    .lessons[
-                                                                        index]
-                                                                    .time,
-                                                                category: widget
-                                                                    .lessons[
-                                                                        index]
-                                                                    .category,
-                                                                thumbnail: widget
-                                                                    .thumbnail,
-                                                                title: widget
-                                                                    .title,
-                                                                id: widget.id)),
-                                                  );
-                                        '';
-                                      },
-                                      child: Column(
-                                        children: <Widget>[
-                                          Container(
-                                              color: Colors.grey, height: 0.3),
-                                          SizedBox(
-                                            height: 15.0,
-                                          ),
-                                          GestureDetector(
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: <Widget>[
-                                                Row(
+      body: FutureHelper(
+        task: futureActiveState,
+        builder: (context, _) => _loading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView(
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      if (widget.lessons
+                              .where((element) => element.form == 'Beginner')
+                              .length >
+                          0)
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 25.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 15.0,
+                              ),
+                              Text(
+                                'Beginner',
+                                style: TextStyle(
+                                    color: Color(0XFFF21600),
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                              ListView.builder(
+                                  physics: ScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: widget.lessons.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return widget.lessons[index].form ==
+                                            'Beginner'
+                                        ? Column(
+                                            children: <Widget>[
+                                              GestureDetector(
+                                                onTap: () {
+                                                  print(
+                                                      'study: ${widget.lessons[index].study.length}');
+                                                  widget.lessons[index].study
+                                                              .length ==
+                                                          0
+                                                      ? SizedBox()
+                                                      : Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) => ContinueList(
+                                                                  lessons: widget
+                                                                      .lessons[
+                                                                          index]
+                                                                      .study,
+                                                                  courses: widget
+                                                                      .lessons,
+                                                                  description:
+                                                                      widget
+                                                                          .description,
+                                                                  form: widget
+                                                                      .lessons[
+                                                                          index]
+                                                                      .form,
+                                                                  name: widget
+                                                                      .lessons[
+                                                                          index]
+                                                                      .name,
+                                                                  time: widget
+                                                                      .lessons[
+                                                                          index]
+                                                                      .time,
+                                                                  category: widget
+                                                                      .lessons[
+                                                                          index]
+                                                                      .category,
+                                                                  thumbnail: widget
+                                                                      .thumbnail,
+                                                                  title: widget
+                                                                      .title,
+                                                                  id: widget
+                                                                      .id)),
+                                                        );
+                                                  '';
+                                                },
+                                                child: Column(
                                                   children: <Widget>[
-                                                    CircleAvatar(
-                                                      radius: 27,
-                                                      backgroundImage:
-                                                          AssetImage(
-                                                              widget.thumbnail),
-                                                      child: Stack(
-                                                        overflow:
-                                                            Overflow.visible,
-                                                        alignment:
-                                                            Alignment.topRight,
+                                                    Container(
+                                                        color: Colors.grey,
+                                                        height: 0.3),
+                                                    SizedBox(
+                                                      height: 15.0,
+                                                    ),
+                                                    GestureDetector(
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
                                                         children: <Widget>[
+                                                          Row(
+                                                            children: <Widget>[
+                                                              CircleAvatar(
+                                                                radius: 27,
+                                                                backgroundImage:
+                                                                    AssetImage(
+                                                                        widget
+                                                                            .thumbnail),
+                                                                child: Stack(
+                                                                  overflow:
+                                                                      Overflow
+                                                                          .visible,
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .topRight,
+                                                                  children: <
+                                                                      Widget>[
+                                                                    widget.lessons[index].premiumContent ==
+                                                                            true
+                                                                        ? Positioned(
+                                                                            right:
+                                                                                -2,
+                                                                            top:
+                                                                                9,
+                                                                            child:
+                                                                                SvgPicture.asset(
+                                                                              "assets/images/mark.svg",
+                                                                            ))
+                                                                        : SizedBox(
+                                                                            height:
+                                                                                0,
+                                                                          ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 20.0,
+                                                              ),
+                                                              Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: <
+                                                                    Widget>[
+                                                                  Text(
+                                                                    '${widget.lessons[index].type}',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontSize:
+                                                                            12),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: 5,
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
+                                                                        0.6,
+                                                                    height: 30,
+                                                                    child:
+                                                                        ListView(
+                                                                      scrollDirection:
+                                                                          Axis.horizontal,
+                                                                      shrinkWrap:
+                                                                          true,
+                                                                      children: <
+                                                                          Widget>[
+                                                                        Text(
+                                                                            '${widget.lessons[index].name}',
+                                                                            style: TextStyle(
+                                                                                fontSize: 17.0,
+                                                                                color: Colors.black,
+                                                                                fontWeight: FontWeight.w500)),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
                                                           widget.lessons[index]
                                                                       .premiumContent ==
                                                                   true
-                                                              ? Positioned(
-                                                                  right: -2,
-                                                                  top: 9,
-                                                                  child:
-                                                                      SvgPicture
-                                                                          .asset(
-                                                                    "assets/images/mark.svg",
-                                                                  ))
+                                                              ? Container(
+                                                                  child: SvgPicture
+                                                                      .asset(
+                                                                          "assets/images/padlock.svg"),
+                                                                )
                                                               : SizedBox(
                                                                   height: 0,
-                                                                ),
+                                                                )
                                                         ],
                                                       ),
                                                     ),
                                                     SizedBox(
-                                                      width: 20.0,
+                                                      height: 20.0,
                                                     ),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: <Widget>[
-                                                        Text(
-                                                          '${widget.lessons[index].type}',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontSize: 12),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        SizedBox(
-                                                          width: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.6,
-                                                          height: 30,
-                                                          child: ListView(
-                                                            scrollDirection:
-                                                                Axis.horizontal,
-                                                            shrinkWrap: true,
-                                                            children: <Widget>[
-                                                              Text(
-                                                                  '${widget.lessons[index].name}',
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          17.0,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500)),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
+                                                    Container(
+                                                        color: Colors.grey,
+                                                        height: 0.3),
                                                   ],
                                                 ),
-                                                widget.lessons[index]
-                                                            .premiumContent ==
-                                                        true
-                                                    ? Container(
-                                                        child: SvgPicture.asset(
-                                                            "assets/images/padlock.svg"),
-                                                      )
-                                                    : SizedBox(
-                                                        height: 0,
-                                                      )
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 20.0,
-                                          ),
-                                          Container(
-                                              color: Colors.grey, height: 0.3),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                )
-                              : SizedBox(
-                                  height: 0,
-                                );
-                        })
-                  ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    Text(
-                      'Intermediate',
-                      style: TextStyle(
-                          color: Color(0XFFF21600),
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    ListView.builder(
-                        physics: ScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: widget.lessons.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return widget.lessons[index].form == 'Intermediate'
-                              ? Column(
-                                  children: <Widget>[
-                                    GestureDetector(
-                                      onTap: () {
-                                        print(
-                                            'study: ${widget.lessons[index].study.length}');
-                                        widget.lessons[index].study.length == 0
-                                            ? SizedBox()
-                                            : widget.lessons[index]
-                                                        .premiumContent ==
-                                                    false
-                                                ? _modalBottomSheetMenu()
-                                                : Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ContinueList(
-                                                                lessons: widget
-                                                                    .lessons[
-                                                                        index]
-                                                                    .study,
-                                                                courses: widget
-                                                                    .lessons,
-                                                                description: widget
-                                                                    .description,
-                                                                form: widget
-                                                                    .lessons[
-                                                                        index]
-                                                                    .form,
-                                                                name: widget
-                                                                    .lessons[
-                                                                        index]
-                                                                    .name,
-                                                                time: widget
-                                                                    .lessons[
-                                                                        index]
-                                                                    .time,
-                                                                category: widget
-                                                                    .lessons[
-                                                                        index]
-                                                                    .category,
-                                                                title: widget
-                                                                    .title,
-                                                                thumbnail: widget
-                                                                    .thumbnail,
-                                                                id: widget.id)),
-                                                  );
-                                        '';
-                                      },
-                                      child: Column(
-                                        children: <Widget>[
-                                          Container(
-                                              color: Colors.grey, height: 0.3),
-                                          SizedBox(
-                                            height: 15.0,
-                                          ),
-                                          GestureDetector(
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: <Widget>[
-                                                Row(
+                                              )
+                                            ],
+                                          )
+                                        : SizedBox(
+                                            height: 0,
+                                          );
+                                  })
+                            ],
+                          ),
+                        ),
+                      if (widget.lessons
+                              .where(
+                                  (element) => element.form == 'Intermediate')
+                              .length >
+                          0)
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 25.0, vertical: 5.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                              Text(
+                                'Intermediate',
+                                style: TextStyle(
+                                    color: Color(0XFFF21600),
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                              ListView.builder(
+                                  physics: ScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: widget.lessons.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return widget.lessons[index].form ==
+                                            'Intermediate'
+                                        ? Column(
+                                            children: <Widget>[
+                                              GestureDetector(
+                                                onTap: () {
+                                                  print(
+                                                      'study: ${widget.lessons[index].study.length}');
+                                                  widget.lessons[index].study
+                                                              .length ==
+                                                          0
+                                                      ? SizedBox()
+                                                      : !Auth.authProvider(
+                                                                  context)
+                                                              .user
+                                                              .activeSubscription
+                                                          ? _modalBottomSheetMenu()
+                                                          : Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => ContinueList(
+                                                                      lessons: widget
+                                                                          .lessons[
+                                                                              index]
+                                                                          .study,
+                                                                      courses:
+                                                                          widget
+                                                                              .lessons,
+                                                                      description:
+                                                                          widget
+                                                                              .description,
+                                                                      form: widget
+                                                                          .lessons[
+                                                                              index]
+                                                                          .form,
+                                                                      name: widget
+                                                                          .lessons[
+                                                                              index]
+                                                                          .name,
+                                                                      time: widget
+                                                                          .lessons[
+                                                                              index]
+                                                                          .time,
+                                                                      category: widget
+                                                                          .lessons[
+                                                                              index]
+                                                                          .category,
+                                                                      title: widget
+                                                                          .title,
+                                                                      thumbnail:
+                                                                          widget
+                                                                              .thumbnail,
+                                                                      id: widget
+                                                                          .id)),
+                                                            );
+                                                  '';
+                                                },
+                                                child: Column(
                                                   children: <Widget>[
-                                                    CircleAvatar(
-                                                      radius: 27,
-                                                      backgroundImage:
-                                                          AssetImage(
-                                                              widget.thumbnail),
-                                                      child: Stack(
-                                                        overflow:
-                                                            Overflow.visible,
-                                                        alignment:
-                                                            Alignment.topRight,
+                                                    Container(
+                                                        color: Colors.grey,
+                                                        height: 0.3),
+                                                    SizedBox(
+                                                      height: 15.0,
+                                                    ),
+                                                    GestureDetector(
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
                                                         children: <Widget>[
-                                                          widget.lessons[index]
-                                                                      .premiumContent ==
-                                                                  false
-                                                              ? Positioned(
-                                                                  right: -2,
-                                                                  top: 9,
-                                                                  child:
-                                                                      SvgPicture
-                                                                          .asset(
-                                                                    "assets/images/mark.svg",
-                                                                  ))
+                                                          Row(
+                                                            children: <Widget>[
+                                                              CircleAvatar(
+                                                                radius: 27,
+                                                                backgroundImage:
+                                                                    AssetImage(
+                                                                        widget
+                                                                            .thumbnail),
+                                                                child: Stack(
+                                                                  overflow:
+                                                                      Overflow
+                                                                          .visible,
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .topRight,
+                                                                  children: <
+                                                                      Widget>[
+                                                                    !Auth.authProvider(context)
+                                                                            .user
+                                                                            .activeSubscription
+                                                                        ? Positioned(
+                                                                            right:
+                                                                                -2,
+                                                                            top:
+                                                                                9,
+                                                                            child:
+                                                                                SvgPicture.asset(
+                                                                              "assets/images/mark.svg",
+                                                                            ))
+                                                                        : SizedBox(
+                                                                            height:
+                                                                                0,
+                                                                          ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 20.0,
+                                                              ),
+                                                              Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: <
+                                                                    Widget>[
+                                                                  Text(
+                                                                    '${widget.lessons[index].type}',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontSize:
+                                                                            12),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: 5,
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
+                                                                        0.6,
+                                                                    height: 30,
+                                                                    child:
+                                                                        ListView(
+                                                                      scrollDirection:
+                                                                          Axis.horizontal,
+                                                                      shrinkWrap:
+                                                                          true,
+                                                                      children: <
+                                                                          Widget>[
+                                                                        Text(
+                                                                            '${widget.lessons[index].name}',
+                                                                            style: TextStyle(
+                                                                                fontSize: 17.0,
+                                                                                color: Colors.black,
+                                                                                fontWeight: FontWeight.w500)),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          !Auth.authProvider(
+                                                                      context)
+                                                                  .user
+                                                                  .activeSubscription
+                                                              ? Container(
+                                                                  child: SvgPicture
+                                                                      .asset(
+                                                                          "assets/images/padlock.svg"),
+                                                                )
                                                               : SizedBox(
                                                                   height: 0,
-                                                                ),
+                                                                )
                                                         ],
                                                       ),
                                                     ),
                                                     SizedBox(
-                                                      width: 20.0,
+                                                      height: 20.0,
                                                     ),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: <Widget>[
-                                                        Text(
-                                                          '${widget.lessons[index].type}',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontSize: 12),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        SizedBox(
-                                                          width: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.6,
-                                                          height: 30,
-                                                          child: ListView(
-                                                            scrollDirection:
-                                                                Axis.horizontal,
-                                                            shrinkWrap: true,
-                                                            children: <Widget>[
-                                                              Text(
-                                                                  '${widget.lessons[index].name}',
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          17.0,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500)),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
+                                                    Container(
+                                                        color: Colors.grey,
+                                                        height: 0.3),
                                                   ],
                                                 ),
-                                                widget.lessons[index]
-                                                            .premiumContent ==
-                                                        false
-                                                    ? Container(
-                                                        child: SvgPicture.asset(
-                                                            "assets/images/padlock.svg"),
-                                                      )
-                                                    : SizedBox(
-                                                        height: 0,
-                                                      )
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 20.0,
-                                          ),
-                                          Container(
-                                              color: Colors.grey, height: 0.3),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                )
-                              : SizedBox(
-                                  height: 0,
-                                );
-                        })
-                  ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    Text(
-                      'Advanced',
-                      style: TextStyle(
-                          color: Color(0XFFF21600),
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    ListView.builder(
-                        physics: ScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: widget.lessons.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return widget.lessons[index].form == 'Advanced'
-                              ? Column(
-                                  children: <Widget>[
-                                    GestureDetector(
-                                      onTap: () {
-                                        print(
-                                            'study: ${widget.lessons[index].study.length}');
-                                        widget.lessons[index].study.length == 0
-                                            ? SizedBox()
-                                            : widget.lessons[index]
-                                                        .premiumContent ==
-                                                    false
-                                                ? _modalBottomSheetMenu()
-                                                : Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ContinueList(
-                                                                lessons: widget
-                                                                    .lessons[
-                                                                        index]
-                                                                    .study,
-                                                                courses: widget
-                                                                    .lessons,
-                                                                description: widget
-                                                                    .description,
-                                                                form: widget
-                                                                    .lessons[
-                                                                        index]
-                                                                    .form,
-                                                                name: widget
-                                                                    .lessons[
-                                                                        index]
-                                                                    .name,
-                                                                time: widget
-                                                                    .lessons[
-                                                                        index]
-                                                                    .time,
-                                                                category: widget
-                                                                    .lessons[
-                                                                        index]
-                                                                    .category,
-                                                                title: widget
-                                                                    .title,
-                                                                thumbnail: widget
-                                                                    .thumbnail,
-                                                                id: widget.id)),
-                                                  );
-                                        '';
-                                      },
-                                      child: Column(
-                                        children: <Widget>[
-                                          Container(
-                                              color: Colors.grey, height: 0.3),
-                                          SizedBox(
-                                            height: 15.0,
-                                          ),
-                                          GestureDetector(
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: <Widget>[
-                                                Row(
+                                              )
+                                            ],
+                                          )
+                                        : SizedBox(
+                                            height: 0,
+                                          );
+                                  })
+                            ],
+                          ),
+                        ),
+                      if (widget.lessons
+                              .where((element) => element.form == 'Advanced')
+                              .length >
+                          0)
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 25.0, vertical: 5.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                              Text(
+                                'Advanced',
+                                style: TextStyle(
+                                    color: Color(0XFFF21600),
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                              ListView.builder(
+                                  physics: ScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: widget.lessons.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return widget.lessons[index].form ==
+                                            'Advanced'
+                                        ? Column(
+                                            children: <Widget>[
+                                              GestureDetector(
+                                                onTap: () {
+                                                  print(
+                                                      'study: ${widget.lessons[index].study.length}');
+                                                  widget.lessons[index].study
+                                                              .length ==
+                                                          0
+                                                      ? SizedBox()
+                                                      : !Auth.authProvider(
+                                                                  context)
+                                                              .user
+                                                              .activeSubscription
+                                                          ? _modalBottomSheetMenu()
+                                                          : Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => ContinueList(
+                                                                      lessons: widget
+                                                                          .lessons[
+                                                                              index]
+                                                                          .study,
+                                                                      courses:
+                                                                          widget
+                                                                              .lessons,
+                                                                      description:
+                                                                          widget
+                                                                              .description,
+                                                                      form: widget
+                                                                          .lessons[
+                                                                              index]
+                                                                          .form,
+                                                                      name: widget
+                                                                          .lessons[
+                                                                              index]
+                                                                          .name,
+                                                                      time: widget
+                                                                          .lessons[
+                                                                              index]
+                                                                          .time,
+                                                                      category: widget
+                                                                          .lessons[
+                                                                              index]
+                                                                          .category,
+                                                                      title: widget
+                                                                          .title,
+                                                                      thumbnail:
+                                                                          widget
+                                                                              .thumbnail,
+                                                                      id: widget
+                                                                          .id)),
+                                                            );
+                                                  '';
+                                                },
+                                                child: Column(
                                                   children: <Widget>[
-                                                    CircleAvatar(
-                                                      radius: 27,
-                                                      backgroundImage:
-                                                          AssetImage(
-                                                              widget.thumbnail),
-                                                      child: Stack(
-                                                        overflow:
-                                                            Overflow.visible,
-                                                        alignment:
-                                                            Alignment.topRight,
+                                                    Container(
+                                                        color: Colors.grey,
+                                                        height: 0.3),
+                                                    SizedBox(
+                                                      height: 15.0,
+                                                    ),
+                                                    GestureDetector(
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
                                                         children: <Widget>[
-                                                          widget.lessons[index]
-                                                                      .premiumContent ==
-                                                                  false
-                                                              ? Positioned(
-                                                                  right: -2,
-                                                                  top: 9,
-                                                                  child:
-                                                                      SvgPicture
-                                                                          .asset(
-                                                                    "assets/images/mark.svg",
-                                                                  ))
+                                                          Row(
+                                                            children: <Widget>[
+                                                              CircleAvatar(
+                                                                radius: 27,
+                                                                backgroundImage:
+                                                                    AssetImage(
+                                                                        widget
+                                                                            .thumbnail),
+                                                                child: Stack(
+                                                                  overflow:
+                                                                      Overflow
+                                                                          .visible,
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .topRight,
+                                                                  children: <
+                                                                      Widget>[
+                                                                    !Auth.authProvider(context)
+                                                                            .user
+                                                                            .activeSubscription
+                                                                        ? Positioned(
+                                                                            right:
+                                                                                -2,
+                                                                            top:
+                                                                                9,
+                                                                            child:
+                                                                                SvgPicture.asset(
+                                                                              "assets/images/mark.svg",
+                                                                            ))
+                                                                        : SizedBox(
+                                                                            height:
+                                                                                0,
+                                                                          ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 20.0,
+                                                              ),
+                                                              Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: <
+                                                                    Widget>[
+                                                                  Text(
+                                                                    '${widget.lessons[index].type}',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontSize:
+                                                                            12),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: 5,
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
+                                                                        0.6,
+                                                                    height: 30,
+                                                                    child:
+                                                                        ListView(
+                                                                      scrollDirection:
+                                                                          Axis.horizontal,
+                                                                      shrinkWrap:
+                                                                          true,
+                                                                      children: <
+                                                                          Widget>[
+                                                                        Text(
+                                                                            '${widget.lessons[index].name}',
+                                                                            style: TextStyle(
+                                                                                fontSize: 17.0,
+                                                                                color: Colors.black,
+                                                                                fontWeight: FontWeight.w500)),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          !Auth.authProvider(
+                                                                      context)
+                                                                  .user
+                                                                  .activeSubscription
+                                                              ? Container(
+                                                                  child: SvgPicture
+                                                                      .asset(
+                                                                          "assets/images/padlock.svg"),
+                                                                )
                                                               : SizedBox(
                                                                   height: 0,
-                                                                ),
+                                                                )
                                                         ],
                                                       ),
                                                     ),
                                                     SizedBox(
-                                                      width: 20.0,
+                                                      height: 20.0,
                                                     ),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: <Widget>[
-                                                        Text(
-                                                          '${widget.lessons[index].type}',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontSize: 12),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        SizedBox(
-                                                          width: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.6,
-                                                          height: 30,
-                                                          child: ListView(
-                                                            scrollDirection:
-                                                                Axis.horizontal,
-                                                            shrinkWrap: true,
-                                                            children: <Widget>[
-                                                              Text(
-                                                                  '${widget.lessons[index].name}',
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          17.0,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500)),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
+                                                    Container(
+                                                        color: Colors.grey,
+                                                        height: 0.3),
                                                   ],
                                                 ),
-                                                widget.lessons[index]
-                                                            .premiumContent ==
-                                                        false
-                                                    ? Container(
-                                                        child: SvgPicture.asset(
-                                                            "assets/images/padlock.svg"),
-                                                      )
-                                                    : SizedBox(
-                                                        height: 0,
-                                                      )
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 20.0,
-                                          ),
-                                          Container(
-                                              color: Colors.grey, height: 0.3),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                )
-                              : SizedBox(
-                                  height: 0,
-                                );
-                        })
-                  ],
-                ),
-              )
-            ],
-          )
-        ],
+                                              )
+                                            ],
+                                          )
+                                        : SizedBox(
+                                            height: 0,
+                                          );
+                                  })
+                            ],
+                          ),
+                        )
+                    ],
+                  )
+                ],
+              ),
       ),
     );
   }

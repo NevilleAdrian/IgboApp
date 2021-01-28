@@ -68,7 +68,7 @@ class _ContinueListState extends State<ContinueList> {
                     Column(
                       children: <Widget>[
                         Text(
-                          'Lesson 1 - ${widget.form}',
+                          'Lesson - ${widget.form}',
                           style: TextStyle(color: Colors.white, fontSize: 20.0),
                         ),
                         Padding(

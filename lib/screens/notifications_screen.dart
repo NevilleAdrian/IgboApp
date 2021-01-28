@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/screens/banner.dart';
 import 'package:nkuzi_igbo/screens/settings.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
+import 'package:nkuzi_igbo/models/user_model.dart';
+import 'package:nkuzi_igbo/providers/auth_provider.dart';
 
 class NotificationScreen extends StatefulWidget {
   @override
@@ -10,6 +12,13 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
+  User user;
+  @override
+  void initState() {
+    user = Auth.authProvider(context).user;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -20,7 +29,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
           title: Text(
             'Notification',
             style: kAuthTextBig.copyWith(
-                fontFamily: 'Baloo', fontWeight: FontWeight.w900, color: Colors.black, fontSize: 25.0),
+                fontFamily: 'Baloo',
+                fontWeight: FontWeight.w900,
+                color: Colors.black,
+                fontSize: 25.0),
           ),
           centerTitle: false,
           automaticallyImplyLeading: false,
@@ -42,19 +54,19 @@ class _NotificationScreenState extends State<NotificationScreen> {
           elevation: 0,
         ),
         body: Padding(
-          padding: const EdgeInsets.only(top: 40.0, left: 10.0, right: 10.0),
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 20.0,),
-              NotificationBanner(),
-            ],
-          )
-        ),
+            padding: const EdgeInsets.only(top: 40.0, left: 10.0, right: 10.0),
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 20.0,
+                ),
+                if (!user.activeSubscription) NotificationBanner(),
+              ],
+            )),
       ),
     );
   }
 }
-
 
 class NotificationList extends StatelessWidget {
   const NotificationList({this.mainText, this.lowerText});

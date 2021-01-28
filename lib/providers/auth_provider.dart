@@ -57,6 +57,21 @@ class Auth extends ChangeNotifier {
     }
   }
 
+  Future<bool> checkUserActiveState() async {
+    try {
+      bool active = await _helper.checkActiveState(user.sId);
+      print(active);
+      if (!user.activeSubscription == active) {
+        user.activeSubscription = active;
+        _hiveRepository.add<User>(name: kUserName, key: 'user', item: user);
+        notifyListeners();
+      }
+      return active;
+    } catch (ex) {
+      throw ApiFailureException(ex);
+    }
+  }
+
   logout() {
     setUser(null);
     setToken(null);

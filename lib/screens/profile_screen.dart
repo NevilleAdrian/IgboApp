@@ -7,6 +7,7 @@ import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/banner.dart';
 import 'package:nkuzi_igbo/screens/settings.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
+import 'package:nkuzi_igbo/models/user_model.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -20,6 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   bool name = true;
   bool location = true;
+  User user;
 
   @override
   void dispose() {
@@ -33,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     name = true;
     location = true;
-
+    user = Auth.authProvider(context).user;
     super.initState();
   }
 
@@ -112,7 +114,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: EdgeInsets.only(left: 25.0, right: 25.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: Color(0XFFB5B5B5), width: 0.4),
+                        border:
+                            Border.all(color: Color(0XFFB5B5B5), width: 0.4),
                         color: Colors.white,
                       ),
                       child: Column(
@@ -145,7 +148,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         Text(
                                           Auth.authProvider(context).user.email,
                                           style: TextStyle(
-                                              color: Colors.black, fontSize: 16),
+                                              color: Colors.black,
+                                              fontSize: 16),
                                         ),
 //                                            Text(
 //                                              'edit',
@@ -190,91 +194,93 @@ class _ProfileScreenState extends State<ProfileScreen> {
 //                                  ),
                             ],
                           ),
-                          Column(
-                            children: <Widget>[
-                              location
-                                  ? GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          location = !location;
-                                        });
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          border: Border(
-                                            bottom: BorderSide(
-                                                color: Colors.grey, width: 0.4),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 15, bottom: 15),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Text(
-                                                Auth.authProvider(context)
-                                                            .user
-                                                            .location !=
-                                                        null
-                                                    ? Auth.authProvider(context)
-                                                        .user
-                                                        .location
-                                                    : 'Location',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 16),
-                                              ),
-                                              Text(
-                                                'edit',
-                                                style: TextStyle(
-                                                    color: Color(0XFFF21600)),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  : TextFormField(
-                                      controller: _locationController,
-                                      textInputAction: TextInputAction.next,
-                                      textCapitalization:
-                                          TextCapitalization.words,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        contentPadding:
-                                            EdgeInsets.symmetric(vertical: 5),
-                                        focusedBorder: InputBorder.none,
-                                        labelText: Auth.authProvider(context)
-                                            .user
-                                            .location,
-                                        labelStyle:
-                                            TextStyle(color: Colors.black),
-                                        fillColor: Colors.white,
-                                        filled: true,
-                                        errorBorder: InputBorder.none,
-                                        disabledBorder: InputBorder.none,
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.grey),
-                                        ),
-                                      ),
-                                      validator: (String value) {
-                                        if (value.length < 1) {
-                                          return 'Please enter the right location';
-                                        } else {
-                                          return null;
-                                        }
-                                      },
-                                    ),
-                            ],
-                          ),
+                          // Column(
+                          //   children: <Widget>[
+                          //     location
+                          //         ? GestureDetector(
+                          //             onTap: () {
+                          //               setState(() {
+                          //                 location = !location;
+                          //               });
+                          //             },
+                          //             child: Container(
+                          //               decoration: BoxDecoration(
+                          //                 border: Border(
+                          //                   bottom: BorderSide(
+                          //                       color: Colors.grey, width: 0.4),
+                          //                 ),
+                          //               ),
+                          //               child: Padding(
+                          //                 padding: const EdgeInsets.only(
+                          //                     top: 15, bottom: 15),
+                          //                 child: Row(
+                          //                   mainAxisAlignment:
+                          //                       MainAxisAlignment.spaceBetween,
+                          //                   children: <Widget>[
+                          //                     Text(
+                          //                       Auth.authProvider(context)
+                          //                                   .user
+                          //                                   .location !=
+                          //                               null
+                          //                           ? Auth.authProvider(context)
+                          //                               .user
+                          //                               .location
+                          //                           : 'Location',
+                          //                       style: TextStyle(
+                          //                           color: Colors.black,
+                          //                           fontSize: 16),
+                          //                     ),
+                          //                     Text(
+                          //                       'edit',
+                          //                       style: TextStyle(
+                          //                           color: Color(0XFFF21600)),
+                          //                     )
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //             ),
+                          //           )
+                          //         : TextFormField(
+                          //             controller: _locationController,
+                          //             textInputAction: TextInputAction.next,
+                          //             textCapitalization:
+                          //                 TextCapitalization.words,
+                          //             decoration: InputDecoration(
+                          //               border: InputBorder.none,
+                          //               contentPadding:
+                          //                   EdgeInsets.symmetric(vertical: 5),
+                          //               focusedBorder: InputBorder.none,
+                          //               labelText: Auth.authProvider(context)
+                          //                   .user
+                          //                   .location,
+                          //               labelStyle:
+                          //                   TextStyle(color: Colors.black),
+                          //               fillColor: Colors.white,
+                          //               filled: true,
+                          //               errorBorder: InputBorder.none,
+                          //               disabledBorder: InputBorder.none,
+                          //               enabledBorder: UnderlineInputBorder(
+                          //                 borderSide:
+                          //                     BorderSide(color: Colors.grey),
+                          //               ),
+                          //             ),
+                          //             validator: (String value) {
+                          //               if (value.length < 1) {
+                          //                 return 'Please enter the right location';
+                          //               } else {
+                          //                 return null;
+                          //               }
+                          //             },
+                          //           ),
+                          //   ],
+                          // ),
                           Container(
                             child: Padding(
-                              padding: const EdgeInsets.only(top: 15, bottom: 15),
+                              padding:
+                                  const EdgeInsets.only(top: 15, bottom: 15),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Text(
                                     'Subsciption',
@@ -287,14 +293,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     child: FlatButton(
                                         color: Color(0XFFF21600),
                                         onPressed: () {},
-                                        padding:
-                                            EdgeInsets.symmetric(horizontal: 10),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(5.0),
                                         ),
                                         child: Text(
-                                          'Active',
+                                          user.activeSubscription
+                                              ? 'Active'
+                                              : 'Inactive',
                                           style: TextStyle(fontSize: 13),
                                         )),
                                   )
@@ -308,17 +316,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(
                       height: 35.0,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 40.0),
-                      child: NotificationBanner(),
-                    ),
+                    if (!user.activeSubscription)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 40.0),
+                        child: NotificationBanner(),
+                      ),
                     SizedBox(
                       height: 30.0,
                     ),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: Color(0XFFB5B5B5), width: 0.4),
+                        border:
+                            Border.all(color: Color(0XFFB5B5B5), width: 0.4),
                         color: Colors.white,
                       ),
                       child: Column(
@@ -362,17 +372,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       children: <Widget>[
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(right: 5.0),
+                                            padding: const EdgeInsets.only(
+                                                right: 5.0),
                                             child: Column(
                                               children: <Widget>[
                                                 Container(
                                                     width: 40.0,
                                                     height: 40.0,
-                                                    decoration: new BoxDecoration(
+                                                    decoration:
+                                                        new BoxDecoration(
                                                       gradient: LinearGradient(
-                                                          begin: Alignment.topRight,
-                                                          end: Alignment.bottomLeft,
+                                                          begin: Alignment
+                                                              .topRight,
+                                                          end: Alignment
+                                                              .bottomLeft,
                                                           colors: [
                                                             Color(0XFFF7B500),
                                                             Color(0XFFF48C02)
@@ -384,7 +397,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 ),
                                                 Text(
                                                   'Mon',
-                                                  style: TextStyle(fontSize: 12.0),
+                                                  style:
+                                                      TextStyle(fontSize: 12.0),
                                                 )
                                               ],
                                             ),
@@ -392,20 +406,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(right: 5.0),
+                                            padding: const EdgeInsets.only(
+                                                right: 5.0),
                                             child: Column(
                                               children: <Widget>[
                                                 Container(
                                                     width: 40.0,
                                                     height: 40.0,
                                                     decoration: new BoxDecoration(
-                                                        gradient: LinearGradient(
-                                                            begin:
-                                                                Alignment.topRight,
-                                                            end: Alignment
-                                                                .bottomLeft,
-                                                            colors: [
+                                                        gradient:
+                                                            LinearGradient(
+                                                                begin: Alignment
+                                                                    .topRight,
+                                                                end: Alignment
+                                                                    .bottomLeft,
+                                                                colors: [
                                                               Colors.white,
                                                               Colors.white
                                                             ]),
@@ -418,7 +433,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 ),
                                                 Text(
                                                   'Tue',
-                                                  style: TextStyle(fontSize: 12.0),
+                                                  style:
+                                                      TextStyle(fontSize: 12.0),
                                                 )
                                               ],
                                             ),
@@ -426,17 +442,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(right: 5.0),
+                                            padding: const EdgeInsets.only(
+                                                right: 5.0),
                                             child: Column(
                                               children: <Widget>[
                                                 Container(
                                                     width: 40.0,
                                                     height: 40.0,
-                                                    decoration: new BoxDecoration(
+                                                    decoration:
+                                                        new BoxDecoration(
                                                       gradient: LinearGradient(
-                                                          begin: Alignment.topRight,
-                                                          end: Alignment.bottomLeft,
+                                                          begin: Alignment
+                                                              .topRight,
+                                                          end: Alignment
+                                                              .bottomLeft,
                                                           colors: [
                                                             Color(0XFFF7B500),
                                                             Color(0XFFF48C02)
@@ -448,7 +467,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 ),
                                                 Text(
                                                   'Wed',
-                                                  style: TextStyle(fontSize: 12.0),
+                                                  style:
+                                                      TextStyle(fontSize: 12.0),
                                                 )
                                               ],
                                             ),
@@ -456,20 +476,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(right: 5.0),
+                                            padding: const EdgeInsets.only(
+                                                right: 5.0),
                                             child: Column(
                                               children: <Widget>[
                                                 Container(
                                                     width: 40.0,
                                                     height: 40.0,
                                                     decoration: new BoxDecoration(
-                                                        gradient: LinearGradient(
-                                                            begin:
-                                                                Alignment.topRight,
-                                                            end: Alignment
-                                                                .bottomLeft,
-                                                            colors: [
+                                                        gradient:
+                                                            LinearGradient(
+                                                                begin: Alignment
+                                                                    .topRight,
+                                                                end: Alignment
+                                                                    .bottomLeft,
+                                                                colors: [
                                                               Colors.white,
                                                               Colors.white
                                                             ]),
@@ -482,7 +503,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 ),
                                                 Text(
                                                   'Thu',
-                                                  style: TextStyle(fontSize: 12.0),
+                                                  style:
+                                                      TextStyle(fontSize: 12.0),
                                                 )
                                               ],
                                             ),
@@ -490,17 +512,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(right: 5.0),
+                                            padding: const EdgeInsets.only(
+                                                right: 5.0),
                                             child: Column(
                                               children: <Widget>[
                                                 Container(
                                                     width: 40.0,
                                                     height: 40.0,
-                                                    decoration: new BoxDecoration(
+                                                    decoration:
+                                                        new BoxDecoration(
                                                       gradient: LinearGradient(
-                                                          begin: Alignment.topRight,
-                                                          end: Alignment.bottomLeft,
+                                                          begin: Alignment
+                                                              .topRight,
+                                                          end: Alignment
+                                                              .bottomLeft,
                                                           colors: [
                                                             Color(0XFFF7B500),
                                                             Color(0XFFF48C02)
@@ -512,7 +537,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 ),
                                                 Text(
                                                   'Fri',
-                                                  style: TextStyle(fontSize: 12.0),
+                                                  style:
+                                                      TextStyle(fontSize: 12.0),
                                                 )
                                               ],
                                             ),
@@ -520,20 +546,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(right: 5.0),
+                                            padding: const EdgeInsets.only(
+                                                right: 5.0),
                                             child: Column(
                                               children: <Widget>[
                                                 Container(
                                                     width: 40.0,
                                                     height: 40.0,
                                                     decoration: new BoxDecoration(
-                                                        gradient: LinearGradient(
-                                                            begin:
-                                                                Alignment.topRight,
-                                                            end: Alignment
-                                                                .bottomLeft,
-                                                            colors: [
+                                                        gradient:
+                                                            LinearGradient(
+                                                                begin: Alignment
+                                                                    .topRight,
+                                                                end: Alignment
+                                                                    .bottomLeft,
+                                                                colors: [
                                                               Colors.white,
                                                               Colors.white
                                                             ]),
@@ -546,7 +573,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 ),
                                                 Text(
                                                   'Sat',
-                                                  style: TextStyle(fontSize: 12.0),
+                                                  style:
+                                                      TextStyle(fontSize: 12.0),
                                                 )
                                               ],
                                             ),
@@ -554,17 +582,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(right: 5.0),
+                                            padding: const EdgeInsets.only(
+                                                right: 5.0),
                                             child: Column(
                                               children: <Widget>[
                                                 Container(
                                                     width: 40.0,
                                                     height: 40.0,
-                                                    decoration: new BoxDecoration(
+                                                    decoration:
+                                                        new BoxDecoration(
                                                       gradient: LinearGradient(
-                                                          begin: Alignment.topRight,
-                                                          end: Alignment.bottomLeft,
+                                                          begin: Alignment
+                                                              .topRight,
+                                                          end: Alignment
+                                                              .bottomLeft,
                                                           colors: [
                                                             Color(0XFFF7B500),
                                                             Color(0XFFF48C02)
@@ -576,7 +607,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 ),
                                                 Text(
                                                   'Sun',
-                                                  style: TextStyle(fontSize: 12.0),
+                                                  style:
+                                                      TextStyle(fontSize: 12.0),
                                                 )
                                               ],
                                             ),

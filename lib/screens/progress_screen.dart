@@ -312,12 +312,13 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 : Container(
                     height: MediaQuery.of(context).size.height * 0.5,
                     child: Center(
-                        child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      backgroundColor: Colors.white,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).primaryColor),
-                    )),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        backgroundColor: Colors.white,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            Theme.of(context).primaryColor),
+                      ),
+                    ),
                   )
           ],
         ),

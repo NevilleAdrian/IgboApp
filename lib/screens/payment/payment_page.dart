@@ -11,6 +11,7 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   WebViewController _webViewController;
+  bool _loading = true;
 
   @override
   void initState() {
@@ -29,6 +30,9 @@ class _PaymentPageState extends State<PaymentPage> {
       javascriptMode: JavascriptMode.unrestricted,
       onPageFinished: (url) {
         print('url is $url');
+        setState(() {
+          _loading = false;
+        });
       },
       onWebViewCreated: (controller) {
         _webViewController = controller;
@@ -53,7 +57,21 @@ class _PaymentPageState extends State<PaymentPage> {
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              child: _showWebView(url),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  _showWebView(url),
+                  if (_loading)
+                    Container(
+                      height: double.infinity,
+                      width: double.infinity,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                            backgroundColor: kPrimary),
+                      ),
+                    )
+                ],
+              ),
             ),
           ],
         ),
