@@ -23,7 +23,7 @@ class HomeScreenPageHeader implements SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    final String learnText = 'What will you like to learn today';
+    final String learnText = 'What would you like to learn today';
     print(shrinkOffset);
     return Container(
       color: Colors.white,

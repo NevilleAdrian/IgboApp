@@ -278,7 +278,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                     horizontal: 20.0,
                                                     vertical: 5.0),
                                                 child: Text(
-                                                  'N33, 000.00/mo',
+                                                  'N3, 000.00/mo',
                                                   style: TextStyle(
                                                       color: Colors.grey,
                                                       fontSize: 10.0),

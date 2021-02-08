@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String searchText;
   List<Category> categories;
   List<Category> filteredCategories = [];
-  final String learnText = 'What will you like to learn today';
+  final String learnText = 'What would you like to learn today';
 
   onSearch() {
     print('text is ${_nameController.text}');

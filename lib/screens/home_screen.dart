@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen>
                       )),
                 ),
                 title: Text(
-                  'What will you like to learn today?',
+                  'What would you like to learn today?',
                   style: TextStyle(fontSize: 14.0),
                 ),
                 actions: <Widget>[
@@ -285,7 +285,7 @@ class _HomeScreenState extends State<HomeScreen>
                             height: 5.0,
                           ),
                           Text(
-                            'What will you like to learn today',
+                            'What would you like to learn today',
                             style:
                                 TextStyle(fontSize: 14.0, color: Colors.black),
                           ),
