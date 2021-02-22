@@ -140,7 +140,13 @@ class _AuthLayoutState extends State<AuthLayout> {
                 LoadingButton(
                   isFlat: false,
                   action: () async {
+                    setState(() {
+                      _isGoogleBusy = true;
+                    });
                     await _onGoogleSignIn();
+                    setState(() {
+                      _isGoogleBusy = false;
+                    });
                   },
                   isLoading: _isGoogleBusy,
                   color: kGoogleBorderColor,
@@ -157,7 +163,13 @@ class _AuthLayoutState extends State<AuthLayout> {
                 LoadingButton(
                   isLoading: _isBusy,
                   action: () async {
+                    setState(() {
+                      _isBusy = true;
+                    });
                     await _onFacebookLogin(context);
+                    setState(() {
+                      _isBusy = false;
+                    });
                   },
                   color: kFacebookColor,
                   display: ExternalLogin(
