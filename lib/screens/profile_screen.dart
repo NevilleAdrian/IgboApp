@@ -288,8 +288,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         color: Colors.black, fontSize: 16),
                                   ),
                                   SizedBox(
-                                    height: 27,
-                                    width: 70,
+                                    height: 40,
+                                    width: 90,
                                     child: FlatButton(
                                         color: Color(0XFFF21600),
                                         onPressed: () {},
