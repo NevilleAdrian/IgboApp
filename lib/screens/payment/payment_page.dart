@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:nkuzi_igbo/models/pay_model.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -37,9 +38,33 @@ class _PaymentPageState extends State<PaymentPage> {
       onWebViewCreated: (controller) {
         _webViewController = controller;
         _webViewController.loadUrl(url);
+
       },
     );
   }
+
+  Widget _showWeb(String url) {
+    return WebviewScaffold(
+      url: url,
+      appBar: AppBar(
+        title: Text('PAYMENT'),
+      ),
+      withZoom: true,
+      withLocalStorage: true,
+      hidden: true,
+      initialChild: Container(
+        height: double.infinity,
+        width: double.infinity,
+        child: Center(
+          child: CircularProgressIndicator(
+              backgroundColor: kPrimary),
+        ),
+      )
+
+    );
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,34 +73,7 @@ class _PaymentPageState extends State<PaymentPage> {
         '$kPayUrl?fullname=${model.name}&email=${model.email}&phone=${model.phone}'
         '&amount=${model.amount}&subId=${model.subId}';
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('PAYMENT'),
-        ),
-        body: Stack(
-          children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  _showWebView(url),
-                  if (_loading)
-                    Container(
-                      height: double.infinity,
-                      width: double.infinity,
-                      child: Center(
-                        child: CircularProgressIndicator(
-                            backgroundColor: kPrimary),
-                      ),
-                    )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      child: _showWeb(url)
     );
   }
 }

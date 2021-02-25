@@ -44,12 +44,14 @@ class HomeScreenPageHeader implements SliverPersistentHeaderDelegate {
                     SizedBox(
                       width: 20,
                     ),
-                    Text(
-                      learnText,
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.black.withOpacity(
-                          reverseTitleOpacity(shrinkOffset),
+                    Expanded(
+                      child: Text(
+                        learnText,
+                        style: TextStyle(
+                          fontSize: 13.0,
+                          color: Colors.black.withOpacity(
+                            reverseTitleOpacity(shrinkOffset),
+                          ),
                         ),
                       ),
                     ),

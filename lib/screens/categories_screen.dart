@@ -157,237 +157,247 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                 ],
                               ),
                               SizedBox(
-                                height: 40.0,
+                                height: 60.0,
                               ),
                               Row(
                                 children: <Widget>[
-                                  GestureDetector(
-                                    onTap: () => _onPayTap(5000, '1'),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          border: Border.all(
-                                              color: Color(0XFFB5B5B5),
-                                              width: 0.4),
-                                          color: Colors.white),
-                                      child: Column(
-                                        children: <Widget>[
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border(
-                                                bottom: BorderSide(
-                                                    color: Colors.grey,
-                                                    width: 0.4),
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () => _onPayTap(5000, '1'),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            border: Border.all(
+                                                color: Color(0XFFB5B5B5),
+                                                width: 0.4),
+                                            color: Colors.white),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                border: Border(
+                                                  bottom: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 0.4),
+                                                ),
+                                              ),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 30.0,
+                                                  vertical: 15.0),
+                                              child: Column(
+                                                children: <Widget>[
+                                                  Text(
+                                                    '4',
+                                                    style:
+                                                        TextStyle(fontSize: 36.0),
+                                                  ),
+                                                  Text(
+                                                    'Months',
+                                                    style: TextStyle(
+                                                        fontSize: 10.0,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                  ),
+                                                ],
                                               ),
                                             ),
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 30.0,
-                                                vertical: 15.0),
-                                            child: Column(
-                                              children: <Widget>[
-                                                Text(
-                                                  '4',
-                                                  style:
-                                                      TextStyle(fontSize: 36.0),
-                                                ),
-                                                Text(
-                                                  'Months',
-                                                  style: TextStyle(
-                                                      fontSize: 10.0,
-                                                      fontWeight:
-                                                          FontWeight.w700),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 20.0,
-                                                vertical: 5.0),
-                                            child: Text(
-                                              'N5, 000.00/mo',
-                                              style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 10.0),
-                                            ),
-                                          )
-                                        ],
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 20.0,
+                                                  vertical: 5.0),
+                                              child: Text(
+                                                'N5, 000.00/mo',
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 10.0),
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                  GestureDetector(
-                                    onTap: () => _onPayTap(3000, '3'),
-                                    child: Stack(
-                                      overflow: Overflow.visible,
-                                      alignment: Alignment.topCenter,
-                                      children: <Widget>[
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () => _onPayTap(3000, '3'),
+                                      child: Stack(
+                                        overflow: Overflow.visible,
+                                        alignment: Alignment.topCenter,
+                                        children: <Widget>[
                                         Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              border: Border.all(
-                                                  color: Color(0XFFF21600),
-                                                  width: 0.7),
-                                              color: Colors.white),
-                                          child: Column(
-                                            children: <Widget>[
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  border: Border(
-                                                    bottom: BorderSide(
-                                                        color:
-                                                            Color(0XFFF21600),
-                                                        width: 0.4),
+                                          padding: EdgeInsets.only(top: 20.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                BorderRadius.circular(5),
+                                                border: Border.all(
+                                                    color: Color(0XFFF21600),
+                                                    width: 0.7),
+                                                color: Colors.white),
+                                            child: Column(
+                                              children: <Widget>[
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                    border: Border(
+                                                      bottom: BorderSide(
+                                                          color:
+                                                          Color(0XFFF21600),
+                                                          width: 0.4),
+                                                    ),
+                                                  ),
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 30.0,
+                                                      vertical: 15.0),
+                                                  child: Column(
+                                                    children: <Widget>[
+                                                      Text(
+                                                        '1',
+                                                        style: TextStyle(
+                                                            fontSize: 36.0),
+                                                      ),
+                                                      Text(
+                                                        'Year',
+                                                        style: TextStyle(
+                                                            fontSize: 10.0,
+                                                            fontWeight:
+                                                            FontWeight.w700),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 5.0,
+                                                      ),
+                                                      Text(
+                                                        'N15,000',
+                                                        style: TextStyle(
+                                                          fontSize: 12.0,
+                                                          decoration:
+                                                          TextDecoration
+                                                              .lineThrough,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 30.0,
-                                                    vertical: 15.0),
-                                                child: Column(
-                                                  children: <Widget>[
-                                                    Text(
-                                                      '1',
-                                                      style: TextStyle(
-                                                          fontSize: 36.0),
-                                                    ),
-                                                    Text(
-                                                      'Year',
-                                                      style: TextStyle(
-                                                          fontSize: 10.0,
-                                                          fontWeight:
-                                                              FontWeight.w700),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 5.0,
-                                                    ),
-                                                    Text(
-                                                      'N15,000,00',
-                                                      style: TextStyle(
-                                                        fontSize: 12.0,
-                                                        decoration:
-                                                            TextDecoration
-                                                                .lineThrough,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 20.0,
-                                                    vertical: 5.0),
-                                                child: Text(
-                                                  'N3, 000.00/mo',
-                                                  style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontSize: 10.0),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        Positioned(
-                                            top: -15,
-                                            child: SizedBox(
-                                              height: 30.0,
-                                              child: FlatButton(
-                                                  color: Color(0XFFF21600),
+                                                Container(
                                                   padding: EdgeInsets.symmetric(
-                                                      horizontal: 5.0),
-                                                  onPressed: () {},
+                                                      horizontal: 20.0,
+                                                      vertical: 5.0),
                                                   child: Text(
-                                                    'SAVE 20%',
+                                                    'N3, 000.00/mo',
                                                     style: TextStyle(
-                                                      fontSize: 10.0,
-                                                    ),
-                                                  )),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () => _onPayTap(4000, '2'),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          border: Border.all(
-                                              color: Color(0XFFB5B5B5),
-                                              width: 0.4),
-                                          color: Colors.white),
-                                      child: Column(
-                                        children: <Widget>[
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              border: Border(
-                                                bottom: BorderSide(
-                                                    color: Colors.grey,
-                                                    width: 0.4),
-                                              ),
-                                            ),
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 30.0,
-                                                vertical: 15.0),
-                                            child: Column(
-                                              children: <Widget>[
-                                                Text(
-                                                  '6',
-                                                  style:
-                                                      TextStyle(fontSize: 36.0),
-                                                ),
-                                                Text(
-                                                  'Months',
-                                                  style: TextStyle(
-                                                      fontSize: 10.0,
-                                                      fontWeight:
-                                                          FontWeight.w700),
-                                                ),
-                                                SizedBox(
-                                                  height: 5.0,
-                                                ),
+                                                        color: Colors.grey,
+                                                        fontSize: 10.0),
+                                                  ),
+                                                )
                                               ],
                                             ),
                                           ),
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 20.0,
-                                                vertical: 5.0),
-                                            child: Text(
-                                              'N4, 000.00/mo',
-                                              style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 10.0),
-                                            ),
-                                          )
+                                        ),
+                                          Positioned(
+                                              top: 10,
+                                              child: SizedBox(
+                                                height: 30.0,
+                                                child: FlatButton(
+                                                    color: Color(0XFFF21600),
+                                                    padding: EdgeInsets.symmetric(
+                                                        horizontal: 5.0),
+                                                    onPressed: () {},
+                                                    child: Text(
+                                                      'SAVE 20%',
+                                                      style: TextStyle(
+                                                        fontSize: 10.0,
+                                                      ),
+                                                    )),
+                                              )),
+
                                         ],
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () => _onPayTap(4000, '2'),
+                                      child : Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            border: Border.all(
+                                                color: Color(0XFFB5B5B5),
+                                                width: 0.4),
+                                            color: Colors.white),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                border: Border(
+                                                  bottom: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 0.4),
+                                                ),
+                                              ),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 30.0,
+                                                  vertical: 15.0),
+                                              child: Column(
+                                                children: <Widget>[
+                                                  Text(
+                                                    '6',
+                                                    style:
+                                                        TextStyle(fontSize: 36.0),
+                                                  ),
+                                                  Text(
+                                                    'Months',
+                                                    style: TextStyle(
+                                                        fontSize: 10.0,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5.0,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 20.0,
+                                                  vertical: 5.0),
+                                              child: Text(
+                                                'N4, 000.00/mo',
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 10.0),
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: 40,
-                                  ),
-                                  FlatButton(
-                                      color: Color(0XFFF21600),
-                                      onPressed: () {},
-                                      child: Text('Continue')),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    'Restore Purchase',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Color(0XFFF21600),
-                                        fontSize: 13.0),
-                                  ),
-                                ],
-                              ),
+                              // Column(
+                              //   crossAxisAlignment: CrossAxisAlignment.stretch,
+                              //   children: <Widget>[
+                              //     SizedBox(
+                              //       height: 40,
+                              //     ),
+                              //     FlatButton(
+                              //         color: Color(0XFFF21600),
+                              //         onPressed: () {},
+                              //         child: Text('Continue')),
+                              //     SizedBox(
+                              //       height: 20,
+                              //     ),
+                              //     Text(
+                              //       'Restore Purchase',
+                              //       textAlign: TextAlign.center,
+                              //       style: TextStyle(
+                              //           color: Color(0XFFF21600),
+                              //           fontSize: 13.0),
+                              //     ),
+                              //   ],
+                              // ),
                               SizedBox(
                                 height: 20,
                               ),
