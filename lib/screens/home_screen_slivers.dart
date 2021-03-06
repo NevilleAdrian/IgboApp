@@ -152,7 +152,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 SliverPersistentHeader(
                   pinned: true,
                   floating: false,
-                  // floating: true,
                   delegate: HomeScreenPageHeader(
                     minExtent: 70,
                     maxExtent: 200,

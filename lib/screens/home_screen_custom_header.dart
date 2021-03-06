@@ -21,10 +21,9 @@ class HomeScreenPageHeader implements SliverPersistentHeaderDelegate {
   final double maxExtent;
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     final String learnText = 'What would you like to learn today';
-    print(shrinkOffset);
+    print('shrinkoffset: $shrinkOffset');
     return Container(
       color: Colors.white,
       child: Column(
@@ -58,32 +57,9 @@ class HomeScreenPageHeader implements SliverPersistentHeaderDelegate {
                   ],
                 ),
               ),
-
               SearchButton(
                 onTap: onTap,
               )
-              // Row(
-              //   children: [
-              //     CircleAvatar(
-              //       radius: 28,
-              //       backgroundImage: NetworkImage(
-              //           'https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80'),
-              //     ),
-              //     SizedBox(
-              //       width: 20,
-              //     ),
-              //     Text(
-              //       learnText,
-              //       style: TextStyle(
-              //           fontSize: 14.0,
-              //           color: Colors.black
-              //               .withOpacity(reverseTitleOpacity(shrinkOffset))),
-              //     )
-              //   ],
-              // ),
-              // SearchButton(
-              //   onTap: onTap,
-              // )
             ],
           ),
           Expanded(

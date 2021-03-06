@@ -57,6 +57,16 @@ class Auth extends ChangeNotifier {
     }
   }
 
+Future<void> socialRegisterUser(String name, String email) async {
+    try {
+      var data = await _helper.socialRegisterUser(name, email);
+      _setInitialData(data);
+      print(_token);
+    } catch (ex) {
+      throw ApiFailureException(ex);
+    }
+  }
+
   Future<bool> checkUserActiveState() async {
     try {
       bool active = await _helper.checkActiveState(user.sId);

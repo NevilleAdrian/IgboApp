@@ -1,14 +1,20 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:apple_sign_in/apple_sign_in_button.dart' as btn;
+import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:nkuzi_igbo/Exceptions/api_failure_exception.dart';
+import 'package:nkuzi_igbo/providers/apple_auth_service.dart';
+import 'package:nkuzi_igbo/apple_sign_in_available.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
 import 'package:nkuzi_igbo/ui_widgets/loading_button.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
+import 'package:provider/provider.dart';
 
 enum AuthType { SignUp, Login }
 
@@ -31,6 +37,7 @@ class _AuthLayoutState extends State<AuthLayout> {
   );
   bool _isBusy = false;
   bool _isGoogleBusy = false;
+  bool _isAppleBusy = false;
 
   Future<void> _onGoogleSignIn() async {
     try {
@@ -40,7 +47,7 @@ class _AuthLayoutState extends State<AuthLayout> {
       if (res == null) {
         _showError(context, 'An error occurred during the sign in process');
       } else {
-        await _sendDetailsToServer(context, res.displayName, res.email);
+        await _sendSmDetailsToServer(context, res.displayName, res.email);
       }
       print(res);
     } catch (error) {
@@ -63,7 +70,8 @@ class _AuthLayoutState extends State<AuthLayout> {
         final graphResponse = await http.get(
             'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=$token');
         final profile = jsonDecode(graphResponse.body);
-        await _sendDetailsToServer(context, profile['name'], profile['email']);
+        await _sendSmDetailsToServer(
+            context, profile['name'], profile['email']);
         break;
       case FacebookLoginStatus.cancelledByUser:
         _showError(context, 'Authentication flow canceled by you.');
@@ -71,6 +79,31 @@ class _AuthLayoutState extends State<AuthLayout> {
       case FacebookLoginStatus.error:
         _showError(context, result.errorMessage);
         break;
+    }
+  }
+
+  Future<void> _signInWithApple(BuildContext context) async {
+    try {
+      setState(() {
+        _isAppleBusy = true;
+      });
+      final authService = Provider.of<AuthServices>(context, listen: false);
+      final user = await authService
+          .signInWithApple(scopes: [Scope.email, Scope.fullName]);
+      setState(() {
+        _isAppleBusy = false;
+      });
+      if (user != null) {
+        await _sendSmDetailsToServer(context, user.displayName, user.email);
+      } else {
+        _showError(context, 'An error occurred during the sign in process');
+      }
+    } catch (e) {
+      setState(() {
+        _isAppleBusy = false;
+      });
+      print('e: $e');
+      _showError(context, e);
     }
   }
 
@@ -84,9 +117,33 @@ class _AuthLayoutState extends State<AuthLayout> {
     }
   }
 
+  Future<void> _authSmAction(
+      BuildContext context, String name, String email) async {
+    if (widget.authType == AuthType.SignUp) {
+      return await Auth.authProvider(context).socialRegisterUser(name, email);
+    } else {
+      return await Auth.authProvider(context).loginUser(email, 'password');
+    }
+  }
+
   Future<void> _sendDetailsToServer(
       BuildContext context, String name, String email) async {
     await _authAction(context, name, email)
+        .then((_) => setState(() {
+              _isBusy = false;
+              _navigateToHome(context);
+            }))
+        .catchError((error) {
+      setState(() {
+        _isBusy = false;
+        _showError(context, error);
+      });
+    });
+  }
+
+  Future<void> _sendSmDetailsToServer(
+      BuildContext context, String name, String email) async {
+    await _authSmAction(context, name, email)
         .then((_) => setState(() {
               _isBusy = false;
               _navigateToHome(context);
@@ -113,6 +170,9 @@ class _AuthLayoutState extends State<AuthLayout> {
 
   @override
   Widget build(BuildContext context) {
+    final appleSignInAvailable =
+        Provider.of<AppleSignInAvailable>(context, listen: false);
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -179,6 +239,29 @@ class _AuthLayoutState extends State<AuthLayout> {
                     size: 30.0,
                   ),
                 ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                _isAppleBusy
+                    ? LoadingButton(
+                        isLoading: _isAppleBusy,
+                        color: Colors.black,
+                      )
+                    : (Platform.isIOS
+                        ? Column(
+                            children: [
+                              if (appleSignInAvailable.isAvailable)
+                                AppleSignInButton(
+                                  type: ButtonType.signIn,
+                                  style: btn.ButtonStyle.black,
+                                  cornerRadius: 35, // style as needed
+                                  onPressed: () => _signInWithApple(context),
+                                ),
+                            ],
+                          )
+                        : SizedBox(
+                            height: 0,
+                          )),
                 SizedBox(
                   height: 20.0,
                 ),

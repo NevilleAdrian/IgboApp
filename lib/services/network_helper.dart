@@ -23,6 +23,13 @@ class NetworkHelper {
     return await authRequest(body, '$kAppAPIUrl/auth/register');
   }
 
+  Future<dynamic> socialRegisterUser(
+      String name, String email) async {
+    print('$email, $name, ');
+    var body = Register(name: name, email: email).toJson();
+    return await authRequest(body, '$kAppAPIUrl/auth/login/sm/appuser');
+  }
+
   Future<bool> checkActiveState(String id) async {
     print('id is $id');
     var data = await getRequest('$kAppAPIUrl/user/$id');

@@ -43,7 +43,11 @@ dependencies:
   flutter_cache_manager: ^2.0.0
   just_audio: ^0.5.5
   flutter_webview_plugin: ^0.3.11
-#  assets_audio_player: ^2.0.13+1
+  apple_sign_in: ^0.1.0
+  firebase_core: ^0.5.2
+  firebase_auth: ^0.18.3
+
+  #  assets_audio_player: ^2.0.13+1
 
 
   # The following adds the Cupertino Icons font to your application.

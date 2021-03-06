@@ -37,6 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     controller.forward();
 
+
     controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         controller.reverse(from: 5.0);

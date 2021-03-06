@@ -1,4 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:nkuzi_igbo/apple_sign_in_available.dart';
 import 'package:nkuzi_igbo/models/app_model.dart';
 import 'package:nkuzi_igbo/models/study.dart';
 import 'package:nkuzi_igbo/models/sub_category.dart';
@@ -27,7 +29,13 @@ import 'utils/theme_data.dart';
 
 void main() async {
   await _openHive();
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  final appleSignInAvailable = await AppleSignInAvailable.check();
+  runApp(Provider<AppleSignInAvailable>.value(
+    value: appleSignInAvailable,
+    child: MyApp(),
+  ));
 }
 
 _openHive() async {
