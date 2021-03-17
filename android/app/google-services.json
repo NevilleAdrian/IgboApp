@@ -38,6 +38,13 @@
             {
               "client_id": "409649017308-ir8nh5t918iukp02r2f359cf0l4qaqso.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "409649017308-gfu3983au00tjelvn9ic9qvqnvcvu1av.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.igboapp.com"
+              }
             }
           ]
         }
