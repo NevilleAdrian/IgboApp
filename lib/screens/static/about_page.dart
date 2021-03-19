@@ -7,12 +7,13 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return StaticLayout(
       title: 'About Nkuzi Igbo',
-      content:
-          '<p>Quisque suscipit ipsum est, eu venenatis leo ornare eget. Ut porta facilisis elementum. '
-          'Sed condimentum sed massa quis ullamcorper. Donec at scelerisque neque. Pellentesque sagittis, massa sodales sodales finibus, felis ligula tempus lorem, eu porttitor </p>'
-          '<p>ex lacus vel felis. Vivamus egestas scelerisque consectetur. Vestibulum faucibus enim urna, fermentum aliquet quam euismod non. Proin cursus, '
-          'libero quis semper elementum, diam metus eleifend magna, in placerat sem velit vitae lacus. Vivamus tempor fringilla nisl, id condimentum felis dignissim nec. Quisque suscipit ipsum est, eu venenatis leo ornare eget. Ut porta facilisis elementum. Sed condimentum sed massa quis ullamcorper. Donec at scelerisque neque. Pellentesque sagittis, massa sodales sodales finibus, felis ligula tempus lorem, eu porttitor ex lacus vel felis. Vivamus egestas scelerisque '
-          'consectetur. Vestibulum faucibus enim urna, fermentum aliquet quam euismod non.</p>',
+      content: '<p><strong>About Nkuzi Igbo</strong></p>'
+          '<p><span style="font-weight: 400;">Nkuzi Igbo is a startup language '
+          'learning platform in Igbo language, it hopes to become the most downloaded Igbo education '
+          'learning app in the world, with millions of users. Our mission is to make the learning '
+          'of the Igbo language fun and accessible to all. Nkuzi Igbo is gamified to make learning effective. '
+          'There are several basic learning materials in the learning of Igbo as well as a huge content base '
+          'for learners of the indigenous Nigerian Language who want to progress in their learning.</span></p>',
     );
   }
 }
