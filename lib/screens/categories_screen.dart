@@ -482,7 +482,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       setState(() {
         _loading = false;
       });
-    }).catchError(() {
+    }).catchError((err) {
       setState(() {
         _loading = false;
       });
