@@ -163,7 +163,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                 children: <Widget>[
                                   Expanded(
                                     child: GestureDetector(
-                                      onTap: () => _onPayTap(5000, '1'),
+                                      onTap: () =>
+                                          _onPayTap(_isLocal ? 4000 : 10, '1'),
                                       child: Container(
                                         decoration: BoxDecoration(
                                             borderRadius:
@@ -188,7 +189,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                               child: Column(
                                                 children: <Widget>[
                                                   Text(
-                                                    '4',
+                                                    '3',
                                                     style: TextStyle(
                                                         fontSize: 36.0),
                                                   ),
@@ -207,7 +208,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                   horizontal: 20.0,
                                                   vertical: 5.0),
                                               child: Text(
-                                                'N5, 000.00/mo',
+                                                _isLocal
+                                                    ? 'N4, 000.00/mo'
+                                                    : '\$10/mo',
                                                 style: TextStyle(
                                                     color: Colors.grey,
                                                     fontSize: 10.0),
@@ -218,108 +221,109 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                       ),
                                     ),
                                   ),
+                                  // Expanded(
+                                  //   child: GestureDetector(
+                                  //     onTap: () => _onPayTap(3000, '3'),
+                                  //     child: Stack(
+                                  //       overflow: Overflow.visible,
+                                  //       alignment: Alignment.topCenter,
+                                  //       children: <Widget>[
+                                  //         Container(
+                                  //           padding: EdgeInsets.only(top: 20.0),
+                                  //           child: Container(
+                                  //             decoration: BoxDecoration(
+                                  //                 borderRadius:
+                                  //                     BorderRadius.circular(5),
+                                  //                 border: Border.all(
+                                  //                     color: Color(0XFFF21600),
+                                  //                     width: 0.7),
+                                  //                 color: Colors.white),
+                                  //             child: Column(
+                                  //               children: <Widget>[
+                                  //                 Container(
+                                  //                   decoration: BoxDecoration(
+                                  //                     border: Border(
+                                  //                       bottom: BorderSide(
+                                  //                           color: Color(
+                                  //                               0XFFF21600),
+                                  //                           width: 0.4),
+                                  //                     ),
+                                  //                   ),
+                                  //                   padding:
+                                  //                       EdgeInsets.symmetric(
+                                  //                           horizontal: 30.0,
+                                  //                           vertical: 15.0),
+                                  //                   child: Column(
+                                  //                     children: <Widget>[
+                                  //                       Text(
+                                  //                         '1',
+                                  //                         style: TextStyle(
+                                  //                             fontSize: 36.0),
+                                  //                       ),
+                                  //                       Text(
+                                  //                         'Year',
+                                  //                         style: TextStyle(
+                                  //                             fontSize: 10.0,
+                                  //                             fontWeight:
+                                  //                                 FontWeight
+                                  //                                     .w700),
+                                  //                       ),
+                                  //                       SizedBox(
+                                  //                         height: 5.0,
+                                  //                       ),
+                                  //                       Text(
+                                  //                         'N15,000',
+                                  //                         style: TextStyle(
+                                  //                           fontSize: 12.0,
+                                  //                           decoration:
+                                  //                               TextDecoration
+                                  //                                   .lineThrough,
+                                  //                         ),
+                                  //                       ),
+                                  //                     ],
+                                  //                   ),
+                                  //                 ),
+                                  //                 Container(
+                                  //                   padding:
+                                  //                       EdgeInsets.symmetric(
+                                  //                           horizontal: 20.0,
+                                  //                           vertical: 5.0),
+                                  //                   child: Text(
+                                  //                     'N3, 000.00/mo',
+                                  //                     style: TextStyle(
+                                  //                         color: Colors.grey,
+                                  //                         fontSize: 10.0),
+                                  //                   ),
+                                  //                 )
+                                  //               ],
+                                  //             ),
+                                  //           ),
+                                  //         ),
+                                  //         Positioned(
+                                  //             top: 10,
+                                  //             child: SizedBox(
+                                  //               height: 30.0,
+                                  //               child: FlatButton(
+                                  //                   color: Color(0XFFF21600),
+                                  //                   padding:
+                                  //                       EdgeInsets.symmetric(
+                                  //                           horizontal: 5.0),
+                                  //                   onPressed: () {},
+                                  //                   child: Text(
+                                  //                     'SAVE 20%',
+                                  //                     style: TextStyle(
+                                  //                       fontSize: 10.0,
+                                  //                     ),
+                                  //                   )),
+                                  //             )),
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   Expanded(
                                     child: GestureDetector(
-                                      onTap: () => _onPayTap(3000, '3'),
-                                      child: Stack(
-                                        overflow: Overflow.visible,
-                                        alignment: Alignment.topCenter,
-                                        children: <Widget>[
-                                          Container(
-                                            padding: EdgeInsets.only(top: 20.0),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  border: Border.all(
-                                                      color: Color(0XFFF21600),
-                                                      width: 0.7),
-                                                  color: Colors.white),
-                                              child: Column(
-                                                children: <Widget>[
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                      border: Border(
-                                                        bottom: BorderSide(
-                                                            color: Color(
-                                                                0XFFF21600),
-                                                            width: 0.4),
-                                                      ),
-                                                    ),
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 30.0,
-                                                            vertical: 15.0),
-                                                    child: Column(
-                                                      children: <Widget>[
-                                                        Text(
-                                                          '1',
-                                                          style: TextStyle(
-                                                              fontSize: 36.0),
-                                                        ),
-                                                        Text(
-                                                          'Year',
-                                                          style: TextStyle(
-                                                              fontSize: 10.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 5.0,
-                                                        ),
-                                                        Text(
-                                                          'N15,000',
-                                                          style: TextStyle(
-                                                            fontSize: 12.0,
-                                                            decoration:
-                                                                TextDecoration
-                                                                    .lineThrough,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 20.0,
-                                                            vertical: 5.0),
-                                                    child: Text(
-                                                      'N3, 000.00/mo',
-                                                      style: TextStyle(
-                                                          color: Colors.grey,
-                                                          fontSize: 10.0),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                              top: 10,
-                                              child: SizedBox(
-                                                height: 30.0,
-                                                child: FlatButton(
-                                                    color: Color(0XFFF21600),
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 5.0),
-                                                    onPressed: () {},
-                                                    child: Text(
-                                                      'SAVE 20%',
-                                                      style: TextStyle(
-                                                        fontSize: 10.0,
-                                                      ),
-                                                    )),
-                                              )),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () => _onPayTap(4000, '2'),
+                                      onTap: () =>
+                                          _onPayTap(_isLocal ? 3000 : 6, '2'),
                                       child: Container(
                                         decoration: BoxDecoration(
                                             borderRadius:
@@ -366,7 +370,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                                   horizontal: 20.0,
                                                   vertical: 5.0),
                                               child: Text(
-                                                'N4, 000.00/mo',
+                                                _isLocal
+                                                    ? 'N3, 000.00/mo'
+                                                    : '\$6/mo',
                                                 style: TextStyle(
                                                     color: Colors.grey,
                                                     fontSize: 10.0),
@@ -427,6 +433,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   }
 
   bool _loading = false;
+  bool _isLocal;
   Future<bool> futureActiveState;
   Future<bool> currentTask() {
     //check user state
@@ -435,7 +442,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   Future<bool> futureTask() async {
     //check user state
-    return await Auth.authProvider(context).checkUserActiveState();
+    Map<String, dynamic> activeState =
+        await Auth.authProvider(context).checkUserActiveState();
+    setState(() {
+      _isLocal = activeState['isLocal'];
+    });
+    return Future.value(activeState['subscription_active']);
   }
 
   @override
@@ -454,6 +466,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         phone: '08043567891',
         email: user.email,
         amount: amount,
+        currency: _isLocal ? 'NGN' : 'USD',
         subId: subId);
     Navigator.of(context).pop();
     Navigator.of(context)

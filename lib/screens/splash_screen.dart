@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nkuzi_igbo/helpers/background_image_container.dart';
@@ -10,6 +8,7 @@ import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/repository/hive_repository.dart';
 import 'package:nkuzi_igbo/screens/auth/welcome_screen.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
+import 'package:nkuzi_igbo/ui_widgets/alt_auth_action.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +35,6 @@ class _SplashScreenState extends State<SplashScreen>
     );
 
     controller.forward();
-
 
     controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -106,11 +104,18 @@ class _SplashScreenState extends State<SplashScreen>
               width: double.infinity,
             ),
             Expanded(
-                flex: 1,
-                child: Text(
-                  'Igbo Tutor Powered by Gtonia',
-                  style: TextStyle(color: Colors.white, fontSize: 11),
-                ))
+              flex: 1,
+              child: AltAuthAction(
+                defaultStyle: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+                leadingText: 'Igbo Tutor Powered by ',
+                actionText: 'GTonia',
+                actionStyle:
+                    TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+              ),
+            ),
           ],
         ),
       ),

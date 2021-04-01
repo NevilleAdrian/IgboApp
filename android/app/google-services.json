@@ -15,11 +15,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "409649017308-73p1kdennannd58dl70jtteb22rr9hrq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.infomall.nkuzi_igbo",
+            "certificate_hash": "d533159a8ebdd5b8ccc0dc5a0e4dce7707dba9aa"
+          }
+        },
+        {
           "client_id": "409649017308-bii82sluud6bbfghnf89iecshg1lg8e3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.infomall.nkuzi_igbo",
             "certificate_hash": "3f9174e1c61fed33530677b14f3cfe0c1830e7c5"
+          }
+        },
+        {
+          "client_id": "409649017308-fo3aa4k50kq73lkdpp1lsji3j4ahp4ph.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.infomall.nkuzi_igbo",
+            "certificate_hash": "6659463937cfb2572739afb2a9ec0268d97d29d9"
           }
         },
         {

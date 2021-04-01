@@ -50,33 +50,38 @@ class Auth extends ChangeNotifier {
   Future<void> registerUser(String name, String email, String password) async {
     try {
       var data = await _helper.registerUser(name, email, password);
+      var category = await _helper.getCategory();
       _setInitialData(data);
+      _categories = category;
       print(_token);
     } catch (ex) {
       throw ApiFailureException(ex);
     }
   }
 
-Future<void> socialRegisterUser(String name, String email) async {
+  Future<void> socialRegisterUser(String name, String email) async {
     try {
       var data = await _helper.socialRegisterUser(name, email);
+      var category = await _helper.getCategory();
       _setInitialData(data);
+      _categories = category;
       print(_token);
     } catch (ex) {
       throw ApiFailureException(ex);
     }
   }
 
-  Future<bool> checkUserActiveState() async {
+  Future<Map<String, dynamic>> checkUserActiveState() async {
     try {
-      bool active = await _helper.checkActiveState(user.sId);
-      print(active);
-      if (!user.activeSubscription == active) {
-        user.activeSubscription = active;
+      Map<String, dynamic> activeState =
+          await _helper.checkActiveState(user.sId);
+      print(activeState);
+      if (!user.activeSubscription == activeState['subscription_active']) {
+        user.activeSubscription = activeState['subscription_active'];
         _hiveRepository.add<User>(name: kUserName, key: 'user', item: user);
         notifyListeners();
       }
-      return active;
+      return activeState;
     } catch (ex) {
       throw ApiFailureException(ex);
     }
@@ -87,6 +92,7 @@ Future<void> socialRegisterUser(String name, String email) async {
     setToken(null);
     _hiveRepository.clear<User>(name: kUserName);
     _hiveRepository.clear<AppModel>(name: kAppDataName);
+    _hiveRepository.clear<Category>(name: kCategory);
   }
 
   void _setInitialData(data) {

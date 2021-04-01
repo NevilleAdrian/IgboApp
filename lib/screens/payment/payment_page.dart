@@ -38,42 +38,34 @@ class _PaymentPageState extends State<PaymentPage> {
       onWebViewCreated: (controller) {
         _webViewController = controller;
         _webViewController.loadUrl(url);
-
       },
     );
   }
 
   Widget _showWeb(String url) {
     return WebviewScaffold(
-      url: url,
-      appBar: AppBar(
-        title: Text('PAYMENT'),
-      ),
-      withZoom: true,
-      withLocalStorage: true,
-      hidden: true,
-      initialChild: Container(
-        height: double.infinity,
-        width: double.infinity,
-        child: Center(
-          child: CircularProgressIndicator(
-              backgroundColor: kPrimary),
+        url: url,
+        appBar: AppBar(
+          title: Text('PAYMENT'),
         ),
-      )
-
-    );
+        withZoom: true,
+        withLocalStorage: true,
+        hidden: true,
+        initialChild: Container(
+          height: double.infinity,
+          width: double.infinity,
+          child: Center(
+            child: CircularProgressIndicator(backgroundColor: kPrimary),
+          ),
+        ));
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     PayModel model = ModalRoute.of(context).settings.arguments;
     String url =
         '$kPayUrl?fullname=${model.name}&email=${model.email}&phone=${model.phone}'
-        '&amount=${model.amount}&subId=${model.subId}';
-    return SafeArea(
-      child: _showWeb(url)
-    );
+        '&amount=${model.amount}&subId=${model.subId}&currency=${model.currency}';
+    return SafeArea(child: _showWeb(url));
   }
 }

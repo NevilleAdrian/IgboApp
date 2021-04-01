@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dart_ipify/dart_ipify.dart';
 import 'package:http/http.dart' as http;
 import 'package:nkuzi_igbo/Exceptions/api_failure_exception.dart';
 import 'package:nkuzi_igbo/models/category_model.dart';
@@ -23,18 +24,22 @@ class NetworkHelper {
     return await authRequest(body, '$kAppAPIUrl/auth/register');
   }
 
-  Future<dynamic> socialRegisterUser(
-      String name, String email) async {
+  Future<dynamic> socialRegisterUser(String name, String email) async {
     print('$email, $name, ');
     var body = Register(name: name, email: email).toJson();
     return await authRequest(body, '$kAppAPIUrl/auth/login/sm/appuser');
   }
 
-  Future<bool> checkActiveState(String id) async {
+  Future<Map<String, dynamic>> checkActiveState(String id) async {
     print('id is $id');
-    var data = await getRequest('$kAppAPIUrl/user/$id');
+    String ipv4 = '';
+    try {
+      ipv4 = await Ipify.ipv4();
+    } catch (err) {}
+    print('external IP: $ipv4');
+    var data = await getRequest('$kAppAPIUrl/user/$id/ip/$ipv4');
     print(data);
-    return data['subscription_active'];
+    return data;
   }
 
   Future<dynamic> getCategoryList() async {

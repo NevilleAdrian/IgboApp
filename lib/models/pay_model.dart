@@ -4,6 +4,7 @@ class PayModel {
   final String email;
   final double amount;
   final String subId;
+  final String currency;
 
   PayModel({
     this.name,
@@ -11,5 +12,6 @@ class PayModel {
     this.email,
     this.amount,
     this.subId,
+    this.currency,
   });
 }
