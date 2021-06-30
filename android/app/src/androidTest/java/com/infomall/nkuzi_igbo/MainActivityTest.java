@@ -1,4 +1,3 @@
-
 package com.infomall.nkuzi_igbo;
 
 import androidx.test.rule.ActivityTestRule;
