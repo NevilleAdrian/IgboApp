@@ -4,8 +4,9 @@ import 'package:nkuzi_igbo/helpers/auth_layout.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/auth/login_screen.dart';
 import 'package:nkuzi_igbo/ui_widgets/alt_auth_action.dart';
-import 'package:nkuzi_igbo/ui_widgets/loading_button.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
+import 'package:nkuzi_igbo/utils/functions.dart';
+
 import '../home_page.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -51,13 +52,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
         Container(
           width: double.infinity,
-          child: LoadingButton(
-            display: Text(
-              'Sign up',
-              style: TextStyle(fontSize: 18.0),
-            ),
-            isLoading: _loading,
-            action: () async {
+          child: FlatButton(
+            child: _loading
+                ? spinner(context)
+                : Text(
+                    'Sign up',
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+            color: kButtonColor,
+            onPressed: () async {
               FocusManager.instance.primaryFocus.unfocus();
               if (_formKey.currentState.validate()) {
                 setState(() {
@@ -100,20 +103,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(
                 height: 10.0,
               ),
-              AltAuthAction(
-                defaultStyle: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w200,
-                ),
-                leadingText: 'Have an account? ',
-                actionText: 'Log in',
-                actionStyle: TextStyle(
-                  decoration: TextDecoration.underline,
-                ),
-                onTap: () {
-                  Navigator.of(context).pushNamed(LoginScreen.id);
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Have an account? ',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w200,
+                    ),
+                  ),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(LoginScreen.id);
+                      },
+                      child: Text(
+                        'Log in',
+                        style: TextStyle(decoration: TextDecoration.underline),
+                      )),
+                ],
               ),
+              // AltAuthAction(
+              //   defaultStyle: TextStyle(
+              //     color: Colors.black,
+              //     fontWeight: FontWeight.w200,
+              //   ),
+              //   leadingText: 'Have an account? ',
+              //   actionText: 'Log in',
+              //   actionStyle: TextStyle(
+              //     decoration: TextDecoration.underline,
+              //   ),
+              //   onTap: () {
+              //     Navigator.of(context).pushNamed(LoginScreen.id);
+              //   },
+              // ),
             ],
           ),
         )
@@ -132,6 +155,7 @@ class SignUpForm extends StatelessWidget {
     return Column(
       children: <Widget>[
         TextFormField(
+          key: Key('name'),
           keyboardType: TextInputType.text,
           textInputAction: TextInputAction.next,
           decoration: const InputDecoration(
@@ -152,6 +176,7 @@ class SignUpForm extends StatelessWidget {
           height: 10.0,
         ),
         TextFormField(
+          key: Key('email'),
           keyboardType: TextInputType.emailAddress,
           textInputAction: TextInputAction.next,
           decoration: const InputDecoration(
@@ -172,6 +197,7 @@ class SignUpForm extends StatelessWidget {
           height: 10.0,
         ),
         TextFormField(
+          key: Key('password'),
           keyboardType: TextInputType.text,
           textInputAction: TextInputAction.done,
           obscureText: true,

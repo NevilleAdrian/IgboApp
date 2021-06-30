@@ -22,7 +22,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
-  Animation animation;
+  //Animation animation;
   HiveRepository _hiveRepository = HiveRepository();
 
   @override

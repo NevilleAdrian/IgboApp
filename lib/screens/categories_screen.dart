@@ -4,12 +4,11 @@ import 'package:nkuzi_igbo/models/pay_model.dart';
 import 'package:nkuzi_igbo/models/sub_category.dart';
 import 'package:nkuzi_igbo/models/user_model.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
+import 'package:nkuzi_igbo/screens/continue_screen.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
 import 'package:nkuzi_igbo/screens/payment/payment_page.dart';
 import 'package:nkuzi_igbo/screens/settings.dart';
-import 'package:nkuzi_igbo/screens/continue_screen.dart';
 import 'package:nkuzi_igbo/ui_widgets/future_helper.dart';
-import 'package:nkuzi_igbo/utils/constants.dart';
 
 class CategoriesScreen extends StatefulWidget {
   CategoriesScreen(

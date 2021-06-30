@@ -31,6 +31,11 @@ const String kBaseUrl = 'https://nkuziigbo.herokuapp.com/igboapp';
 const String kAppAPIUrl = '$kBaseUrl/api';
 const String kPayUrl = '$kBaseUrl/subscribe';
 
+const String kUrl = 'nkuziigbo.herokuapp.com';
+const String kAppUrl = '/igboapp/api';
+const String kPayAppUrl = '/igboapp/subscribe';
+
+
 Map<String, String> _headers(String token) {
   return {
     'Content-type': 'application/json',

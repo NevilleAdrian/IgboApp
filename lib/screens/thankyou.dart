@@ -91,9 +91,7 @@ class _ThankYouState extends State<ThankYou> {
                     FlatButton(
                         color: Color(0XFFF21600),
                         onPressed: () {
-                          var data = Auth.authProvider(context)
-                              .category
-                              .firstWhere((element) {
+                          var data = Auth.authProvider(context).category.firstWhere((element) {
                             print('element is $element');
                             print('widget id is ${widget.id}');
                             return element.sId == widget.id;

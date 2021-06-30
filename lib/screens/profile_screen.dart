@@ -3,11 +3,11 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nkuzi_igbo/models/user_model.dart';
 import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/banner.dart';
 import 'package:nkuzi_igbo/screens/settings.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
-import 'package:nkuzi_igbo/models/user_model.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -111,208 +111,94 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       height: 20.0,
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 25.0, right: 25.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border:
-                            Border.all(color: Color(0XFFB5B5B5), width: 0.4),
-                        color: Colors.white,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          Column(
+                        padding: EdgeInsets.only(left: 25.0, right: 25.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border:
+                              Border.all(color: Color(0XFFB5B5B5), width: 0.4),
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
-//                            name
-//                                ?
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    name = !name;
-                                  });
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                          color: Colors.grey, width: 0.4),
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 15, bottom: 15),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Text(
-                                          Auth.authProvider(context).user.email,
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16),
-                                        ),
-//                                            Text(
-//                                              'edit',
-//                                              style: TextStyle(
-//                                                  color: Color(0XFFF21600)),
-//                                            )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              )
-//                                :
-//                            TextFormField(
-//                                    controller: _nameController,
-//                                    textInputAction: TextInputAction.next,
-//                                    textCapitalization:
-//                                        TextCapitalization.words,
-//                                    decoration: InputDecoration(
-//                                      border: InputBorder.none,
-//                                      contentPadding:
-//                                          EdgeInsets.symmetric(vertical: 5),
-//                                      focusedBorder: InputBorder.none,
-//                                      labelText: Auth.authProvider(context).user.name,
-//                                      labelStyle:
-//                                          TextStyle(color: Colors.black),
-//                                      fillColor: Colors.white,
-//                                      filled: true,
-//                                      errorBorder: InputBorder.none,
-//                                      disabledBorder: InputBorder.none,
-//                                      enabledBorder: UnderlineInputBorder(
-//                                        borderSide:
-//                                            BorderSide(color: Colors.grey),
-//                                      ),
-//                                    ),
-//                                    validator: (String value) {
-//                                      if (value.length < 1) {
-//                                        return 'Please enter the right name';
-//                                      } else {
-//                                        return null;
-//                                      }
-//                                    },
-//                                  ),
-                            ],
-                          ),
-                          // Column(
-                          //   children: <Widget>[
-                          //     location
-                          //         ? GestureDetector(
-                          //             onTap: () {
-                          //               setState(() {
-                          //                 location = !location;
-                          //               });
-                          //             },
-                          //             child: Container(
-                          //               decoration: BoxDecoration(
-                          //                 border: Border(
-                          //                   bottom: BorderSide(
-                          //                       color: Colors.grey, width: 0.4),
-                          //                 ),
-                          //               ),
-                          //               child: Padding(
-                          //                 padding: const EdgeInsets.only(
-                          //                     top: 15, bottom: 15),
-                          //                 child: Row(
-                          //                   mainAxisAlignment:
-                          //                       MainAxisAlignment.spaceBetween,
-                          //                   children: <Widget>[
-                          //                     Text(
-                          //                       Auth.authProvider(context)
-                          //                                   .user
-                          //                                   .location !=
-                          //                               null
-                          //                           ? Auth.authProvider(context)
-                          //                               .user
-                          //                               .location
-                          //                           : 'Location',
-                          //                       style: TextStyle(
-                          //                           color: Colors.black,
-                          //                           fontSize: 16),
-                          //                     ),
-                          //                     Text(
-                          //                       'edit',
-                          //                       style: TextStyle(
-                          //                           color: Color(0XFFF21600)),
-                          //                     )
-                          //                   ],
-                          //                 ),
-                          //               ),
-                          //             ),
-                          //           )
-                          //         : TextFormField(
-                          //             controller: _locationController,
-                          //             textInputAction: TextInputAction.next,
-                          //             textCapitalization:
-                          //                 TextCapitalization.words,
-                          //             decoration: InputDecoration(
-                          //               border: InputBorder.none,
-                          //               contentPadding:
-                          //                   EdgeInsets.symmetric(vertical: 5),
-                          //               focusedBorder: InputBorder.none,
-                          //               labelText: Auth.authProvider(context)
-                          //                   .user
-                          //                   .location,
-                          //               labelStyle:
-                          //                   TextStyle(color: Colors.black),
-                          //               fillColor: Colors.white,
-                          //               filled: true,
-                          //               errorBorder: InputBorder.none,
-                          //               disabledBorder: InputBorder.none,
-                          //               enabledBorder: UnderlineInputBorder(
-                          //                 borderSide:
-                          //                     BorderSide(color: Colors.grey),
-                          //               ),
-                          //             ),
-                          //             validator: (String value) {
-                          //               if (value.length < 1) {
-                          //                 return 'Please enter the right location';
-                          //               } else {
-                          //                 return null;
-                          //               }
-                          //             },
-                          //           ),
-                          //   ],
-                          // ),
-                          Container(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 15, bottom: 15),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                              Column(
                                 children: <Widget>[
-                                  Text(
-                                    'Subsciption',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 16),
-                                  ),
-                                  SizedBox(
-                                    height: 40,
-                                    width: 90,
-                                    child: FlatButton(
-                                        color: Color(0XFFF21600),
-                                        onPressed: () {},
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5.0),
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        name = !name;
+                                      });
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                              color: Colors.grey, width: 0.4),
                                         ),
-                                        child: Text(
-                                          user.activeSubscription
-                                              ? 'Active'
-                                              : 'Inactive',
-                                          style: TextStyle(fontSize: 13),
-                                        )),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 15, bottom: 15),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Text(
+                                              Auth.authProvider(context)
+                                                      .user
+                                                      .email ??
+                                                  '',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 15, bottom: 15),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Text(
+                                            'Subsciption',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16),
+                                          ),
+                                          SizedBox(
+                                            height: 40,
+                                            width: 90,
+                                            child: FlatButton(
+                                                color: Color(0XFFF21600),
+                                                onPressed: () {},
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0),
+                                                ),
+                                                child: Text(
+                                                  user.activeSubscription
+                                                      ? 'Active'
+                                                      : 'Inactive',
+                                                  style:
+                                                      TextStyle(fontSize: 13),
+                                                )),
+                                          )
+                                        ],
+                                      ),
+                                    ),
                                   )
                                 ],
                               ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                            ])),
                     SizedBox(
                       height: 35.0,
                     ),
