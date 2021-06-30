@@ -41,7 +41,7 @@ dependencies:
   cached_network_image: ^2.4.0
   flutter_widget_from_html_core: ^0.5.0+3
   webview_flutter: ^0.3.22+1
-  flutter_cache_manager: ^2.1.0
+  flutter_cache_manager: ^2.1.2
   just_audio: ^0.6.4
   flutter_webview_plugin: ^0.3.11
   apple_sign_in: ^0.1.0
