@@ -67,16 +67,35 @@ class StartAuthBottom extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          AltAuthAction(
-            defaultStyle: kAuthTextSmall,
-            leadingText: 'Have an account? ',
-            actionText: 'Log in',
-            actionStyle:
-                kAuthTextSmall.copyWith(decoration: TextDecoration.underline),
-            onTap: () {
-              Navigator.of(context).pushNamed(LoginScreen.id);
-            },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Have an account?',
+                style: kAuthTextSmall,
+              ),
+              SizedBox(width: 5.0,),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(LoginScreen.id);
+                  },
+                  child: Text(
+                    'Log in',
+                    style: kAuthTextSmall.copyWith(
+                        decoration: TextDecoration.underline),
+                  )),
+            ],
           ),
+          // AltAuthAction(
+          //   defaultStyle: kAuthTextSmall,
+          //   leadingText: 'Have an account? ',
+          //   actionText: 'Log in',
+          //   actionStyle:
+          //       kAuthTextSmall.copyWith(decoration: TextDecoration.underline),
+          //   onTap: () {
+          //     Navigator.of(context).pushNamed(LoginScreen.id);
+          //   },
+          // ),
           SizedBox(
             height: 20,
           ),

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:nkuzi_igbo/utils/constants.dart';
 
 String replaceBackSlash(String url) =>
@@ -33,3 +34,23 @@ String replaceRemoteAudioWithLocal(String url) =>
             'https://infomall-001-site1.etempurl.com/assets\\', kAudioRemoteUrl)
         ?.replaceAll(' ', '_') ??
     null;
+
+bool isEmailValid(String email) {
+  RegExp regex;
+  String pattern =
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+  if (email != null) {
+    regex = RegExp(pattern);
+  }
+
+  print('bool: ${regex.hasMatch(email)}');
+  return regex.hasMatch(email);
+}
+
+Widget spinner(BuildContext context) {
+  return CircularProgressIndicator(
+    strokeWidth: 2,
+    backgroundColor: Colors.white,
+    valueColor: AlwaysStoppedAnimation<Color>(kPrimary),
+  );
+}

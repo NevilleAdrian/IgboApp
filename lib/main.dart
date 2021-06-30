@@ -36,7 +36,6 @@ void main() async {
     value: appleSignInAvailable,
     child: MyApp(),
   ));
-  runApp(MyApp());
 }
 
 _openHive() async {

@@ -23,7 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: ^0.19.1
+  flutter_svg: ^0.19.0
   animations: ^1.0.0+5
   http: ^0.12.2
   dart_ipify: ^1.0.2
@@ -31,22 +31,22 @@ dependencies:
   percent_indicator: ^2.1.5
   provider: ^4.3.2
   flushbar: ^1.10.4
-  hive: ^1.4.4+1
-  hive_flutter: ^0.3.1
-  path_provider: ^1.6.5
+  hive: ^1.4.4
+#  hive_flutter: ^1.0.0
+  path_provider: ^1.6.24
 #  pushy_flutter: 1.0.14
-  flutter_launcher_icons: ^0.7.5
+  flutter_launcher_icons: ^0.8.1
   flutter_facebook_login: ^3.0.0
   google_sign_in: ^4.5.3
-  cached_network_image: ^2.3.3
+  cached_network_image: ^2.4.0
   flutter_widget_from_html_core: ^0.5.0+3
   webview_flutter: ^0.3.22+1
-  flutter_cache_manager: ^2.0.0
-  just_audio: ^0.5.5
+  flutter_cache_manager: ^2.1.0
+  just_audio: ^0.6.4
   flutter_webview_plugin: ^0.3.11
   apple_sign_in: ^0.1.0
-  firebase_core: ^0.5.2
-  firebase_auth: ^0.18.3
+  firebase_core: ^0.5.3
+  firebase_auth: ^0.18.4
 
   #  assets_audio_player: ^2.0.13+1
 
@@ -58,8 +58,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  hive_generator: ^0.8.1
+  hive_generator: ^0.8.0
   build_runner: ^1.10.4
+  integration_test: ^1.0.2+3
 
 flutter_icons:
   ios: true

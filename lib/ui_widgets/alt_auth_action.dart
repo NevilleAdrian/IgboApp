@@ -27,7 +27,7 @@ class AltAuthAction extends StatelessWidget {
             style: leadingStyle,
           ),
           TextSpan(
-            recognizer: TapGestureRecognizer()..onTap = onTap,
+            //recognizer: TapGestureRecognizer()..onTap = onTap,
             text: actionText,
             style: actionStyle,
           ),

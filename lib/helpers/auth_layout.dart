@@ -39,6 +39,12 @@ class _AuthLayoutState extends State<AuthLayout> {
   bool _isGoogleBusy = false;
   bool _isAppleBusy = false;
 
+  // uriConverter (String url) {
+  //   print('${APIUrl.baseUrl}${APIUrl.appendUrl}/$url');
+  //   return Uri.https(APIUrl.baseUrl,'${APIUrl.appendUrl}/$url');
+  // }
+
+
   Future<void> _onGoogleSignIn() async {
     try {
       _isGoogleBusy = true;
@@ -67,8 +73,8 @@ class _AuthLayoutState extends State<AuthLayout> {
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         String token = result.accessToken.token;
-        final graphResponse = await http.get(
-            'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=$token');
+
+        final graphResponse = await http.get(Uri.https('graph.facebook.com','/v2.12/me?fields=name,first_name,last_name,email&access_token=$token'));
         final profile = jsonDecode(graphResponse.body);
         await _sendSmDetailsToServer(
             context, profile['name'], profile['email']);
@@ -88,16 +94,14 @@ class _AuthLayoutState extends State<AuthLayout> {
         _isAppleBusy = true;
       });
       final authService = Provider.of<AuthServices>(context, listen: false);
-      final user = await authService
-          .signInWithApple(scopes: [Scope.email, Scope.fullName]);
-      setState(() {
-        _isAppleBusy = false;
-      });
+      final user = await authService.signInWithApple(scopes: [Scope.email, Scope.fullName]);
+
       if (user != null) {
         await _sendSmDetailsToServer(context, user.displayName, user.email);
       } else {
         _showError(context, 'An error occurred during the sign in process');
       }
+
     } catch (e) {
       setState(() {
         _isAppleBusy = false;
@@ -146,6 +150,7 @@ class _AuthLayoutState extends State<AuthLayout> {
     await _authSmAction(context, name, email)
         .then((_) => setState(() {
               _isBusy = false;
+              _isAppleBusy = false;
               _navigateToHome(context);
             }))
         .catchError((error) {

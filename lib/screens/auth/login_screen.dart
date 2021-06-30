@@ -5,8 +5,8 @@ import 'package:nkuzi_igbo/providers/auth_provider.dart';
 import 'package:nkuzi_igbo/screens/auth/reset_screen.dart';
 import 'package:nkuzi_igbo/screens/auth/signup_screen.dart';
 import 'package:nkuzi_igbo/screens/home_page.dart';
-import 'package:nkuzi_igbo/ui_widgets/alt_auth_action.dart';
 import 'package:nkuzi_igbo/ui_widgets/loading_button.dart';
+import 'package:nkuzi_igbo/utils/functions.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -18,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String _email;
   String _password;
   bool _loading = false;
+  bool emailValid;
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
         Form(
           key: _formKey,
           child: LoginForm(
+            validator: (email) =>
+                isEmailValid(_email) ? null : 'Email must be valid',
             onEmailChange: (value) {
               setState(() {
                 _email = value;
@@ -90,17 +93,25 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: 10.0,
               ),
-              AltAuthAction(
-                defaultStyle: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w200,
-                ),
-                leadingText: 'New? ',
-                actionText: 'Sign up',
-                actionStyle: TextStyle(decoration: TextDecoration.underline),
-                onTap: () {
-                  Navigator.of(context).pushNamed(SignUpScreen.id);
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'New? ',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w200,
+                    ),
+                  ),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(SignUpScreen.id);
+                      },
+                      child: Text(
+                        'Sign up',
+                        style: TextStyle(decoration: TextDecoration.underline),
+                      )),
+                ],
               ),
             ],
           ),
@@ -113,32 +124,29 @@ class _LoginScreenState extends State<LoginScreen> {
 class LoginForm extends StatelessWidget {
   final Function onEmailChange;
   final Function onPasswordChange;
-  LoginForm({this.onEmailChange, this.onPasswordChange});
+  final Function validator;
+  LoginForm({this.onEmailChange, this.onPasswordChange, this.validator});
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         TextFormField(
-          keyboardType: TextInputType.emailAddress,
-          textInputAction: TextInputAction.next,
-          decoration: const InputDecoration(
-            hintText: 'Email',
-            labelText: 'Email',
-          ),
-          onChanged: (value) {
-            onEmailChange(value);
-          },
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-        ),
+            key: Key('email'),
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            decoration: const InputDecoration(
+              hintText: 'Email',
+              labelText: 'Email',
+            ),
+            onChanged: (value) {
+              onEmailChange(value);
+            },
+            validator: validator),
         SizedBox(
           height: 10.0,
         ),
         TextFormField(
+          key: Key('password'),
           keyboardType: TextInputType.text,
           textInputAction: TextInputAction.done,
           obscureText: true,
