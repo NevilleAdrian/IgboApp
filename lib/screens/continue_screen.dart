@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:nkuzi_igbo/models/category_model.dart';
 import 'package:nkuzi_igbo/models/study.dart';
 import 'package:nkuzi_igbo/models/sub_category.dart';
-import 'package:nkuzi_igbo/screens/quiz.dart';
 import 'package:nkuzi_igbo/screens/quiz/quiz_screen_page.dart';
 
 class ContinueList extends StatefulWidget {
